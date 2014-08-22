@@ -22,6 +22,29 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     public InfoCliente() {
         initComponents();
         this.validate();
+        Actualizar();
+        
+        
+    }
+
+    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
+    {
+        ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
+        Image img = IcoIco.getImage();  
+        Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
+        IcoIco = new ImageIcon(newimg); 
+        return IcoIco;
+    }
+    
+    public static InfoCliente getInstancia() {
+        if (ICInstancia == null) {
+            ICInstancia = new InfoCliente();
+        }
+        return ICInstancia;
+    }
+    
+    public void Actualizar()
+    {
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
         String DirI = "Recursos\\Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
@@ -45,23 +68,17 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         }
         //ClientesTable.setValueAt("Lufasoch", 0, 0);
         //ClientesTable.setValueAt("lufasoch@gmail.com", 0, 1);
-        
-    }
-
-    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
-    {
-        ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
-        Image img = IcoIco.getImage();  
-        Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
-        IcoIco = new ImageIcon(newimg); 
-        return IcoIco;
     }
     
-    public static InfoCliente getInstancia() {
-        if (ICInstancia == null) {
-            ICInstancia = new InfoCliente();
-        }
-        return ICInstancia;
+    public void limpiarCampos()
+    {
+        TTipoUC.setText("");
+        TNicknameC.setText("");
+        TNombreC.setText("");
+        TApellidoC.setText("");
+        TeMailC.setText("");
+        TFechaNacC.setText("");
+        PerfilLabel.setIcon(RZIma("Recursos\\Perfil.jpg",150,150));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +92,6 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         TPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClientesTable = new javax.swing.JTable();
-        VerInfoButton = new javax.swing.JButton();
         PPanel = new javax.swing.JPanel();
         PerfilLabel = new javax.swing.JLabel();
         InfoPanel = new javax.swing.JPanel();
@@ -94,10 +110,13 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         OrdenesPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         OrdenesTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        ActualizarButton = new javax.swing.JButton();
+        VerInfoButton = new javax.swing.JButton();
         OrdenButton = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
-        setClosable(true);
         setPreferredSize(new java.awt.Dimension(800, 600));
         try {
             setSelected(true);
@@ -108,6 +127,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         TPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
+        ClientesTable.setAutoCreateRowSorter(true);
         ClientesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ClientesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,16 +169,6 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         getContentPane().add(TPanel);
         TPanel.setBounds(40, 50, 310, 410);
-
-        VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerInfoButton.setText("Ver Informacion del Cliente");
-        VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInfoButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(VerInfoButton);
-        VerInfoButton.setBounds(40, 470, 310, 50);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -244,6 +254,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         OrdenesPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
+        OrdenesTable.setAutoCreateRowSorter(true);
         OrdenesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -271,6 +282,27 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         getContentPane().add(OrdenesPanel);
         OrdenesPanel.setBounds(390, 50, 160, 170);
 
+        jPanel1.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout(1, 4, 8, 0));
+
+        ActualizarButton.setText("Actualizar");
+        ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ActualizarButton);
+
+        VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        VerInfoButton.setText("Ver Informacion del Cliente");
+        VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerInfoButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(VerInfoButton);
+
         OrdenButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         OrdenButton.setText("Ver Orden de Compra");
         OrdenButton.addActionListener(new java.awt.event.ActionListener() {
@@ -278,8 +310,18 @@ public class InfoCliente extends javax.swing.JInternalFrame {
                 OrdenButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(OrdenButton);
-        OrdenButton.setBounds(390, 470, 360, 50);
+        jPanel1.add(OrdenButton);
+
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Cerrar);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(40, 470, 710, 60);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -291,12 +333,14 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
         String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
         //BUSCAR USUARIO A LA BASE DE DATOS
+        
         //ABAJO//DATOS DEVUELTOS
         String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos\\Usuarios\\Lufasoch.png"};
         int[] NOrdenes = {458, 5366, 7552};
         SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
         java.util.Date FechaU = new Date(88,9,19);     
         //ARRIBA//DATOS DEVUELTOS        
+        
         //ABAJO//IMPRIMIR DATOS
         TNicknameC.setText(DatosU[0]);
         TeMailC.setText(DatosU[1]);
@@ -323,11 +367,24 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
     private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
-        // TODO add your handling code here:
+          ///////////////////////
+         //VER ORDEN DE COMPRA//
+        ///////////////////////
     }//GEN-LAST:event_OrdenButtonActionPerformed
 
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        limpiarCampos();
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_ActualizarButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ActualizarButton;
     private javax.swing.JLabel BackgroundLabel;
+    private javax.swing.JButton Cerrar;
     private javax.swing.JTable ClientesTable;
     private javax.swing.JPanel InfoPanel;
     private javax.swing.JButton OrdenButton;
@@ -349,6 +406,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TeMail;
     private javax.swing.JTextField TeMailC;
     private javax.swing.JButton VerInfoButton;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

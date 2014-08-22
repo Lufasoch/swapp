@@ -24,9 +24,23 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
     public InfoProveedor() {
         initComponents();
         this.validate();
-        //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
         String DirI = "Recursos\\Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
+        Actualizar();
+    }
+
+    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
+    {
+        ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
+        Image img = IcoIco.getImage();  
+        Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
+        IcoIco = new ImageIcon(newimg); 
+        return IcoIco;
+    }
+    
+    public void Actualizar()
+    {
+        //// Agregar imagen y cambiar tamaño de la foto del perfil ////
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
         String[] Nicknames = { "Light" };
@@ -45,15 +59,6 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
             DTM2.addRow(new Object[] { Nicknames[cont], eMails[cont] }); 
             cont++;
         }
-    }
-
-    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
-    {
-        ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
-        Image img = IcoIco.getImage();  
-        Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
-        IcoIco = new ImageIcon(newimg); 
-        return IcoIco;
     }
     
     public static InfoProveedor getInstancia() {
@@ -94,7 +99,11 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         TCompaniaC = new javax.swing.JTextField();
         TPaginaWeb = new javax.swing.JTextField();
         TPaginaWebC = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        Actualizar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         VerInfoButton = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -248,15 +257,43 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         getContentPane().add(InfoPanel);
         InfoPanel.setBounds(390, 240, 360, 280);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout());
+
+        Actualizar.setText("Actualizar");
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Actualizar);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(40, 470, 310, 50);
+
+        jPanel2.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel2.setLayout(new java.awt.GridLayout(2, 0, 0, 8));
+
         VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerInfoButton.setText("Ver Informacion del Proveedor");
+        VerInfoButton.setText("Detalles del Proveedor");
         VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VerInfoButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(VerInfoButton);
-        VerInfoButton.setBounds(40, 470, 310, 50);
+        jPanel2.add(VerInfoButton);
+
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Cerrar);
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(390, 120, 180, 100);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -286,8 +323,19 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         //ARRIBA//IMPRIMIR DATOS
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_ActualizarActionPerformed
+
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        Actualizar();
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
+    private javax.swing.JButton Cerrar;
     private javax.swing.JTable ClientesTable;
     private javax.swing.JPanel InfoPanel;
     private javax.swing.JPanel PPanel;
@@ -310,6 +358,8 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TeMail;
     private javax.swing.JTextField TeMailC;
     private javax.swing.JButton VerInfoButton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private static InfoProveedor IPInstancia;

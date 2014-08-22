@@ -45,6 +45,9 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         PanelProveedor02.setVisible(false);
         PanelProveedor03.setVisible(false);
         PanelProveedor04.setVisible(false);
+        //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
+        String DirI = "Recursos\\Perfil.jpg";
+        PerfilLabel.setIcon(RZIma(DirI,150,150));
     }
 
     /**
@@ -142,7 +145,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         jPanel1.add(FechaNac);
         jPanel1.add(FechaNacC);
 
-        PanelProveedor01.setLayout(new java.awt.GridLayout());
+        PanelProveedor01.setLayout(new java.awt.GridLayout(1, 0));
 
         Empresa.setEditable(false);
         Empresa.setText("Empresa");
@@ -150,12 +153,12 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         jPanel1.add(PanelProveedor01);
 
-        PanelProveedor02.setLayout(new java.awt.GridLayout());
+        PanelProveedor02.setLayout(new java.awt.GridLayout(1, 0));
         PanelProveedor02.add(EmpresaC);
 
         jPanel1.add(PanelProveedor02);
 
-        PanelProveedor03.setLayout(new java.awt.GridLayout());
+        PanelProveedor03.setLayout(new java.awt.GridLayout(1, 0));
 
         SitioWeb.setEditable(false);
         SitioWeb.setText("Sitio Web");
@@ -163,7 +166,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         jPanel1.add(PanelProveedor03);
 
-        PanelProveedor04.setLayout(new java.awt.GridLayout());
+        PanelProveedor04.setLayout(new java.awt.GridLayout(1, 0));
         PanelProveedor04.add(SitioWebC);
 
         jPanel1.add(PanelProveedor04);
@@ -191,7 +194,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         });
         jPanel6.add(LimpiarButton);
 
-        CancelarButton.setText("Cancelar");
+        CancelarButton.setText("Cerrar/Cancelar");
         CancelarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelarButtonActionPerformed(evt);
