@@ -33,15 +33,26 @@ public class Menu extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         ArchivoMenu = new javax.swing.JMenu();
+        RegistrarUsuario = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
         ConsultarMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        VerInfoCliente = new javax.swing.JMenuItem();
+        VerInfoProveedor = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
 
         ArchivoMenu.setText("Archivo");
+
+        RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
+        RegistrarUsuario.setText("Registrar Usuario Nuevo");
+        RegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistrarUsuarioActionPerformed(evt);
+            }
+        });
+        ArchivoMenu.add(RegistrarUsuario);
+
         jMenuBar1.add(ArchivoMenu);
 
         EditarMenu.setText("Editar");
@@ -49,23 +60,21 @@ public class Menu extends javax.swing.JFrame {
 
         ConsultarMenu.setText("Ver");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Informacion de Cliente");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        VerInfoCliente.setText("Informacion de Cliente");
+        VerInfoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                VerInfoClienteActionPerformed(evt);
             }
         });
-        ConsultarMenu.add(jMenuItem1);
+        ConsultarMenu.add(VerInfoCliente);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Informacion de Preveedor");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        VerInfoProveedor.setText("Informacion de Proveedor");
+        VerInfoProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                VerInfoProveedorActionPerformed(evt);
             }
         });
-        ConsultarMenu.add(jMenuItem2);
+        ConsultarMenu.add(VerInfoProveedor);
 
         jMenuBar1.add(ConsultarMenu);
 
@@ -87,7 +96,21 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
+        RegistroUsuario RUs = RegistroUsuario.getInstancia();
+        if (RUs.isVisible()) {
+            try {
+                RUs.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(RUs);
+            RUs.setVisible(true);
+        }
+    }//GEN-LAST:event_RegistrarUsuarioActionPerformed
+
+    private void VerInfoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoClienteActionPerformed
         InfoCliente ICli = InfoCliente.getInstancia();
         if (ICli.isVisible()) {
             try {
@@ -99,9 +122,9 @@ public class Menu extends javax.swing.JFrame {
             this.Escritorio.add(ICli);
             ICli.setVisible(true);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_VerInfoClienteActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void VerInfoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoProveedorActionPerformed
         InfoProveedor IPro = InfoProveedor.getInstancia();
         if (IPro.isVisible()) {
             try {
@@ -113,7 +136,7 @@ public class Menu extends javax.swing.JFrame {
             this.Escritorio.add(IPro);
             IPro.setVisible(true);
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_VerInfoProveedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,8 +177,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu ConsultarMenu;
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem RegistrarUsuario;
+    private javax.swing.JMenuItem VerInfoCliente;
+    private javax.swing.JMenuItem VerInfoProveedor;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }
