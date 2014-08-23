@@ -270,12 +270,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             File fotoCliente = fotoChooser.getSelectedFile();
             try{
                 String fotoClientePath = fotoCliente.getCanonicalPath();
-                
-                //String DirAbs = fotoClientePath.replaceAll(a, "/"+"/");
                 txtFotoPath.setText(fotoClientePath);
-                //PerfilLabel.setIcon(RZIma(txtFotoPath.getText(),150,150));
-                //ESTOY INTENTANDO ACTUALIZAR LA IMAGEN, DE MOMENTO SIN EXITO
-                //EL PROBLEMA ESTA EN LA DIRECCION QUE DA EL FILECHOOSER
+                PerfilLabel.setIcon(RZIma(txtFotoPath.getText(),150,150));
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
                     "Error", JOptionPane.ERROR_MESSAGE);

@@ -34,6 +34,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         ArchivoMenu = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
+        CrearOrden = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
@@ -52,6 +53,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         ArchivoMenu.add(RegistrarUsuario);
+
+        CrearOrden.setText("Crear orden de compra");
+        CrearOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearOrdenActionPerformed(evt);
+            }
+        });
+        ArchivoMenu.add(CrearOrden);
 
         jMenuBar1.add(ArchivoMenu);
 
@@ -138,6 +147,20 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_VerInfoProveedorActionPerformed
 
+    private void CrearOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearOrdenActionPerformed
+        GenerarOC GOC = GenerarOC.getInstancia();
+        if (GOC.isVisible()) {
+            try {
+                GOC.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(GOC);
+            GOC.setVisible(true);
+        }
+    }//GEN-LAST:event_CrearOrdenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -175,6 +198,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ArchivoMenu;
     private javax.swing.JMenu ConsultarMenu;
+    private javax.swing.JMenuItem CrearOrden;
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
