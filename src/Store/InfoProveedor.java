@@ -24,7 +24,7 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
     public InfoProveedor() {
         initComponents();
         this.validate();
-        String DirI = "Recursos\\Perfil.jpg";
+        String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
         Actualizar();
     }
@@ -306,7 +306,7 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();//NICKNAME PARA BUSCAR AL USUARIO
         //BUSCAR INFORMACION DE USUARIO
         //ABAJO//DATOS DEVUELTOS
-        String[] DatosU = {"Light", "TwilightSparkle@gmail.com", "Twilight", "Sparkle", "Proveedor", "Rainbow INC", "www.RainbowINC.com", "Recursos\\U.jpg"};        
+        String[] DatosU = {"Light", "TwilightSparkle@gmail.com", "Twilight", "Sparkle", "Proveedor", "Rainbow INC", "www.RainbowINC.com", "Recursos/U.jpg"};        
         SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
         java.util.Date FechaU = new Date(95,8,17);
         //ARRIBA//DATOS DEVUELTOS

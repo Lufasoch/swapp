@@ -46,7 +46,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     public void Actualizar()
     {
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
-        String DirI = "Recursos\\Perfil.jpg";
+        String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
@@ -78,7 +78,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         TApellidoC.setText("");
         TeMailC.setText("");
         TFechaNacC.setText("");
-        PerfilLabel.setIcon(RZIma("Recursos\\Perfil.jpg",150,150));
+        PerfilLabel.setIcon(RZIma("Recursos/Perfil.jpg",150,150));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -295,7 +295,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         jPanel1.add(ActualizarButton);
 
         VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerInfoButton.setText("Ver Informacion del Cliente");
+        VerInfoButton.setText("Ver datos del Cliente");
         VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VerInfoButtonActionPerformed(evt);
@@ -335,7 +335,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         //BUSCAR USUARIO A LA BASE DE DATOS
         
         //ABAJO//DATOS DEVUELTOS
-        String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos\\Usuarios\\Lufasoch.png"};
+        String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
         int[] NOrdenes = {458, 5366, 7552};
         SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
         java.util.Date FechaU = new Date(88,9,19);     

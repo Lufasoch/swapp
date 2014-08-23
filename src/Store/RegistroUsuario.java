@@ -46,7 +46,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         PanelProveedor03.setVisible(false);
         PanelProveedor04.setVisible(false);
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
-        String DirI = "Recursos\\Perfil.jpg";
+        String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
     }
 
@@ -271,7 +271,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             try{
                 String fotoClientePath = fotoCliente.getCanonicalPath();
                 
-                //String DirAbs = fotoClientePath.replaceAll(a, "\\"+"\\");
+                //String DirAbs = fotoClientePath.replaceAll(a, "/"+"/");
                 txtFotoPath.setText(fotoClientePath);
                 //PerfilLabel.setIcon(RZIma(txtFotoPath.getText(),150,150));
                 //ESTOY INTENTANDO ACTUALIZAR LA IMAGEN, DE MOMENTO SIN EXITO
