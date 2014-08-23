@@ -13,6 +13,12 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     /**
      * Creates new form GenerarOC
      */
+    public static GenerarOC getInstancia() {
+        if (IGenerarOC == null) {
+            IGenerarOC = new GenerarOC();
+        }
+        return IGenerarOC;
+    }
     public GenerarOC() {
         initComponents();
     }
@@ -34,6 +40,8 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         txtnickname = new javax.swing.JTextField();
         txtNomAp = new javax.swing.JTextField();
         txtnicknamedsp = new javax.swing.JTextField();
+        SPArticulos = new javax.swing.JScrollPane();
+        TArticulos = new javax.swing.JTable();
         BackgroundLabel = new javax.swing.JLabel();
 
         setTitle("Orden de Compra");
@@ -101,6 +109,24 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         getContentPane().add(PCabezal);
         PCabezal.setBounds(10, 10, 770, 80);
 
+        SPArticulos.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        TArticulos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        SPArticulos.setViewportView(TArticulos);
+
+        getContentPane().add(SPArticulos);
+        SPArticulos.setBounds(10, 120, 770, 230);
+
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
         BackgroundLabel.setBounds(0, 0, 800, 570);
@@ -111,6 +137,8 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JPanel PCabezal;
+    private javax.swing.JScrollPane SPArticulos;
+    private javax.swing.JTable TArticulos;
     private javax.swing.JTextField TxtCliente;
     private javax.swing.JButton btn_selCli;
     private javax.swing.JTextField txtNomAp;
@@ -119,4 +147,5 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtnickname;
     private javax.swing.JTextField txtnicknamedsp;
     // End of variables declaration//GEN-END:variables
+    private static GenerarOC IGenerarOC;
 }
