@@ -14,6 +14,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import direct.market.controller.Fabrica;
+//import direct.market.controller.UsuarioControllerImpl;
+import direct.market.controller.IUsuarioController;
+import direct.market.controller.UsuarioControllerImpl;
+import java.util.Date;
+
 class CustomFilter extends javax.swing.filechooser.FileFilter {
 	@Override
 	public boolean accept(File file){
@@ -352,13 +358,9 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         else if(TipoUC.getSelectedItem().toString().equals("Proveedor") && (EmpresaC.getText().isEmpty() || SitioWeb.getText().isEmpty()))
         {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-        }
+        }             
         else
         {
-            //SE CREA EL DATAUSUARIO Y SE ENVIA AL CONTROLADOR
-            //DataUsuario DU = new DataUsuario(txtFotoPath.getText(), NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), eMailC.getText(), FechaNacC.getDate(), txtFotoPath.getText(), EmpresaC.getText(), SitioWebC.getText())
-            //enviarDataUsuario(DU);
-            
             String name = fileImagen.getName();
             int pos = name.lastIndexOf('.');
             String ext = name.substring(pos+1);
@@ -385,6 +387,13 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            
+            //SE CREA EL DATAUSUARIO Y SE ENVIA AL CONTROLADOR
+            //Las fotos estan en "Recursos/Usuarios/" + nickname + "." + extencion
+            //DataUsuario DU = new DataUsuario(txtFotoPath.getText(), NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), eMailC.getText(), FechaNacC.getDate(), "Recursos/Usuarios/" + nickname + "." + ext, EmpresaC.getText(), SitioWebC.getText())
+            //enviarDataUsuario(DU);
+            IUsuarioController IUC = Fabrica.getInstance().getInterfazUsuario();
+            //altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), "Recursos/Usuarios/" + NicknameC.getText() + "." + ext, TipoUC.getSelectedItem().toString(), EmpresaC.getText(), SitioWebC.getText());
             limpiarCampos();
             this.dispose();
         }
