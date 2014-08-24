@@ -5,14 +5,14 @@
 package Store;
 
 import java.awt.Image;
-import java.io.File;
+//import java.io.File;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.text.BadLocationException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 class CustomFilter extends javax.swing.filechooser.FileFilter {
 	@Override
@@ -34,10 +34,9 @@ class CustomFilter extends javax.swing.filechooser.FileFilter {
  * @author Lufasoch
  */
 public class RegistroUsuario extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form RegistroUsuario
-     */
+    
+    private File fileImagen = null;
+    
     public RegistroUsuario() {
         initComponents();
         this.validate();
@@ -105,6 +104,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         TipoU.setEditable(false);
         TipoU.setText("Tipo de Usuario");
+        TipoU.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TipoU.setEnabled(false);
         jPanel1.add(TipoU);
 
         TipoUC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cliente", "Proveedor" }));
@@ -113,35 +114,40 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
                 TipoUCItemStateChanged(evt);
             }
         });
-        TipoUC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TipoUCActionPerformed(evt);
-            }
-        });
         jPanel1.add(TipoUC);
 
         Nickname.setEditable(false);
         Nickname.setText("Nickname");
+        Nickname.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        Nickname.setEnabled(false);
         jPanel1.add(Nickname);
         jPanel1.add(NicknameC);
 
         Nombre.setEditable(false);
         Nombre.setText("Nombre");
+        Nombre.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        Nombre.setEnabled(false);
         jPanel1.add(Nombre);
         jPanel1.add(NombreC);
 
         Apellido.setEditable(false);
         Apellido.setText("Apellido");
+        Apellido.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        Apellido.setEnabled(false);
         jPanel1.add(Apellido);
         jPanel1.add(ApellidoC);
 
         eMail.setEditable(false);
         eMail.setText("eMail");
+        eMail.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        eMail.setEnabled(false);
         jPanel1.add(eMail);
         jPanel1.add(eMailC);
 
         FechaNac.setEditable(false);
         FechaNac.setText("Fecha de Nacimiento");
+        FechaNac.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        FechaNac.setEnabled(false);
         jPanel1.add(FechaNac);
         jPanel1.add(FechaNacC);
 
@@ -149,6 +155,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         Empresa.setEditable(false);
         Empresa.setText("Empresa");
+        Empresa.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        Empresa.setEnabled(false);
         PanelProveedor01.add(Empresa);
 
         jPanel1.add(PanelProveedor01);
@@ -162,6 +170,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         SitioWeb.setEditable(false);
         SitioWeb.setText("Sitio Web");
+        SitioWeb.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        SitioWeb.setEnabled(false);
         PanelProveedor03.add(SitioWeb);
 
         jPanel1.add(PanelProveedor03);
@@ -222,9 +232,13 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         Foto.setEditable(false);
         Foto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Foto.setText("Foto de Perfil");
+        Foto.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        Foto.setEnabled(false);
         jPanel7.add(Foto);
 
         txtFotoPath.setEditable(false);
+        txtFotoPath.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        txtFotoPath.setEnabled(false);
         jPanel7.add(txtFotoPath);
 
         btnExaminarFoto.setText("Examinar");
@@ -260,25 +274,66 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_TipoUCItemStateChanged
 
-    private void TipoUCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoUCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TipoUCActionPerformed
-
     private void btnExaminarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarFotoActionPerformed
-        int returnVal = fotoChooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            File fotoCliente = fotoChooser.getSelectedFile();
+        JFileChooser buscarImagen = new JFileChooser();
+        FileNameExtensionFilter filtro= new FileNameExtensionFilter("Imágenes (bmp, jpg, png)", new String[]{"bmp","jpg","png"});
+        buscarImagen.setAcceptAllFileFilterUsed(false);
+        buscarImagen.setFileFilter(filtro);
+
+        int result = buscarImagen.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION){
+            fileImagen = buscarImagen.getSelectedFile();
+            txtFotoPath.setText(fileImagen.getPath());
+            ImageIcon imageIcon = new ImageIcon(fileImagen.getPath());
+            PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            PerfilLabel.repaint();
+
+            //******************** GUARDAR IMGENES EN CARPETA ********************
+
+            String name = fileImagen.getName();
+            int pos = name.lastIndexOf('.');
+            String ext = name.substring(pos+1);
+
+            File directorio = new File("src/Store/Recursos/Usuarios/TempPic/");
+            directorio.mkdir();
+            
+            File destino = new File("src/Store/Recursos/Usuarios/TempPic/tmp"+"."+ext);
             try{
-                String fotoClientePath = fotoCliente.getCanonicalPath();
-                txtFotoPath.setText(fotoClientePath);
-                PerfilLabel.setIcon(RZIma(txtFotoPath.getText(),150,150));
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                InputStream in = new FileInputStream(fileImagen);
+                OutputStream out = new FileOutputStream(destino);
+
+                byte[] buffer = new byte[1024];
+                int tamanoRes;
+
+
+                    while ((tamanoRes = in.read(buffer)) > 0) {
+                        out.write(buffer, 0, tamanoRes);
+                    }
+                    in.close();
+                    out.close();
+                
+            }
+            catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+//        int returnVal = fotoChooser.showOpenDialog(this);
+//        if(returnVal == JFileChooser.APPROVE_OPTION){
+//            File fotoCliente = fotoChooser.getSelectedFile();
+//            try{
+//                String fotoClientePath = fotoCliente.getCanonicalPath();
+//                txtFotoPath.setText(fotoClientePath);
+//                //PerfilLabel.setIcon(RZIma(fotoClientePath,150,150));
+//                
+//            }catch(Exception e){
+//                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
+//                    "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
     }//GEN-LAST:event_btnExaminarFotoActionPerformed
 
+    //Solo direcciones desde "Store/"
     public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
     {
         ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
@@ -302,7 +357,33 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             //SE CREA EL DATAUSUARIO Y SE ENVIA AL CONTROLADOR
             //DataUsuario DU = new DataUsuario(txtFotoPath.getText(), NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), eMailC.getText(), FechaNacC.getDate(), txtFotoPath.getText(), EmpresaC.getText(), SitioWebC.getText())
             //enviarDataUsuario(DU);
+            
+            String name = fileImagen.getName();
+            int pos = name.lastIndexOf('.');
+            String ext = name.substring(pos+1);
 
+            File directorio = new File("src/Store/Recursos/Usuarios/");
+            directorio.mkdir();
+            
+            File destino = new File("src/Store/Recursos/Usuarios/"+NicknameC.getText()+"."+ext);
+            try{
+                InputStream in = new FileInputStream(fileImagen);
+                OutputStream out = new FileOutputStream(destino);
+
+                byte[] buffer = new byte[1024];
+                int tamanoRes;
+
+
+                    while ((tamanoRes = in.read(buffer)) > 0) {
+                        out.write(buffer, 0, tamanoRes);
+                    }
+                    in.close();
+                    out.close();
+                
+            }
+            catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             limpiarCampos();
             this.dispose();
         }
@@ -314,6 +395,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
     private void CancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarButtonActionPerformed
         limpiarCampos();
+        
         this.dispose();
     }//GEN-LAST:event_CancelarButtonActionPerformed
 
@@ -328,6 +410,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         FechaNacC.setDate(null);
         EmpresaC.setText("");
         SitioWeb.setText("");
+        String DirI = "Recursos/Perfil.jpg";
+        PerfilLabel.setIcon(RZIma(DirI,150,150));
         PanelProveedor01.setVisible(false);
         PanelProveedor02.setVisible(false);
         PanelProveedor03.setVisible(false);

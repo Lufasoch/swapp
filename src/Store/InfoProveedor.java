@@ -170,95 +170,127 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         TNickname.setBackground(new java.awt.Color(255, 255, 255));
         TNickname.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TNickname.setText("Nickname");
+        TNickname.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TNickname.setEnabled(false);
         InfoPanel.add(TNickname);
 
         TNicknameC.setEditable(false);
         TNicknameC.setBackground(new java.awt.Color(255, 255, 255));
         TNicknameC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TNicknameC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TNicknameC.setEnabled(false);
         InfoPanel.add(TNicknameC);
 
         TeMail.setEditable(false);
         TeMail.setBackground(new java.awt.Color(255, 255, 255));
         TeMail.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TeMail.setText("eMail");
+        TeMail.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TeMail.setEnabled(false);
         InfoPanel.add(TeMail);
 
         TeMailC.setEditable(false);
         TeMailC.setBackground(new java.awt.Color(255, 255, 255));
         TeMailC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TeMailC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TeMailC.setEnabled(false);
         InfoPanel.add(TeMailC);
 
         TNombre.setEditable(false);
         TNombre.setBackground(new java.awt.Color(255, 255, 255));
         TNombre.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TNombre.setText("Nombre");
+        TNombre.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TNombre.setEnabled(false);
         InfoPanel.add(TNombre);
 
         TNombreC.setEditable(false);
         TNombreC.setBackground(new java.awt.Color(255, 255, 255));
         TNombreC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TNombreC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TNombreC.setEnabled(false);
         InfoPanel.add(TNombreC);
 
         TApellido.setEditable(false);
         TApellido.setBackground(new java.awt.Color(255, 255, 255));
         TApellido.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TApellido.setText("Apellido");
+        TApellido.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TApellido.setEnabled(false);
         InfoPanel.add(TApellido);
 
         TApellidoC.setEditable(false);
         TApellidoC.setBackground(new java.awt.Color(255, 255, 255));
         TApellidoC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TApellidoC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TApellidoC.setEnabled(false);
         InfoPanel.add(TApellidoC);
 
         TFechaNac.setEditable(false);
         TFechaNac.setBackground(new java.awt.Color(255, 255, 255));
         TFechaNac.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TFechaNac.setText("Fecha de Nacimiento");
+        TFechaNac.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TFechaNac.setEnabled(false);
         InfoPanel.add(TFechaNac);
 
         TFechaNacC.setEditable(false);
         TFechaNacC.setBackground(new java.awt.Color(255, 255, 255));
         TFechaNacC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TFechaNacC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TFechaNacC.setEnabled(false);
         InfoPanel.add(TFechaNacC);
 
         TTipoU.setEditable(false);
         TTipoU.setBackground(new java.awt.Color(255, 255, 255));
         TTipoU.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TTipoU.setText("Tipo de Usuario");
+        TTipoU.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TTipoU.setEnabled(false);
         InfoPanel.add(TTipoU);
 
         TTipoUC.setEditable(false);
         TTipoUC.setBackground(new java.awt.Color(255, 255, 255));
         TTipoUC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TTipoUC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TTipoUC.setEnabled(false);
         InfoPanel.add(TTipoUC);
 
         TCompania.setEditable(false);
         TCompania.setBackground(new java.awt.Color(255, 255, 255));
         TCompania.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TCompania.setText("Compañía");
+        TCompania.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TCompania.setEnabled(false);
         InfoPanel.add(TCompania);
 
         TCompaniaC.setEditable(false);
         TCompaniaC.setBackground(new java.awt.Color(255, 255, 255));
         TCompaniaC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TCompaniaC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TCompaniaC.setEnabled(false);
         InfoPanel.add(TCompaniaC);
 
         TPaginaWeb.setEditable(false);
         TPaginaWeb.setBackground(new java.awt.Color(255, 255, 255));
         TPaginaWeb.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         TPaginaWeb.setText("Pagina Web");
+        TPaginaWeb.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TPaginaWeb.setEnabled(false);
         InfoPanel.add(TPaginaWeb);
 
         TPaginaWebC.setEditable(false);
         TPaginaWebC.setBackground(new java.awt.Color(255, 255, 255));
         TPaginaWebC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TPaginaWebC.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TPaginaWebC.setEnabled(false);
         InfoPanel.add(TPaginaWebC);
 
         getContentPane().add(InfoPanel);
         InfoPanel.setBounds(390, 240, 360, 280);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         Actualizar.setText("Actualizar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {

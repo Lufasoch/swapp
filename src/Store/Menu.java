@@ -35,6 +35,7 @@ public class Menu extends javax.swing.JFrame {
         ArchivoMenu = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         CrearOrden = new javax.swing.JMenuItem();
+        Salir = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
@@ -45,7 +46,7 @@ public class Menu extends javax.swing.JFrame {
 
         ArchivoMenu.setText("Archivo");
 
-        RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
+        RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         RegistrarUsuario.setText("Registrar Usuario Nuevo");
         RegistrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,6 +55,7 @@ public class Menu extends javax.swing.JFrame {
         });
         ArchivoMenu.add(RegistrarUsuario);
 
+        CrearOrden.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         CrearOrden.setText("Crear orden de compra");
         CrearOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,6 +63,10 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         ArchivoMenu.add(CrearOrden);
+
+        Salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        Salir.setText("Salir");
+        ArchivoMenu.add(Salir);
 
         jMenuBar1.add(ArchivoMenu);
 
@@ -202,6 +208,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
+    private javax.swing.JMenuItem Salir;
     private javax.swing.JMenuItem VerInfoCliente;
     private javax.swing.JMenuItem VerInfoProveedor;
     private javax.swing.JMenuBar jMenuBar1;
