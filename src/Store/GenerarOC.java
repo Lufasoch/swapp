@@ -3,13 +3,18 @@
  * and open the template in the editor.
  */
 package Store;
+import javax.swing.table.DefaultTableModel;
+import direct.market.domain.Producto;
+import direct.market.domain.EspecificacionProducto;
+
+        
 
 /**
  *
  * @author jpmc21891
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
-
+public int cont=0;
     /**
      * Creates new form GenerarOC
      */
@@ -21,6 +26,21 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     }
     public GenerarOC() {
         initComponents();
+        DefaultTableModel modelo = new DefaultTableModel(){
+                                                            boolean[] canEdit = new boolean[]{false, false, true, false, false};
+
+                                                            @Override
+                                                            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                                                return canEdit[columnIndex];
+                                                            }
+                                                        };
+        
+
+        String header[] = new String[] { "Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea" };
+        modelo.setColumnIdentifiers(header);
+        TArticulos.setModel(modelo);   
+        
+        
     }
 
     /**
@@ -42,6 +62,14 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         txtnicknamedsp = new javax.swing.JTextField();
         SPArticulos = new javax.swing.JScrollPane();
         TArticulos = new javax.swing.JTable();
+        PBotones1 = new javax.swing.JPanel();
+        Btn_Aceptar1 = new javax.swing.JButton();
+        Btn_Cancelar1 = new javax.swing.JButton();
+        PAddProducto = new javax.swing.JPanel();
+        Btn_AddProd = new javax.swing.JButton();
+        PTotales = new javax.swing.JPanel();
+        TxtTotal = new javax.swing.JTextField();
+        TxtTotalVal = new javax.swing.JTextField();
         BackgroundLabel = new javax.swing.JLabel();
 
         setTitle("Orden de Compra");
@@ -107,25 +135,74 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         txtnicknamedsp.setBounds(100, 40, 270, 30);
 
         getContentPane().add(PCabezal);
-        PCabezal.setBounds(10, 10, 770, 80);
+        PCabezal.setBounds(10, 30, 770, 80);
 
         SPArticulos.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
         TArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         SPArticulos.setViewportView(TArticulos);
 
         getContentPane().add(SPArticulos);
-        SPArticulos.setBounds(10, 120, 770, 230);
+        SPArticulos.setBounds(10, 190, 770, 240);
+
+        PBotones1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        PBotones1.setLayout(new java.awt.GridLayout(1, 2));
+
+        Btn_Aceptar1.setText("Aceptar");
+        PBotones1.add(Btn_Aceptar1);
+
+        Btn_Cancelar1.setText("Cancelar");
+        Btn_Cancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Cancelar1ActionPerformed(evt);
+            }
+        });
+        PBotones1.add(Btn_Cancelar1);
+
+        getContentPane().add(PBotones1);
+        PBotones1.setBounds(400, 500, 380, 50);
+
+        PAddProducto.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        PAddProducto.setLayout(new java.awt.GridLayout(1, 2));
+
+        Btn_AddProd.setText("Añadir Producto");
+        Btn_AddProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_AddProdActionPerformed(evt);
+            }
+        });
+        PAddProducto.add(Btn_AddProd);
+
+        getContentPane().add(PAddProducto);
+        PAddProducto.setBounds(10, 150, 160, 50);
+
+        PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        PTotales.setLayout(new java.awt.GridLayout(1, 2));
+
+        TxtTotal.setEditable(false);
+        TxtTotal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        TxtTotal.setText("Total");
+        TxtTotal.setFocusable(false);
+        PTotales.add(TxtTotal);
+
+        TxtTotalVal.setEditable(false);
+        TxtTotalVal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        TxtTotalVal.setForeground(new java.awt.Color(1, 1, 1));
+        TxtTotalVal.setText("Total");
+        TxtTotalVal.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        TxtTotalVal.setEnabled(false);
+        TxtTotalVal.setFocusable(false);
+        PTotales.add(TxtTotalVal);
+
+        getContentPane().add(PTotales);
+        PTotales.setBounds(400, 420, 380, 50);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -134,12 +211,56 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void Btn_AddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddProdActionPerformed
+        // TODO add your handling code here:
+        //hardcode hasta nuevo aviso ! :p
+        Producto p = new Producto("Producto1","P1",null);
+        EspecificacionProducto esp = new EspecificacionProducto();
+        esp.setDescripcion("Soborocotongo");
+        esp.setEspecificaciones("Soborocotongo");
+        esp.setPrecio(100);
+        p.setEspecificacion(esp);  
+        //
+        
+        DefaultTableModel tart= (DefaultTableModel) TArticulos.getModel();
+        tart.addRow(new Object[]{});
+        TArticulos.setModel(tart);
+        int col = 0;
+        TArticulos.setValueAt(p.getReferencia(), cont, col);
+        col++;
+        TArticulos.setValueAt(p.getNombre(), cont, col);
+        col++;
+        TArticulos.setValueAt(0, cont, col);
+        col++;
+        TArticulos.setValueAt(esp.getPrecio(), cont, col);
+        col++;
+        TArticulos.setValueAt(0, cont, col);
+        cont++;
+             
+    }//GEN-LAST:event_Btn_AddProdActionPerformed
+
+    private void Btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Cancelar1ActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel vacio = new DefaultTableModel(0,0);
+        TArticulos.setModel(vacio);
+        this.dispose();
+    }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundLabel;
+    private javax.swing.JButton Btn_Aceptar1;
+    private javax.swing.JButton Btn_AddProd;
+    private javax.swing.JButton Btn_Cancelar1;
+    private javax.swing.JPanel PAddProducto;
+    private javax.swing.JPanel PBotones1;
     private javax.swing.JPanel PCabezal;
+    private javax.swing.JPanel PTotales;
     private javax.swing.JScrollPane SPArticulos;
     private javax.swing.JTable TArticulos;
     private javax.swing.JTextField TxtCliente;
+    private javax.swing.JTextField TxtTotal;
+    private javax.swing.JTextField TxtTotalVal;
     private javax.swing.JButton btn_selCli;
     private javax.swing.JTextField txtNomAp;
     private javax.swing.JTextField txtemail;
