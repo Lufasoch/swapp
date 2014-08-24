@@ -95,6 +95,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         fotoChooser.setDialogTitle("Seleccione Imagen");
         fotoChooser.setFileFilter(new CustomFilter());
 
+        setClosable(true);
         setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
 

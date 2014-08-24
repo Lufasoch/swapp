@@ -37,11 +37,14 @@ public class Menu extends javax.swing.JFrame {
         CrearOrden = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
+        ModificarProducto = new javax.swing.JMenuItem();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
         VerInfoProveedor = new javax.swing.JMenuItem();
+        VerInfoProducto = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Market Place");
         setMinimumSize(new java.awt.Dimension(600, 400));
 
         ArchivoMenu.setText("Archivo");
@@ -71,6 +74,15 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(ArchivoMenu);
 
         EditarMenu.setText("Editar");
+
+        ModificarProducto.setText("Modificar Producto");
+        ModificarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarProductoActionPerformed(evt);
+            }
+        });
+        EditarMenu.add(ModificarProducto);
+
         jMenuBar1.add(EditarMenu);
 
         ConsultarMenu.setText("Ver");
@@ -90,6 +102,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         ConsultarMenu.add(VerInfoProveedor);
+
+        VerInfoProducto.setText("Informacion de Producto");
+        VerInfoProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerInfoProductoActionPerformed(evt);
+            }
+        });
+        ConsultarMenu.add(VerInfoProducto);
 
         jMenuBar1.add(ConsultarMenu);
 
@@ -167,6 +187,34 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CrearOrdenActionPerformed
 
+    private void VerInfoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoProductoActionPerformed
+        InfoProducto IProd = InfoProducto.getInstancia();
+        if (IProd.isVisible()) {
+            try {
+                IProd.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(IProd);
+            IProd.setVisible(true);
+        }
+    }//GEN-LAST:event_VerInfoProductoActionPerformed
+
+    private void ModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarProductoActionPerformed
+        ModifProducto MProd = ModifProducto.getInstancia();
+        if (MProd.isVisible()) {
+            try {
+                MProd.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(MProd);
+            MProd.setVisible(true);
+        }
+    }//GEN-LAST:event_ModificarProductoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,9 +255,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem CrearOrden;
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem ModificarProducto;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenuItem VerInfoCliente;
+    private javax.swing.JMenuItem VerInfoProducto;
     private javax.swing.JMenuItem VerInfoProveedor;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables

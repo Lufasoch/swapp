@@ -329,7 +329,7 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
-        BackgroundLabel.setBounds(0, 0, 790, 570);
+        BackgroundLabel.setBounds(0, 0, 800, 570);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
