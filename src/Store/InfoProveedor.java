@@ -258,7 +258,7 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         InfoPanel.setBounds(390, 240, 360, 280);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         Actualizar.setText("Actualizar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -297,7 +297,7 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
-        BackgroundLabel.setBounds(0, 0, 790, 570);
+        BackgroundLabel.setBounds(0, 0, 800, 570);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
