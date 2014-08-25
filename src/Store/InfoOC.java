@@ -183,10 +183,13 @@ public class InfoOC extends javax.swing.JInternalFrame {
         PTotales.add(TxtTotal);
 
         TxtTotalVal.setEditable(false);
+        TxtTotalVal.setBackground(new java.awt.Color(254, 254, 254));
         TxtTotalVal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         TxtTotalVal.setForeground(new java.awt.Color(1, 1, 1));
+        TxtTotalVal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TxtTotalVal.setText("Total");
         TxtTotalVal.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        TxtTotalVal.setDisabledTextColor(new java.awt.Color(1, 1, 1));
         TxtTotalVal.setEnabled(false);
         TxtTotalVal.setFocusable(false);
         PTotales.add(TxtTotalVal);
@@ -247,19 +250,23 @@ public class InfoOC extends javax.swing.JInternalFrame {
                         return canEdit[columnIndex];
                     }
                 };
-                String header[] = new String[] { "Codigo", "Nombre", "Precio unitario", "Cantidad", "Sub total" };
+                String header[] = new String[] { "Codigo", "Nombre", "Precio U.", "Cantidad", "Sub total" };
                 DTM2.setColumnIdentifiers(header);
                 OrdenInfoTable.setModel(DTM2);
                 OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
                     //ARRIBA//CAMBIAR MODELO DE LA TABLA
-
+                double total = 0;
                 int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
                 while(cont < 3)
                 {
                     //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
                     DTM2.addRow(new Object[] { CodP[cont], NomP[cont], PreUniP[cont], CantP[cont], PreUniP[cont]*CantP[cont] }); 
+                    total = total + PreUniP[cont]*CantP[cont];
                     cont++;
                 }
+                String total2 = String.valueOf(total);
+                TxtTotalVal.setText(total2);
             } 
         catch (IndexOutOfBoundsException ex)
         {
