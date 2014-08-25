@@ -376,7 +376,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
             //ABAJO//DATOS DEVUELTOS
             String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
             int[] NOrdenes = {458, 5366, 7552};
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
             java.util.Date FechaU = new Date(88,9,19);     
             //ARRIBA//DATOS DEVUELTOS        
 
