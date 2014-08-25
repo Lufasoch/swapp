@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,11 +48,20 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
         String[] Nicknames = { "Light" };
         String[] eMails = { "TwilightSparkle@gmail.com" };
         //ABAJO//CAMBIAR MODELO DE LA TABLA
-        DefaultTableModel DTM2 = new DefaultTableModel(0, 0);
+        DefaultTableModel DTM2 = new DefaultTableModel()
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
         String header[] = new String[] { "Nickname", "eMail" };
         DTM2.setColumnIdentifiers(header);
         ClientesTable.setModel(DTM2);
         ClientesTable.getColumnModel().getColumn(0).setPreferredWidth(23);
+        ClientesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //ARRIBA//CAMBIAR MODELO DE LA TABLA
         
         int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
@@ -335,24 +346,31 @@ public class InfoProveedor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
-        String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();//NICKNAME PARA BUSCAR AL USUARIO
-        //BUSCAR INFORMACION DE USUARIO
-        //ABAJO//DATOS DEVUELTOS
-        String[] DatosU = {"Light", "TwilightSparkle@gmail.com", "Twilight", "Sparkle", "Proveedor", "Rainbow INC", "www.RainbowINC.com", "Recursos/U.jpg"};        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
-        java.util.Date FechaU = new Date(95,8,17);
-        //ARRIBA//DATOS DEVUELTOS
-        //ABAJO//IMPRIMIR DATOS
-        TNicknameC.setText(DatosU[0]);
-        TeMailC.setText(DatosU[1]);
-        TNombreC.setText(DatosU[2]);
-        TApellidoC.setText(DatosU[3]);
-        TFechaNacC.setText(sdf.format(FechaU.getTime()));
-        TTipoUC.setText(DatosU[4]);
-        TCompaniaC.setText(DatosU[5]);
-        TPaginaWebC.setText(DatosU[6]);
-        PerfilLabel.setIcon(RZIma(DatosU[7],150,150));        
-        //ARRIBA//IMPRIMIR DATOS
+        try
+        {
+            String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();//NICKNAME PARA BUSCAR AL USUARIO
+            //BUSCAR INFORMACION DE USUARIO
+            //ABAJO//DATOS DEVUELTOS
+            String[] DatosU = {"Light", "TwilightSparkle@gmail.com", "Twilight", "Sparkle", "Proveedor", "Rainbow INC", "www.RainbowINC.com", "Recursos/U.jpg"};        
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+            java.util.Date FechaU = new Date(95,8,17);
+            //ARRIBA//DATOS DEVUELTOS
+            //ABAJO//IMPRIMIR DATOS
+            TNicknameC.setText(DatosU[0]);
+            TeMailC.setText(DatosU[1]);
+            TNombreC.setText(DatosU[2]);
+            TApellidoC.setText(DatosU[3]);
+            TFechaNacC.setText(sdf.format(FechaU.getTime()));
+            TTipoUC.setText(DatosU[4]);
+            TCompaniaC.setText(DatosU[5]);
+            TPaginaWebC.setText(DatosU[6]);
+            PerfilLabel.setIcon(RZIma(DatosU[7],150,150));        
+            //ARRIBA//IMPRIMIR DATOS
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed

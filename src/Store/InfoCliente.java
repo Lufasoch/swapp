@@ -4,10 +4,14 @@
  */
 package Store;
 
+import direct.market.controller.IUsuarioController;
+import direct.market.factory.Factory;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -53,16 +57,25 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         String[] Nicknames = { "Lufasoch", "Andres", "Clobes", "Mariza", "JuanPablo" };
         String[] eMails = { "lufasoch@gmail.com", "kerveza@gmail.com", "clobesney1@gmail.com", "maryleon1982@gmail.com", "jpmc21891@gmail.com" };
         //ABAJO//CAMBIAR MODELO DE LA TABLA
-        DefaultTableModel DTM2 = new DefaultTableModel(0, 0);
+        DefaultTableModel DTM2 = new DefaultTableModel()
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
         String header[] = new String[] { "Nickname", "eMail" };
         DTM2.setColumnIdentifiers(header);
         ClientesTable.setModel(DTM2);
         ClientesTable.getColumnModel().getColumn(0).setPreferredWidth(23);
+        ClientesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //ARRIBA//CAMBIAR MODELO DE LA TABLA
-        
         int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
         while(cont < 5)
         {
+            //DTM2.addRow(new Object[] { DATAUSUARIO_ITEM.getNickname(), DATAUSUARIO_ITEM.getemail() });
             DTM2.addRow(new Object[] { Nicknames[cont], eMails[cont] }); 
             cont++;
         }
@@ -355,45 +368,69 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
-        String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
-        //BUSCAR USUARIO A LA BASE DE DATOS
-        
-        //ABAJO//DATOS DEVUELTOS
-        String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
-        int[] NOrdenes = {458, 5366, 7552};
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
-        java.util.Date FechaU = new Date(88,9,19);     
-        //ARRIBA//DATOS DEVUELTOS        
-        
-        //ABAJO//IMPRIMIR DATOS
-        TNicknameC.setText(DatosU[0]);
-        TeMailC.setText(DatosU[1]);
-        TNombreC.setText(DatosU[2]);
-        TApellidoC.setText(DatosU[3]);
-        TFechaNacC.setText(sdf.format(FechaU.getTime()));
-        TTipoUC.setText(DatosU[4]);
-        PerfilLabel.setIcon(RZIma(DatosU[5],150,150));
-        
-            //ABAJO//CAMBIAR MODELO DE LA TABLA
-        DefaultTableModel DTM = new DefaultTableModel(0, 0);
-        String header[] = new String[] { "No. Orden" };
-        DTM.setColumnIdentifiers(header);
-        OrdenesTable.setModel(DTM);
-            //ARRIBA//CAMBIAR MODELO DE LA TABLA
-        
-        int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-        while(cont < 3)
+        try
         {
-            DTM.addRow(new Object[] { NOrdenes[cont] }); 
-            cont++;
+            String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
+            //BUSCAR USUARIO A LA BASE DE DATOS
+
+            //ABAJO//DATOS DEVUELTOS
+            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
+            int[] NOrdenes = {458, 5366, 7552};
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+            java.util.Date FechaU = new Date(88,9,19);     
+            //ARRIBA//DATOS DEVUELTOS        
+
+            //ABAJO//IMPRIMIR DATOS
+            TNicknameC.setText(DatosU[0]);
+            TeMailC.setText(DatosU[1]);
+            TNombreC.setText(DatosU[2]);
+            TApellidoC.setText(DatosU[3]);
+            TFechaNacC.setText(sdf.format(FechaU.getTime()));
+            TTipoUC.setText(DatosU[4]);
+            PerfilLabel.setIcon(RZIma(DatosU[5],150,150));
+
+                //ABAJO//CAMBIAR MODELO DE LA TABLA
+            DefaultTableModel DTM = new DefaultTableModel()
+            {
+                boolean[] canEdit = new boolean[]{false};
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            };
+            String header[] = new String[] { "No. Orden" };
+            DTM.setColumnIdentifiers(header);
+            OrdenesTable.setModel(DTM);
+            OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                //ARRIBA//CAMBIAR MODELO DE LA TABLA
+
+            int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
+            while(cont < 3)
+            {
+                //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden() });
+                DTM.addRow(new Object[] { NOrdenes[cont] }); 
+                cont++;
+            }
+            //ARRIBA//IMPRIMIR DATOS
+        } 
+        catch (IndexOutOfBoundsException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-        //ARRIBA//IMPRIMIR DATOS
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
     private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
+        try
+        {
           ///////////////////////
          //VER ORDEN DE COMPRA//
         ///////////////////////
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_OrdenButtonActionPerformed
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed

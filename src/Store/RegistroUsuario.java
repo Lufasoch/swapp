@@ -14,11 +14,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import direct.market.controller.Fabrica;
+import direct.market.factory.Factory;
 //import direct.market.controller.UsuarioControllerImpl;
 import direct.market.controller.IUsuarioController;
-import direct.market.controller.UsuarioControllerImpl;
 import java.util.Date;
+import direct.market.datatype.DataUsuario;
 
 class CustomFilter extends javax.swing.filechooser.FileFilter {
 	@Override
@@ -325,19 +325,6 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-//        int returnVal = fotoChooser.showOpenDialog(this);
-//        if(returnVal == JFileChooser.APPROVE_OPTION){
-//            File fotoCliente = fotoChooser.getSelectedFile();
-//            try{
-//                String fotoClientePath = fotoCliente.getCanonicalPath();
-//                txtFotoPath.setText(fotoClientePath);
-//                //PerfilLabel.setIcon(RZIma(fotoClientePath,150,150));
-//                
-//            }catch(Exception e){
-//                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
-//                    "Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
     }//GEN-LAST:event_btnExaminarFotoActionPerformed
 
     //Solo direcciones desde "Store/"
@@ -348,7 +335,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
         IcoIco = new ImageIcon(newimg); 
         return IcoIco;
-    }
+    }  
     
     private void AceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarButtonActionPerformed
         if(txtFotoPath.getText().isEmpty() || NicknameC.getText().isEmpty() || NombreC.getText().isEmpty() || ApellidoC.getText().isEmpty() || eMailC.getText().isEmpty() || FechaNacC.getDate()== null)
@@ -390,10 +377,10 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             
             //SE CREA EL DATAUSUARIO Y SE ENVIA AL CONTROLADOR
             //Las fotos estan en "Recursos/Usuarios/" + nickname + "." + extencion
-            //DataUsuario DU = new DataUsuario(txtFotoPath.getText(), NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), eMailC.getText(), FechaNacC.getDate(), "Recursos/Usuarios/" + nickname + "." + ext, EmpresaC.getText(), SitioWebC.getText())
-            //enviarDataUsuario(DU);
-            IUsuarioController IUC = Fabrica.getInstance().getInterfazUsuario();
-            //altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), "Recursos/Usuarios/" + NicknameC.getText() + "." + ext, TipoUC.getSelectedItem().toString(), EmpresaC.getText(), SitioWebC.getText());
+           
+            IUsuarioController IUC = Factory.getInstance().getUsuarioController();
+            //DataUsuario DU = new DataUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), "Recursos/Usuarios/" + NicknameC.getText() + "." + ext, TipoUC.getSelectedItem().toString(), EmpresaC.getText(), SitioWebC.getText());
+            //IUC.altaUsuario(DU);
             limpiarCampos();
             this.dispose();
         }
