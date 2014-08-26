@@ -238,7 +238,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
         
             int[] CodP = { 1 , 2563, 179 };
             String[] NomP = { "Radeon R9 280x", "AMD Phenom II X6 1100t", "Kingstom 4Gb 1333Mhz" };
-            double[] PreUniP = { 329.99, 169.99, 53.00 };
+            double[] PreUniP = { 329.99, 165.99, 53.00 };
             int[] CantP = { 2, 1, 4 };
 
             DefaultTableModel DTM2 = new DefaultTableModel()
