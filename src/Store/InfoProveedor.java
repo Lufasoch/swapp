@@ -289,6 +289,9 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(390, 120, 180, 100);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(485, 500));
+
         ProveedorTable.setAutoCreateRowSorter(true);
         ProveedorTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ProveedorTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -315,7 +318,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
             }
         });
         ProveedorTable.setFillsViewportHeight(true);
-        ProveedorTable.setPreferredSize(new java.awt.Dimension(330, 410));
+        ProveedorTable.setPreferredSize(new java.awt.Dimension(330, 200));
         ProveedorTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ProveedorTable);
 

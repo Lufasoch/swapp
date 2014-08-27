@@ -58,13 +58,22 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         //ABAJO//DATOS DEVUELTOS
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header);
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
 
         ClientesTable.getColumnModel().getColumn(0).setPreferredWidth(23);
         ClientesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ClientesTable.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
+        
         int c = clientes.size();
         for (int i = 0; i < c; i++) {
             String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
@@ -93,7 +102,6 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         TPanel = new javax.swing.JPanel();
         jScrollVerClientes = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
         ClientesTable = new javax.swing.JTable();
         PPanel = new javax.swing.JPanel();
         PerfilLabel = new javax.swing.JLabel();
@@ -110,14 +118,13 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         TFechaNacC = new javax.swing.JTextField();
         TTipoU = new javax.swing.JTextField();
         TTipoUC = new javax.swing.JTextField();
-        OrdenesPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        OrdenesTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         ActualizarButton = new javax.swing.JButton();
         VerInfoButton = new javax.swing.JButton();
         OrdenButton = new javax.swing.JButton();
         Cerrar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        OrdenesTable = new javax.swing.JTable();
         BackgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -158,29 +165,25 @@ public class InfoCliente extends javax.swing.JInternalFrame {
             }
         });
         ClientesTable.setFillsViewportHeight(true);
-        ClientesTable.setPreferredSize(new java.awt.Dimension(330, 410));
+        ClientesTable.setPreferredSize(new java.awt.Dimension(330, 200));
         ClientesTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(ClientesTable);
+        jScrollVerClientes.setViewportView(ClientesTable);
+        ClientesTable.getColumnModel().getColumn(1).setHeaderValue("eMail");
         ClientesTable.getAccessibleContext().setAccessibleParent(jScrollVerClientes);
 
         javax.swing.GroupLayout TPanelLayout = new javax.swing.GroupLayout(TPanel);
         TPanel.setLayout(TPanelLayout);
         TPanelLayout.setHorizontalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158)
-                .addComponent(jScrollVerClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
         );
         TPanelLayout.setVerticalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(40, 50, 330, 410);
+        TPanel.setBounds(10, 50, 370, 410);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -190,7 +193,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         PerfilLabel.setBounds(10, 10, 150, 150);
 
         getContentPane().add(PPanel);
-        PPanel.setBounds(580, 50, 170, 170);
+        PPanel.setBounds(600, 50, 170, 170);
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         InfoPanel.setLayout(new java.awt.GridLayout(6, 2));
@@ -286,37 +289,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         InfoPanel.add(TTipoUC);
 
         getContentPane().add(InfoPanel);
-        InfoPanel.setBounds(390, 240, 360, 220);
-
-        OrdenesPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-
-        OrdenesTable.setAutoCreateRowSorter(true);
-        OrdenesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        OrdenesTable.setFillsViewportHeight(true);
-        OrdenesTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(OrdenesTable);
-
-        javax.swing.GroupLayout OrdenesPanelLayout = new javax.swing.GroupLayout(OrdenesPanel);
-        OrdenesPanel.setLayout(OrdenesPanelLayout);
-        OrdenesPanelLayout.setHorizontalGroup(
-            OrdenesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-        );
-        OrdenesPanelLayout.setVerticalGroup(
-            OrdenesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(OrdenesPanel);
-        OrdenesPanel.setBounds(390, 50, 160, 170);
+        InfoPanel.setBounds(390, 240, 390, 220);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -359,6 +332,36 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(40, 470, 710, 60);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null}
+            },
+            new String [] {
+                "Nro Orden"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(OrdenesTable);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(402, 52, 160, 170);
+
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
         BackgroundLabel.setBounds(0, 0, 790, 570);
@@ -375,7 +378,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
             //ABAJO//DATOS DEVUELTOS
 //            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
-            int[] NOrdenes = {458, 5366, 7552};
+            int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
 //            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
 //            java.util.Date FechaU = new Date(88,9,19);     
             //ARRIBA//DATOS DEVUELTOS    
@@ -407,7 +410,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
                 //ARRIBA//CAMBIAR MODELO DE LA TABLA
 
             int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-            while(cont < 3)
+            while(cont < 9)
             {
                 //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden() });
                 DTM.addRow(new Object[] { NOrdenes[cont] }); 
@@ -450,7 +453,6 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTable ClientesTable;
     private javax.swing.JPanel InfoPanel;
     private javax.swing.JButton OrdenButton;
-    private javax.swing.JPanel OrdenesPanel;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PPanel;
     private javax.swing.JLabel PerfilLabel;
@@ -470,7 +472,6 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton VerInfoButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollVerClientes;
     // End of variables declaration//GEN-END:variables
     private static InfoCliente ICInstancia;

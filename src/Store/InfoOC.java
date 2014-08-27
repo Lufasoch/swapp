@@ -130,7 +130,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
         TPanel.setBounds(40, 30, 190, 400);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         Cerrar.setText("Cerrar");
         Cerrar.addActionListener(new java.awt.event.ActionListener() {
