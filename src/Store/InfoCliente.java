@@ -5,10 +5,12 @@
 package Store;
 
 import direct.market.controller.IUsuarioController;
+import direct.market.datatype.DataUsuario;
 import direct.market.factory.Factory;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -47,40 +49,27 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         return ICInstancia;
     }
     
-    public void Actualizar()
-    {
+    public void Actualizar(){
+        limpiarCampos();
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
         String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI,150,150));
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
-        String[] Nicknames = { "Lufasoch", "Andres", "Clobes", "Mariza", "JuanPablo" };
-        String[] eMails = { "lufasoch@gmail.com", "kerveza@gmail.com", "clobesney1@gmail.com", "maryleon1982@gmail.com", "jpmc21891@gmail.com" };
-        //ABAJO//CAMBIAR MODELO DE LA TABLA
-        DefaultTableModel DTM2 = new DefaultTableModel()
-        {
-            boolean[] canEdit = new boolean[]{false, false};
+        String data[][] = {};
+        String header[] = new String[]{"Nickname", "eMail"};
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header);
 
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-        String header[] = new String[] { "Nickname", "eMail" };
-        DTM2.setColumnIdentifiers(header);
-        ClientesTable.setModel(DTM2);
         ClientesTable.getColumnModel().getColumn(0).setPreferredWidth(23);
         ClientesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //ARRIBA//CAMBIAR MODELO DE LA TABLA
-        int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-        while(cont < 5)
-        {
-            //DTM2.addRow(new Object[] { DATAUSUARIO_ITEM.getNickname(), DATAUSUARIO_ITEM.getemail() });
-            DTM2.addRow(new Object[] { Nicknames[cont], eMails[cont] }); 
-            cont++;
+
+        ClientesTable.setModel(DTM2);
+        List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
+        int c = clientes.size();
+        for (int i = 0; i < c; i++) {
+            String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
+            DTM2.addRow(datos);
         }
-        //ClientesTable.setValueAt("Lufasoch", 0, 0);
-        //ClientesTable.setValueAt("lufasoch@gmail.com", 0, 1);
     }
     
     public void limpiarCampos()
@@ -91,7 +80,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         TApellidoC.setText("");
         TeMailC.setText("");
         TFechaNacC.setText("");
-        PerfilLabel.setIcon(RZIma("Recursos/Perfil.jpg",150,150));
+       // PerfilLabel.setIcon(RZIma("Recursos/Perfil.jpg",150,150));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -103,6 +92,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         TPanel = new javax.swing.JPanel();
+        jScrollVerClientes = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         ClientesTable = new javax.swing.JTable();
         PPanel = new javax.swing.JPanel();
@@ -140,6 +130,8 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         TPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
+        jScrollVerClientes.setPreferredSize(new java.awt.Dimension(330, 410));
+
         ClientesTable.setAutoCreateRowSorter(true);
         ClientesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ClientesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -166,22 +158,29 @@ public class InfoCliente extends javax.swing.JInternalFrame {
             }
         });
         ClientesTable.setFillsViewportHeight(true);
+        ClientesTable.setPreferredSize(new java.awt.Dimension(330, 410));
         ClientesTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ClientesTable);
+        ClientesTable.getAccessibleContext().setAccessibleParent(jScrollVerClientes);
 
         javax.swing.GroupLayout TPanelLayout = new javax.swing.GroupLayout(TPanel);
         TPanel.setLayout(TPanelLayout);
         TPanelLayout.setHorizontalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+            .addGroup(TPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158)
+                .addComponent(jScrollVerClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         TPanelLayout.setVerticalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(40, 50, 310, 410);
+        TPanel.setBounds(40, 50, 330, 410);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -371,23 +370,25 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         try
         {
             String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
+            DataUsuario du=Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
             //BUSCAR USUARIO A LA BASE DE DATOS
 
             //ABAJO//DATOS DEVUELTOS
-            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
+//            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
             int[] NOrdenes = {458, 5366, 7552};
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
-            java.util.Date FechaU = new Date(88,9,19);     
-            //ARRIBA//DATOS DEVUELTOS        
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
+//            java.util.Date FechaU = new Date(88,9,19);     
+            //ARRIBA//DATOS DEVUELTOS    
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             //ABAJO//IMPRIMIR DATOS
-            TNicknameC.setText(DatosU[0]);
-            TeMailC.setText(DatosU[1]);
-            TNombreC.setText(DatosU[2]);
-            TApellidoC.setText(DatosU[3]);
-            TFechaNacC.setText(sdf.format(FechaU.getTime()));
-            TTipoUC.setText(DatosU[4]);
-            PerfilLabel.setIcon(RZIma(DatosU[5],150,150));
+            TNicknameC.setText(du.getNickname());
+            TeMailC.setText(du.getEmail());
+            TNombreC.setText(du.getNombre());
+            TApellidoC.setText(du.getApellido());
+            TFechaNacC.setText(sdf.format(du.getFechaNacimiento()));
+            TTipoUC.setText("Cliente");
+            PerfilLabel.setIcon(RZIma(du.getImagen(),150,150));
 
                 //ABAJO//CAMBIAR MODELO DE LA TABLA
             DefaultTableModel DTM = new DefaultTableModel()
@@ -470,6 +471,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollVerClientes;
     // End of variables declaration//GEN-END:variables
     private static InfoCliente ICInstancia;
 }
