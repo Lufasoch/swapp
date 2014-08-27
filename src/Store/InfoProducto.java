@@ -4,6 +4,17 @@
  */
 package Store;
 
+import direct.market.datatype.DataCategoria;
+import direct.market.datatype.DataProducto;
+import direct.market.factory.Factory;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author kavesa
@@ -15,13 +26,29 @@ public class InfoProducto extends javax.swing.JInternalFrame {
      */
     public InfoProducto() {
         initComponents();
+        cargarCategorias();
     }
-    
+
     public static InfoProducto getInstancia() {
         if (IProdInstancia == null) {
             IProdInstancia = new InfoProducto();
         }
         return IProdInstancia;
+    }
+
+    public DefaultMutableTreeNode searchNode(String nodeStr) {
+        DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
+
+        DefaultMutableTreeNode node = null;
+        Enumeration e = raiz.breadthFirstEnumeration();
+        while (e.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) e.nextElement();
+            if (nodeStr.equals(node.getUserObject().toString())) {
+                return node;
+            }
+        }
+        return null;
     }
 
     /**
@@ -49,29 +76,38 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         tfNombre = new javax.swing.JTextField();
         tfReferencia = new javax.swing.JTextField();
         tfProveedor = new javax.swing.JTextField();
-        tfDescripcion = new javax.swing.JTextField();
         txtNombre = new javax.swing.JLabel();
         txtNumeroReferencia = new javax.swing.JLabel();
         txtProveedor = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JLabel();
         txtEspecificacion = new javax.swing.JLabel();
-        tfEspecificacion = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        taDescripcion = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        taEspecificacion = new javax.swing.JTextArea();
         pnlImagenes = new javax.swing.JPanel();
         sliderImagenes = new javax.swing.JSlider();
         panelImagen = new javax.swing.JPanel();
         pnlCategorias = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listCategorias = new javax.swing.JList();
+        lblMensaje = new javax.swing.JLabel();
 
-        setClosable(true);
         setMaximizable(true);
         setTitle("Ver Informacion de Producto");
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
+        treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(treeCategoria);
 
         lblCategoria.setText("Seleccione una Categoria");
 
         btCategoria.setText("Seleccionar");
+        btCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCategoriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCategoriaLayout = new javax.swing.GroupLayout(panelCategoria);
         panelCategoria.setLayout(panelCategoriaLayout);
@@ -94,19 +130,19 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCategoria)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        listProductos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listProductos);
 
         lblProducto.setText("Seleccione el Producto");
 
         btProducto.setText("Seleccionar");
+        btProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProductoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelProductoLayout = new javax.swing.GroupLayout(panelProducto);
         panelProducto.setLayout(panelProductoLayout);
@@ -141,6 +177,12 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         pnlInformacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        tfNombre.setEditable(false);
+
+        tfReferencia.setEditable(false);
+
+        tfProveedor.setEditable(false);
+
         txtNombre.setText("Nombre");
 
         txtNumeroReferencia.setText("Referencia");
@@ -151,29 +193,39 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         txtEspecificacion.setText("Especificacion");
 
+        taDescripcion.setEditable(false);
+        taDescripcion.setColumns(20);
+        taDescripcion.setLineWrap(true);
+        taDescripcion.setRows(5);
+        jScrollPane4.setViewportView(taDescripcion);
+
+        taEspecificacion.setEditable(false);
+        taEspecificacion.setColumns(20);
+        taEspecificacion.setLineWrap(true);
+        taEspecificacion.setRows(5);
+        jScrollPane5.setViewportView(taEspecificacion);
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDatosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfDescripcion, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDescripcion)
                             .addComponent(txtProveedor)
                             .addComponent(txtNumeroReferencia)
-                            .addComponent(txtNombre))
+                            .addComponent(txtNombre)
+                            .addComponent(txtEspecificacion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfReferencia, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(tfReferencia)
                             .addComponent(tfNombre)
-                            .addComponent(tfProveedor, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addComponent(txtEspecificacion)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(tfEspecificacion))
+                            .addComponent(tfProveedor, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         pnlDatosLayout.setVerticalGroup(
@@ -193,13 +245,13 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                     .addComponent(tfProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtDescripcion)
-                .addGap(3, 3, 3)
-                .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(txtEspecificacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfEspecificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
@@ -240,11 +292,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         pnlInformacion.addTab("Imagenes", pnlImagenes);
 
-        listCategorias.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane3.setViewportView(listCategorias);
 
         javax.swing.GroupLayout pnlCategoriasLayout = new javax.swing.GroupLayout(pnlCategorias);
@@ -266,20 +313,27 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         pnlInformacion.addTab("Categorias", pnlCategorias);
 
+        lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(panelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(pnlInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(23, Short.MAX_VALUE))
+                        .addContainerGap(18, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
@@ -293,22 +347,101 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                         .addGap(75, 75, 75)
                         .addComponent(pnlInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addGap(0, 25, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        IProdInstancia = null;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void cargarCategorias() {
+        try {
+
+            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
+
+            DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
+            DefaultMutableTreeNode nuevo;
+            DefaultMutableTreeNode padre;
+
+            for (DataCategoria dc : categorias) {
+                if (dc.getParent().equals("Categorias")) {
+                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                    root.add(nuevo);
+                } else {
+                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                    padre = searchNode(dc.getParent());
+                    modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void btCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCategoriaActionPerformed
+        lblMensaje.setText("");
+
+        DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+        DefaultListModel dlm = new DefaultListModel();
+        if (seleccionado != null) {
+            if (seleccionado.isLeaf()) {
+                List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+
+                for (DataProducto dp : productos) {
+                    dlm.addElement(dp.getNombre());
+                }
+
+                listProductos.setModel(dlm);
+            } else {
+                lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
+            }
+        } else {
+            lblMensaje.setText("Debe seleccionar una categoria");
+        }
+
+    }//GEN-LAST:event_btCategoriaActionPerformed
+
+    private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
+        if (!listProductos.isSelectionEmpty()) {
+            DataProducto dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+
+
+            tfNombre.setText(dprod.getNombre());
+            tfReferencia.setText(dprod.getReferencia());
+            tfProveedor.setText(dprod.getDataProveedor().getCompania());
+            taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
+            taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
+
+            //lista categorias
+            DefaultListModel dlm = new DefaultListModel();
+
+            List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+
+            for(DataCategoria dc: catList){
+                dlm.addElement(dc.getNombre());
+                
+            }
+          listCategorias.setModel(dlm);
+    
+        }else{
+            lblMensaje.setText("Debe seleccionar un producto");
+    }
+    }//GEN-LAST:event_btProductoActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCategoria;
     private javax.swing.JButton btProducto;
@@ -316,7 +449,10 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblCategoria;
+    private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JList listCategorias;
     private javax.swing.JList listProductos;
@@ -328,8 +464,8 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlImagenes;
     private javax.swing.JTabbedPane pnlInformacion;
     private javax.swing.JSlider sliderImagenes;
-    private javax.swing.JTextField tfDescripcion;
-    private javax.swing.JTextField tfEspecificacion;
+    private javax.swing.JTextArea taDescripcion;
+    private javax.swing.JTextArea taEspecificacion;
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfProveedor;
     private javax.swing.JTextField tfReferencia;
@@ -341,4 +477,5 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
     private static InfoProducto IProdInstancia;
+    
 }
