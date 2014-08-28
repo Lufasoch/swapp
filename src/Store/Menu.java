@@ -33,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         ArchivoMenu = new javax.swing.JMenu();
+        AltaCategoria = new javax.swing.JMenuItem();
         RegistrarUsuario = new javax.swing.JMenuItem();
         CrearOrden = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
@@ -49,6 +50,15 @@ public class Menu extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(600, 400));
 
         ArchivoMenu.setText("Archivo");
+
+        AltaCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        AltaCategoria.setText("Alta Categoria");
+        AltaCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AltaCategoriaActionPerformed(evt);
+            }
+        });
+        ArchivoMenu.add(AltaCategoria);
 
         RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         RegistrarUsuario.setText("Registrar Usuario Nuevo");
@@ -238,6 +248,20 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void AltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaCategoriaActionPerformed
+        AltaCat ACat = AltaCat.getInstancia();
+        if (ACat.isVisible()) {
+            try {
+                ACat.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(ACat);
+            ACat.setVisible(true);
+        }
+    }//GEN-LAST:event_AltaCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,6 +297,7 @@ public class Menu extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AltaCategoria;
     private javax.swing.JMenu ArchivoMenu;
     private javax.swing.JMenu ConsultarMenu;
     private javax.swing.JMenuItem CrearOrden;
