@@ -57,7 +57,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
 
         jPanel5.setBackground(new java.awt.Color(214, 228, 237));
         jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         ElegirPadre.setText("Elegir categoria padre");
         ElegirPadre.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +98,11 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
 
         Cancelar.setText("Cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
         jPanel4.add(Cancelar);
 
         Crear.setText("Crear");
@@ -137,12 +142,16 @@ public class AltaCat extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 570);
 
-        pack();
+        setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ElegirPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirPadreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ElegirPadreActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cancelar;
