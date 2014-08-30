@@ -355,28 +355,29 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         try {
             String path="";
             if (fileImagen != null) {
-                String name = fileImagen.getName();
-                int pos = name.lastIndexOf('.');
-                String ext = name.substring(pos + 1);
-                path= "Recursos/Usuarios/"+NicknameC.getText()+"."+ext;
-
-                File directorio = new File("src/Store/Recursos/Usuarios/");
-                directorio.mkdir();
-
-                File destino = new File("src/Store/Recursos/Usuarios/" + NicknameC.getText() + "." + ext);
-
-                InputStream in = new FileInputStream(fileImagen);
-                OutputStream out = new FileOutputStream(destino);
-
-                byte[] buffer = new byte[1024];
-                int tamanoRes;
-
-
-                while ((tamanoRes = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, tamanoRes);
-                }
-                in.close();
-                out.close();
+                path = fileImagen.getAbsolutePath();
+//                String name = fileImagen.getName();
+//                int pos = name.lastIndexOf('.');
+//                String ext = name.substring(pos + 1);
+//                path= "Recursos/Usuarios/"+NicknameC.getText()+"."+ext;
+//
+//                File directorio = new File("src/Store/Recursos/Usuarios/");
+//                directorio.mkdir();
+//
+//                File destino = new File("src/Store/Recursos/Usuarios/" + NicknameC.getText() + "." + ext);
+//
+//                InputStream in = new FileInputStream(fileImagen);
+//                OutputStream out = new FileOutputStream(destino);
+//
+//                byte[] buffer = new byte[1024];
+//                int tamanoRes;
+//
+//
+//                while ((tamanoRes = in.read(buffer)) > 0) {
+//                    out.write(buffer, 0, tamanoRes);
+//                }
+//                in.close();
+//                out.close();
             }
             else{
                 path="Recursos/Usuarios/Perfil.jpg";
@@ -393,9 +394,9 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         
             limpiarCampos();
             this.dispose();
-        } catch (IOException ex) {
+        } /*catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (UsuarioException ex) {
+        }*/ catch (UsuarioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());//, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_AceptarButtonActionPerformed

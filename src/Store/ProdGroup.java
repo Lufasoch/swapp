@@ -8,17 +8,33 @@ import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataUsuario;
 import direct.market.factory.Factory;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+
+///
+
+
+
+///
 /**
  *
  * @author ubuntu
@@ -32,8 +48,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         initComponents();
         this.validate();
         String DirI = "Recursos/x.jpg";
-        Ima01.setIcon(RZIma(DirI, 100, 100));
-        Actualizar();
+        LImagen.setIcon(RZIma(DirI, LImagen.getWidth(), LImagen.getHeight()));
+        ActualizarProv();
         cargarCategorias();
     }
 
@@ -84,10 +100,18 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         }
     }
     
-    public void Actualizar() {
+    public void ActualizarProv() {
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header);
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
 
         ProveedorTable.getColumnModel().getColumn(0).setPreferredWidth(23);
         ProveedorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -112,6 +136,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     public void DeshabilitarTodo()
     {
         RegProdIF.setFocusable(false);
+        
+        
         this.TCategorias.setFocusable(false);
         this.TCategoriasC.setFocusable(false);
         this.TDescripcion.setFocusable(false);
@@ -126,12 +152,24 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setFocusable(false);
         this.TTitulo.setFocusable(false);
         this.TTituloC.setFocusable(false);
-        this.ElegirProvButton.setFocusable(false);
+        
+        
+        this.ImaList.setFocusable(false);
+        
+        
+        this.ElegirProvButton.setFocusable(false);        
+        this.ElegirImaButton.setFocusable(false);
+        this.ElegirCatButton.setFocusable(false);
+        this.CancelarTodo.setFocusable(false);
+        this.RegistrarTodo.setFocusable(false);
+        this.LimpiarTodo.setFocusable(false);
     }
     
     public void HabilitarTodo()
     {
         RegProdIF.setFocusable(true);
+        
+        
         this.TCategorias.setFocusable(true);
         this.TCategoriasC.setFocusable(true);
         this.TDescripcion.setFocusable(true);
@@ -146,9 +184,40 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setFocusable(true);
         this.TTitulo.setFocusable(true);
         this.TTituloC.setFocusable(true);
+        
+        
+        this.ImaList.setFocusable(true);
+        
+        
         this.ElegirProvButton.setFocusable(true);
+        this.ElegirImaButton.setFocusable(true);
+        this.ElegirCatButton.setFocusable(true);
+        this.CancelarTodo.setFocusable(true);
+        this.RegistrarTodo.setFocusable(true);
+        this.LimpiarTodo.setFocusable(true);
     }
     
+    public void LimpiarIma()
+    {
+        txtFotoPath.setText("");
+        String DirI = "Recursos/x.jpg";
+        LImagen.setIcon(RZIma(DirI, LImagen.getWidth(), LImagen.getHeight()));
+    }
+    
+    public void LimpiarTodo()
+    {        
+        this.TCategoriasC.setText("");
+        this.TDescripcionC.setText("");
+        this.TEspecC.setText("");
+        this.TNoRefC.setText("");
+        this.TPrecioC.setText("");
+        this.TProveedorC.setText("");
+        this.TTituloC.setText("");
+        
+        
+        DefaultListModel listaModel_limpio = new DefaultListModel();
+        ImaList.setModel(listaModel_limpio);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,6 +236,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         CerrarButton = new javax.swing.JButton();
         ActializarButton = new javax.swing.JButton();
         Seleccionar = new javax.swing.JButton();
+        SelectIma = new javax.swing.JInternalFrame();
+        jPanel10 = new javax.swing.JPanel();
+        txtFotoPath = new javax.swing.JTextField();
+        LImagen = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        CerrarImaButton = new javax.swing.JButton();
+        AgregarImaButton = new javax.swing.JButton();
         SelectCat = new javax.swing.JInternalFrame();
         jPanel6 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -198,8 +274,9 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         ElegirCatButton = new javax.swing.JButton();
         TCategoriasC = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
-        jPanel10 = new javax.swing.JPanel();
-        Ima01 = new javax.swing.JLabel();
+        ElegirImaButton = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ImaList = new javax.swing.JList();
         jPanel9 = new javax.swing.JPanel();
         CancelarTodo = new javax.swing.JButton();
         LimpiarTodo = new javax.swing.JButton();
@@ -292,6 +369,55 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
         getContentPane().add(SelectProv);
         SelectProv.setBounds(30, 10, 370, 530);
+
+        SelectIma.setVisible(false);
+        SelectIma.getContentPane().setLayout(null);
+
+        jPanel10.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel10.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel10.setLayout(null);
+
+        txtFotoPath.setEditable(false);
+        txtFotoPath.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        txtFotoPath.setEnabled(false);
+        jPanel10.add(txtFotoPath);
+        txtFotoPath.setBounds(10, 320, 300, 46);
+
+        LImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddImaEve(evt);
+            }
+        });
+        jPanel10.add(LImagen);
+        LImagen.setBounds(10, 10, 300, 300);
+
+        jPanel11.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel11.setLayout(new java.awt.GridLayout(1, 2, 8, 8));
+
+        CerrarImaButton.setText("Cerrar");
+        CerrarImaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarImaButtonActionPerformed(evt);
+            }
+        });
+        jPanel11.add(CerrarImaButton);
+
+        AgregarImaButton.setText("Agregar");
+        AgregarImaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarImaButtonActionPerformed(evt);
+            }
+        });
+        jPanel11.add(AgregarImaButton);
+
+        jPanel10.add(jPanel11);
+        jPanel11.setBounds(10, 380, 300, 40);
+
+        SelectIma.getContentPane().add(jPanel10);
+        jPanel10.setBounds(0, 0, 320, 430);
+
+        getContentPane().add(SelectIma);
+        SelectIma.setBounds(30, 10, 330, 460);
 
         SelectCat.setVisible(false);
         SelectCat.getContentPane().setLayout(null);
@@ -431,25 +557,24 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(jTextField1);
         jTextField1.setBounds(10, 380, 180, 28);
 
-        Ima01.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ElegirIma01(evt);
+        ElegirImaButton.setText("Elegir");
+        ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ElegirImaButtonActionPerformed(evt);
             }
         });
+        jPanel3.add(ElegirImaButton);
+        ElegirImaButton.setBounds(200, 380, 70, 30);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Ima01, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Ima01, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
+        ImaList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = {  };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(ImaList);
 
-        jPanel3.add(jPanel10);
-        jPanel10.setBounds(200, 380, 100, 100);
+        jPanel3.add(jScrollPane4);
+        jScrollPane4.setBounds(280, 380, 480, 100);
 
         RegProdIF.getContentPane().add(jPanel3);
         jPanel3.setBounds(10, 10, 770, 490);
@@ -483,7 +608,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel9.add(RegistrarTodo);
 
         RegProdIF.getContentPane().add(jPanel9);
-        jPanel9.setBounds(370, 514, 410, 100);
+        jPanel9.setBounds(370, 514, 410, 46);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         RegProdIF.getContentPane().add(jLabel1);
@@ -497,11 +622,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
     private void ElegirProvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirProvButtonActionPerformed
         DeshabilitarTodo();
+        ActualizarProv();
         SelectProv.setVisible(true);
     }//GEN-LAST:event_ElegirProvButtonActionPerformed
 
     private void ElegirCatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirCatButtonActionPerformed
         DeshabilitarTodo();
+        cargarCategorias();
         SeleccionarCat.setVisible(true);
     }//GEN-LAST:event_ElegirCatButtonActionPerformed
 
@@ -511,7 +638,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CerrarButtonActionPerformed
 
     private void ActializarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActializarButtonActionPerformed
-        Actualizar();
+        ActualizarProv();
     }//GEN-LAST:event_ActializarButtonActionPerformed
 
     private void SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarActionPerformed
@@ -519,15 +646,17 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         {
             this.TProveedorC.setText(ProveedorTable.getValueAt(ProveedorTable.getSelectedRow(), 0).toString());
             HabilitarTodo();
+            SelectProv.setVisible(false);
         }
         catch (IndexOutOfBoundsException ex)
         {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor de la lista", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-        HabilitarTodo();
-        SelectProv.setVisible(false);
+        }        
     }//GEN-LAST:event_SeleccionarActionPerformed
 
+    //private int contCat = 0;
+    //String CatE[];
+    
     private void CerrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCatActionPerformed
         HabilitarTodo();
         SeleccionarCat.setVisible(false);
@@ -542,48 +671,144 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         if (seleccionado != null) {
             if (seleccionado.isLeaf()) {
                 if(TCategoriasC.getText() == null)
+                {
+                    //CatE[contCat] = seleccionado.toString();
                     TCategoriasC.setText(seleccionado.toString());
+                }
                 else
+                {
+                    //CatE[contCat] = seleccionado.toString();
                     TCategoriasC.setText(TCategoriasC.getText() + ", " + seleccionado.toString());
-            } else {
+                }
+            }
+            else
+            {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria sin subcategorias", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
+        }
+        else
+        {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Warning", JOptionPane.WARNING_MESSAGE);
         }
+        //contCat++;
         HabilitarTodo();
         SeleccionarCat.setVisible(false);
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
-    private int Noima = 0;
-    private void ElegirIma01(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ElegirIma01
-        Noima = 1;//identifica la imagen
-        //popup que falta hacer y despues elegir la imagen
-        //NO ESTOY SEGURO DE COMO MANEJAR EL TEMA DE LAS IMAGENES
-        //Ima01.setIcon(frameIcon);
-    }//GEN-LAST:event_ElegirIma01
-
+    private int NoImaCont = 0;
+    private String ImaI[] = new String[10];
+    
     private void CancelarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarTodoActionPerformed
+        NoImaCont = 0;
         this.dispose();
     }//GEN-LAST:event_CancelarTodoActionPerformed
 
     private void LimpiarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarTodoActionPerformed
-        // TODO add your handling code here:
+        NoImaCont = 0;
+        LimpiarTodo();
     }//GEN-LAST:event_LimpiarTodoActionPerformed
 
     private void RegistrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTodoActionPerformed
-        // TODO add your handling code here:
+        //TCategoriasC.getText() tiene todas las categorias separadas por ", "
+        //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
+        //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
+        NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
     }//GEN-LAST:event_RegistrarTodoActionPerformed
+
+    private void ElegirImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirImaButtonActionPerformed
+        DeshabilitarTodo();
+        SelectIma.setVisible(true);
+    }//GEN-LAST:event_ElegirImaButtonActionPerformed
+
+    private File fileImagen = null;
+    
+    private void AddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddImaEve
+        JFileChooser buscarImagen = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes (bmp, jpg, png)", new String[]{"bmp", "jpg", "png"});
+        buscarImagen.setAcceptAllFileFilterUsed(false);
+        buscarImagen.setFileFilter(filtro);
+
+        int result = buscarImagen.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            fileImagen = buscarImagen.getSelectedFile();
+            txtFotoPath.setText(fileImagen.getPath());
+            ImageIcon imageIcon = new ImageIcon(fileImagen.getPath());
+            LImagen.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(LImagen.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            LImagen.repaint();
+            
+            String name = fileImagen.getName();
+            int pos = name.lastIndexOf('.');
+            String ext = name.substring(pos + 1);
+
+            File directorio = new File("src/Store/Recursos/Usuarios/TempPic/");
+            directorio.mkdir();
+
+            File destino = new File("src/Store/Recursos/Usuarios/TempPic/tmp" + "." + ext);
+            try {
+                InputStream in = new FileInputStream(fileImagen);
+                OutputStream out = new FileOutputStream(destino);
+
+                byte[] buffer = new byte[1024];
+                int tamanoRes;
+
+
+                while ((tamanoRes = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, tamanoRes);
+                }
+                in.close();
+                out.close();
+
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_AddImaEve
+
+    private DefaultListModel listaModel = new DefaultListModel();
+    
+    private void AgregarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarImaButtonActionPerformed
+        if(txtFotoPath.getText() != null)
+        {
+            if(NoImaCont == 0)
+                listaModel = new DefaultListModel();            
+            //DefaultListModel listaModel = new DefaultListModel();
+            ImaList.setModel(listaModel);
+            listaModel.addElement(fileImagen.getAbsolutePath());
+            ImaI[NoImaCont] = fileImagen.getAbsolutePath();
+            txtFotoPath.setText(fileImagen.getAbsolutePath());
+            NoImaCont++;
+            LimpiarIma();
+            SelectIma.setVisible(false);
+            HabilitarTodo();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Antes debe seleccionar una Imágen", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_AgregarImaButtonActionPerformed
+
+    private void CerrarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarImaButtonActionPerformed
+        LimpiarIma();
+        SelectIma.setVisible(false);
+        HabilitarTodo();
+    }//GEN-LAST:event_CerrarImaButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActializarButton;
     private javax.swing.JButton ActualizarCat;
+    private javax.swing.JButton AgregarImaButton;
     private javax.swing.JButton CancelarTodo;
     private javax.swing.JButton CerrarButton;
     private javax.swing.JButton CerrarCat;
+    private javax.swing.JButton CerrarImaButton;
     private javax.swing.JButton ElegirCatButton;
+    private javax.swing.JButton ElegirImaButton;
     private javax.swing.JButton ElegirProvButton;
-    private javax.swing.JLabel Ima01;
+    private javax.swing.JList ImaList;
+    private javax.swing.JLabel LImagen;
     private javax.swing.JButton LimpiarTodo;
     private javax.swing.JTable ProveedorTable;
     private javax.swing.JInternalFrame RegProdIF;
@@ -591,6 +816,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private javax.swing.JButton Seleccionar;
     private javax.swing.JButton SeleccionarCat;
     private javax.swing.JInternalFrame SelectCat;
+    private javax.swing.JInternalFrame SelectIma;
     private javax.swing.JInternalFrame SelectProv;
     private javax.swing.JTextField TCategorias;
     private javax.swing.JTextField TCategoriasC;
@@ -609,6 +835,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -620,9 +847,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTree treeCategoria;
+    private javax.swing.JTextField txtFotoPath;
     // End of variables declaration//GEN-END:variables
     static private ProdGroup PGInstancia;
 }

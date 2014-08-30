@@ -48,7 +48,15 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         //ABAJO//DATOS DEVUELTOS
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header);
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
 
         ProveedorTable.getColumnModel().getColumn(0).setPreferredWidth(23);
         ProveedorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -113,6 +121,11 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         BackgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                SeMuestraSeActualiza(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -347,7 +360,10 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
             TTipoUC.setText("Proveedor");
             TCompaniaC.setText(du.getCompania());
             TPaginaWebC.setText(du.getWebLink());
-            PerfilLabel.setIcon(RZIma(du.getImagen(), 150, 150));
+            //PerfilLabel.setIcon(RZIma(du.getImagen(), 150, 150));
+            ImageIcon imageIcon = new ImageIcon(du.getImagen());
+            PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            PerfilLabel.repaint();
             //ARRIBA//IMPRIMIR DATOS
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor de la lista", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -362,6 +378,11 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         Actualizar();
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
+
+    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
+        Actualizar();
+    }//GEN-LAST:event_SeMuestraSeActualiza
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;

@@ -189,6 +189,11 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         PPanel.setLayout(null);
 
         PerfilLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/Perfil.jpg"))); // NOI18N
+        PerfilLabel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                SeMuestraSeActualiza(evt);
+            }
+        });
         PPanel.add(PerfilLabel);
         PerfilLabel.setBounds(10, 10, 150, 150);
 
@@ -391,8 +396,11 @@ public class InfoCliente extends javax.swing.JInternalFrame {
             TApellidoC.setText(du.getApellido());
             TFechaNacC.setText(sdf.format(du.getFechaNacimiento()));
             TTipoUC.setText("Cliente");
-            PerfilLabel.setIcon(RZIma(du.getImagen(),150,150));
-
+            //String perfS = du.getImagen(); //Sin esto no anda
+            //PerfilLabel.setIcon(RZIma(perfS,150,150));
+            ImageIcon imageIcon = new ImageIcon(du.getImagen());
+            PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            PerfilLabel.repaint();
                 //ABAJO//CAMBIAR MODELO DE LA TABLA
             DefaultTableModel DTM = new DefaultTableModel()
             {
@@ -445,6 +453,10 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
         Actualizar();
     }//GEN-LAST:event_ActualizarButtonActionPerformed
+
+    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
+        Actualizar();
+    }//GEN-LAST:event_SeMuestraSeActualiza
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
