@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package Store;
+
 import direct.market.datatype.DataUsuario;
 import javax.swing.table.DefaultTableModel;
 import direct.market.domain.Producto;
@@ -12,15 +13,15 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
-        
-
 /**
  *
  * @author jpmc21891
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
-public int cont=0;
-DefaultTableModel vacio = new DefaultTableModel(0,0);
+
+    public int cont = 0;
+    DefaultTableModel vacio = new DefaultTableModel(0, 0);
+
     /**
      * Creates new form GenerarOC
      */
@@ -30,28 +31,29 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         }
         return IGenerarOC;
     }
+
     public GenerarOC() {
         initComponents();
         this.validate();
-        DefaultTableModel modelo = new DefaultTableModel(){
-                                                            boolean[] canEdit = new boolean[]{false, false, true, false, false};
+        DefaultTableModel modelo = new DefaultTableModel() {
+            boolean[] canEdit = new boolean[]{false, false, true, false, false};
 
-                                                            @Override
-                                                            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                                                                return canEdit[columnIndex];
-                                                            }
-                                                        };
-        
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
 
-        String header[] = new String[] { "Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea" };
+
+        String header[] = new String[]{"Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea"};
         modelo.setColumnIdentifiers(header);
-        TArticulos.setModel(modelo);   
+        TArticulos.setModel(modelo);
         SelCliente.setVisible(false);
         Actualizar();
         GenOC.setVisible(true);
 
-        
-        
+
+
     }
 
     /**
@@ -334,19 +336,18 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private void Btn_AddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddProdActionPerformed
         // TODO add your handling code here:
         //hardcode hasta nuevo aviso ! :p
-        Producto p = new Producto("Producto1","P1",null);
+        Producto p = new Producto("Producto1", "P1", null);
         EspecificacionProducto esp = new EspecificacionProducto();
         esp.setDescripcion("Soborocotongo");
         esp.setEspecificaciones("Soborocotongo");
         esp.setPrecio(100);
-        p.setEspecificacion(esp);  
+        p.setEspecificacion(esp);
         //
-        
-        DefaultTableModel tart= (DefaultTableModel) TArticulos.getModel();
+
+        DefaultTableModel tart = (DefaultTableModel) TArticulos.getModel();
         tart.addRow(new Object[]{});
         TArticulos.setModel(tart);
         int col = 0;
@@ -360,12 +361,12 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         col++;
         TArticulos.setValueAt(0, cont, col);
         cont++;
-             
+
     }//GEN-LAST:event_Btn_AddProdActionPerformed
 
     private void Btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Cancelar1ActionPerformed
         // TODO add your handling code here:
-       
+
         TArticulos.setModel(vacio);
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
@@ -375,7 +376,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         SelCliente.setVisible(true);
         SelCliente.toFront();
         HabilitarGenOC(false);
-        
+
     }//GEN-LAST:event_btn_selCliActionPerformed
 
     private void BtnSelCli_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_ActualizarActionPerformed
@@ -383,19 +384,16 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
     }//GEN-LAST:event_BtnSelCli_ActualizarActionPerformed
 
     private void BtnSelCli_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_SeleccionarActionPerformed
-        try
-        {
-            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(),0);
+        try {
+            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(), 0);
             DataUsuario dc = Factory.getInstance().getOrdenCompraController().getDataCliente(nick);
-            txtNomAp.setText((dc.getApellido()+", "+dc.getNombre()));
+            txtNomAp.setText((dc.getApellido() + ", " + dc.getNombre()));
             txtnicknamedsp.setText(dc.getNickname());
             txtemaildsp.setText(dc.getEmail());
 //            TCliente.setModel(vacio);
             SelCliente.setVisible(false);
             HabilitarGenOC(true);
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BtnSelCli_SeleccionarActionPerformed
@@ -406,12 +404,11 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         HabilitarGenOC(true);
     }//GEN-LAST:event_BtnSelCli_CancelarActionPerformed
 
-    private void Actualizar(){
+    private void Actualizar() {
 
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
-        {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -425,22 +422,23 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
 
         TCliente.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getOrdenCompraController().getClientes();
-        
-        int c = clientes.size();
-        for (int i = 0; i < c; i++) {
-            String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
-            DTM2.addRow(datos);
+        if (clientes != null) {
+            int c = clientes.size();
+            for (int i = 0; i < c; i++) {
+                String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
+                DTM2.addRow(datos);
+            }
         }
-    }    
-    
-    private void HabilitarGenOC(boolean flg){
+    }
+
+    private void HabilitarGenOC(boolean flg) {
         GenOC.setFocusable(flg);
 //        GenOC.setEnabled(flg);
         Btn_Aceptar1.setEnabled(flg);
         Btn_AddProd.setEnabled(flg);
         Btn_Cancelar1.setEnabled(flg);
         btn_selCli.setVisible(flg);
-        btn_selCli.setEnabled(flg);   
+        btn_selCli.setEnabled(flg);
         TArticulos.setEnabled(flg);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

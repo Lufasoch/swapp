@@ -49,7 +49,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         PanelProveedor03.setVisible(false);
         PanelProveedor04.setVisible(false);
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
-        String DirI = "Recursos/Usuarios/Perfil.jpg";
+        String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI, 150, 150));
     }
 
