@@ -378,6 +378,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
         Actualizar();
+        IPInstancia = null;
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
 

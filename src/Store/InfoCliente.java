@@ -449,7 +449,8 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_OrdenButtonActionPerformed
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        limpiarCampos();
+        Actualizar();
+        ICInstancia = null;
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
 

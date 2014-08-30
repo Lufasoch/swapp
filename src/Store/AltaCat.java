@@ -220,7 +220,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
                 
                 
             }catch (CategoryException ex){
-                JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(this, "Debe seleccionar el tipo de Categoria", "Error", JOptionPane.ERROR_MESSAGE);

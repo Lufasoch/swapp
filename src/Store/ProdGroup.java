@@ -714,6 +714,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         //TCategoriasC.getText() tiene todas las categorias separadas por ", "
         //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
         //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
+        
+        
+
+        
+        
         NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
     }//GEN-LAST:event_RegistrarTodoActionPerformed
 
