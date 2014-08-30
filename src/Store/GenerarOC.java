@@ -3,25 +3,32 @@
  * and open the template in the editor.
  */
 package Store;
-
+import direct.market.datatype.DataCategoria;
+import direct.market.datatype.DataProducto;
 import direct.market.datatype.DataUsuario;
 import javax.swing.table.DefaultTableModel;
 import direct.market.domain.Producto;
 import direct.market.domain.EspecificacionProducto;
 import direct.market.factory.Factory;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+
+        
 
 /**
  *
  * @author jpmc21891
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
-
-    public int cont = 0;
-    DefaultTableModel vacio = new DefaultTableModel(0, 0);
-
+public int cont=0;
+DefaultTableModel vacio = new DefaultTableModel(0,0);
     /**
      * Creates new form GenerarOC
      */
@@ -31,29 +38,46 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         }
         return IGenerarOC;
     }
+    
+    public DefaultMutableTreeNode searchNode(String nodeStr) {
+        DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
 
+        DefaultMutableTreeNode node = null;
+        Enumeration e = raiz.breadthFirstEnumeration();
+        while (e.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) e.nextElement();
+            if (nodeStr.equals(node.getUserObject().toString())) {
+                return node;
+            }
+        }
+        return null;
+    }
+    
     public GenerarOC() {
         initComponents();
         this.validate();
-        DefaultTableModel modelo = new DefaultTableModel() {
-            boolean[] canEdit = new boolean[]{false, false, true, false, false};
+        DefaultTableModel modelo = new DefaultTableModel(){
+                                                            boolean[] canEdit = new boolean[]{false, false, true, false, false};
 
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
+                                                            @Override
+                                                            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                                                return canEdit[columnIndex];
+                                                            }
+                                                        };
+        
 
-
-        String header[] = new String[]{"Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea"};
+        String header[] = new String[] { "Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea" };
         modelo.setColumnIdentifiers(header);
-        TArticulos.setModel(modelo);
+        TArticulos.setModel(modelo);   
         SelCliente.setVisible(false);
+        SelArticulo.setVisible(false);
         Actualizar();
+        cargarCategorias();
         GenOC.setVisible(true);
 
-
-
+        
+        
     }
 
     /**
@@ -65,6 +89,16 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SelArticulo = new javax.swing.JInternalFrame();
+        panelCategoria = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        treeCategoria = new javax.swing.JTree();
+        jPanel2 = new javax.swing.JPanel();
+        btnSelArt_Seleccionar = new javax.swing.JButton();
+        lblcantidad = new javax.swing.JTextField();
+        txtcantidad = new javax.swing.JTextField();
+        btnSelArt_Actualizar = new javax.swing.JButton();
+        btnSelArt_Cancelar = new javax.swing.JButton();
         SelCliente = new javax.swing.JInternalFrame();
         SelCliTPanel = new javax.swing.JPanel();
         jScrollVerClientes = new javax.swing.JScrollPane();
@@ -73,7 +107,6 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         BtnSelCli_Seleccionar = new javax.swing.JButton();
         BtnSelCli_Actualizar = new javax.swing.JButton();
         BtnSelCli_Cancelar = new javax.swing.JButton();
-        SelArticulo = new javax.swing.JInternalFrame();
         GenOC = new javax.swing.JInternalFrame();
         PCabezal = new javax.swing.JPanel();
         TxtCliente = new javax.swing.JTextField();
@@ -98,6 +131,73 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         setTitle("Orden de Compra");
         setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
+
+        SelArticulo.setTitle("Seleccionar Artículo");
+        SelArticulo.setPreferredSize(new java.awt.Dimension(324, 470));
+        SelArticulo.setVisible(true);
+
+        panelCategoria.setBackground(new java.awt.Color(214, 228, 237));
+        panelCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
+        treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(treeCategoria);
+
+        javax.swing.GroupLayout panelCategoriaLayout = new javax.swing.GroupLayout(panelCategoria);
+        panelCategoria.setLayout(panelCategoriaLayout);
+        panelCategoriaLayout.setHorizontalGroup(
+            panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+        );
+        panelCategoriaLayout.setVerticalGroup(
+            panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCategoriaLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+        );
+
+        SelArticulo.getContentPane().add(panelCategoria, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel2.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
+
+        btnSelArt_Seleccionar.setText("Seleccionar");
+        btnSelArt_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelArt_SeleccionarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSelArt_Seleccionar);
+
+        lblcantidad.setEditable(false);
+        lblcantidad.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        lblcantidad.setText("Cantidad");
+        lblcantidad.setEnabled(false);
+        lblcantidad.setFocusable(false);
+        jPanel2.add(lblcantidad);
+        jPanel2.add(txtcantidad);
+
+        btnSelArt_Actualizar.setText("Actualizar");
+        btnSelArt_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelArt_ActualizarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSelArt_Actualizar);
+
+        btnSelArt_Cancelar.setText("Cancelar");
+        btnSelArt_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelArt_CancelarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSelArt_Cancelar);
+
+        SelArticulo.getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(SelArticulo);
+        SelArticulo.setBounds(0, 0, 510, 470);
 
         SelCliente.setTitle("Seleccionar Cliente");
         SelCliente.setVisible(true);
@@ -181,11 +281,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         SelCliente.getContentPane().add(SelCliBtnPanel, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(SelCliente);
-        SelCliente.setBounds(0, 0, 320, 510);
-
-        SelArticulo.setVisible(true);
-        getContentPane().add(SelArticulo);
-        SelArticulo.setBounds(0, 0, 42, 30);
+        SelCliente.setBounds(0, -20, 320, 510);
 
         GenOC.setEnabled(false);
         GenOC.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -336,37 +432,43 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void Btn_AddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddProdActionPerformed
         // TODO add your handling code here:
         //hardcode hasta nuevo aviso ! :p
-        Producto p = new Producto("Producto1", "P1", null);
-        EspecificacionProducto esp = new EspecificacionProducto();
-        esp.setDescripcion("Soborocotongo");
-        esp.setEspecificaciones("Soborocotongo");
-        esp.setPrecio(100);
-        p.setEspecificacion(esp);
-        //
-
-        DefaultTableModel tart = (DefaultTableModel) TArticulos.getModel();
-        tart.addRow(new Object[]{});
-        TArticulos.setModel(tart);
-        int col = 0;
-        TArticulos.setValueAt(p.getReferencia(), cont, col);
-        col++;
-        TArticulos.setValueAt(p.getNombre(), cont, col);
-        col++;
-        TArticulos.setValueAt(0, cont, col);
-        col++;
-        TArticulos.setValueAt(esp.getPrecio(), cont, col);
-        col++;
-        TArticulos.setValueAt(0, cont, col);
-        cont++;
-
+//        Producto p = new Producto("Producto1","P1",null);
+//        EspecificacionProducto esp = new EspecificacionProducto();
+//        esp.setDescripcion("Soborocotongo");
+//        esp.setEspecificaciones("Soborocotongo");
+//        esp.setPrecio(100);
+//        p.setEspecificacion(esp);  
+//        //
+//        
+//        DefaultTableModel tart= (DefaultTableModel) TArticulos.getModel();
+//        tart.addRow(new Object[]{});
+//        TArticulos.setModel(tart);
+//        int col = 0;
+//        TArticulos.setValueAt(p.getReferencia(), cont, col);
+//        col++;
+//        TArticulos.setValueAt(p.getNombre(), cont, col);
+//        col++;
+//        TArticulos.setValueAt(0, cont, col);
+//        col++;
+//        TArticulos.setValueAt(esp.getPrecio(), cont, col);
+//        col++;
+//        TArticulos.setValueAt(0, cont, col);
+//        cont++;
+        cargarCategorias();
+        SelArticulo.setVisible(true);      
+        SelCliente.toFront();
+        
+        HabilitarGenOC(false);
+             
     }//GEN-LAST:event_Btn_AddProdActionPerformed
 
     private void Btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Cancelar1ActionPerformed
         // TODO add your handling code here:
-
+       
         TArticulos.setModel(vacio);
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
@@ -376,7 +478,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         SelCliente.setVisible(true);
         SelCliente.toFront();
         HabilitarGenOC(false);
-
+        
     }//GEN-LAST:event_btn_selCliActionPerformed
 
     private void BtnSelCli_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_ActualizarActionPerformed
@@ -384,31 +486,49 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnSelCli_ActualizarActionPerformed
 
     private void BtnSelCli_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_SeleccionarActionPerformed
-        try {
-            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(), 0);
+        try
+        {
+            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(),0);
             DataUsuario dc = Factory.getInstance().getOrdenCompraController().getDataCliente(nick);
-            txtNomAp.setText((dc.getApellido() + ", " + dc.getNombre()));
+            txtNomAp.setText((dc.getApellido()+", "+dc.getNombre()));
             txtnicknamedsp.setText(dc.getNickname());
             txtemaildsp.setText(dc.getEmail());
 //            TCliente.setModel(vacio);
             SelCliente.setVisible(false);
             HabilitarGenOC(true);
-        } catch (IndexOutOfBoundsException ex) {
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BtnSelCli_SeleccionarActionPerformed
 
     private void BtnSelCli_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_CancelarActionPerformed
-//        TCliente.setModel(vacio);
+
         SelCliente.setVisible(false);
         HabilitarGenOC(true);
     }//GEN-LAST:event_BtnSelCli_CancelarActionPerformed
 
-    private void Actualizar() {
+    private void btnSelArt_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_SeleccionarActionPerformed
+
+    }//GEN-LAST:event_btnSelArt_SeleccionarActionPerformed
+
+    private void btnSelArt_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_CancelarActionPerformed
+        SelArticulo.setVisible(false);
+        HabilitarGenOC(true);
+    }//GEN-LAST:event_btnSelArt_CancelarActionPerformed
+
+    private void btnSelArt_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_ActualizarActionPerformed
+        // TODO add your handling code here:
+        cargarCategorias();
+    }//GEN-LAST:event_btnSelArt_ActualizarActionPerformed
+
+    private void Actualizar(){
 
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
+        {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -422,16 +542,62 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 
         TCliente.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getOrdenCompraController().getClientes();
-        if (clientes != null) {
-            int c = clientes.size();
-            for (int i = 0; i < c; i++) {
-                String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
-                DTM2.addRow(datos);
+        
+        int c = clientes.size();
+        for (int i = 0; i < c; i++) {
+            String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
+            DTM2.addRow(datos);
+        }
+    }    
+    
+    
+       private void cargarCategorias() {
+        try {
+
+            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
+
+            DefaultTreeModel modeloTree = (DefaultTreeModel) treeCategoria.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
+            DefaultMutableTreeNode nuevo;
+            DefaultMutableTreeNode nuevoprod;
+            DefaultMutableTreeNode padre;
+
+            for (DataCategoria dc : categorias) {
+                if (dc.getParent().equals("Categorias")) {
+                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                    root.add(nuevo);
+                    if (dc.isContieneProductos()){
+                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
+                        List<DataProducto> productos = Factory.getInstance().getOrdenCompraController().getProductosCategoria(dc);
+                        for (DataProducto dp : productos) {
+                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
+                            nuevo.add(nuevoprod);                          
+                                    
+                        }
+                                
+                    }
+                } else {
+                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                    padre = searchNode(dc.getParent());
+                    modeloTree.insertNodeInto(nuevo, padre, padre.getChildCount());
+                    if (dc.isContieneProductos()){
+                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
+                        List<DataProducto> productos = Factory.getInstance().getOrdenCompraController().getProductosCategoria(dc);
+                        for (DataProducto dp : productos) {
+                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
+                            nuevo.add(nuevoprod);                          
+                                    
+                        }
+                    }
+                }
             }
+        } catch (Exception ex) {
+            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void HabilitarGenOC(boolean flg) {
+    
+    
+    private void HabilitarGenOC(boolean flg){
         GenOC.setFocusable(flg);
 //        GenOC.setEnabled(flg);
         Btn_Aceptar1.setEnabled(flg);
@@ -439,8 +605,12 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         Btn_Cancelar1.setEnabled(flg);
         btn_selCli.setVisible(flg);
         btn_selCli.setEnabled(flg);
+        Btn_AddProd.setVisible(flg);
         TArticulos.setEnabled(flg);
     }
+    
+    
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton BtnSelCli_Actualizar;
@@ -464,13 +634,24 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtCliente;
     private javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField TxtTotalVal;
+    private javax.swing.JButton btnSelArt_Actualizar;
+    private javax.swing.JButton btnSelArt_Cancelar;
+    private javax.swing.JButton btnSelArt_Seleccionar;
     private javax.swing.JButton btn_selCli;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollVerClientes;
+    private javax.swing.JTextField lblcantidad;
+    private javax.swing.JPanel panelCategoria;
+    private javax.swing.JTree treeCategoria;
     private javax.swing.JTextField txtNomAp;
+    private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtemaildsp;
     private javax.swing.JTextField txtnickname;
     private javax.swing.JTextField txtnicknamedsp;
     // End of variables declaration//GEN-END:variables
     private static GenerarOC IGenerarOC;
+
+
 }
