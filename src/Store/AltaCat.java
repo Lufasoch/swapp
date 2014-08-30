@@ -191,30 +191,33 @@ public class AltaCat extends javax.swing.JInternalFrame {
 
     private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
         if(catProductos.isSelected() || catSubCat.isSelected()){
-            boolean tipoCat = (catProductos.isSelected()?true:false);
+            boolean contieneProductos = (catProductos.isSelected()?true:false);
             try{
                 String padre = (PadreCat.getText().isEmpty()?"Categorias":PadreCat.getText());
-                Factory.getInstance().getCategoriaController().altaCategoria(padre, NombreCat.getText(), tipoCat);
+                Factory.getInstance().getCategoriaController().altaCategoria(padre, NombreCat.getText(), contieneProductos);
 
                 JOptionPane.showMessageDialog(this, "Categoria creada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+              
+                if(catSubCat.isSelected()){
+                    DefaultMutableTreeNode nodoPadre;
+                    if(treeCategoria.getLastSelectedPathComponent().toString().equals("")){
+                        nodoPadre = searchNode(padre);
+                    }else{
+                        nodoPadre = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+                    }
 
+                    DefaultMutableTreeNode nuevoHijo = new DefaultMutableTreeNode(NombreCat.getText());
+                    DefaultTreeModel model = (DefaultTreeModel) treeCategoria.getModel();
+                    model.insertNodeInto(nuevoHijo, nodoPadre, nodoPadre.getChildCount());
+
+                    treeCategoria.setModel(model);
+                    model.reload();
+                }
+                
                 PadreCat.setText("");
                 NombreCat.setText("");
                 buttonGroup1.clearSelection();
                 
-                DefaultMutableTreeNode nodoPadre;
-                if(treeCategoria.getLastSelectedPathComponent().toString().equals("")){
-                    nodoPadre = searchNode(padre);
-                }else{
-                    nodoPadre = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-                }
-                
-                DefaultMutableTreeNode nuevoHijo = new DefaultMutableTreeNode(NombreCat.getText());
-                DefaultTreeModel model = (DefaultTreeModel) treeCategoria.getModel();
-                model.insertNodeInto(nuevoHijo, nodoPadre, nodoPadre.getChildCount());
-                
-                treeCategoria.setModel(model);
-                model.reload();
                 
             }catch (CategoryException ex){
                 JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
@@ -263,6 +266,9 @@ public class AltaCat extends javax.swing.JInternalFrame {
                         padre = searchNode(dc.getParent());
                         modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
                     }
+                }else{
+                    //mejora a futuro:
+                    //codigo para cargar las categorias de productos con otro iconito
                 }
             }
         } catch (Exception ex) {

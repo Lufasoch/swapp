@@ -112,9 +112,11 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
 
+        jTextField1.setEditable(false);
         jTextField1.setText("Seleccione una Categoria");
         jPanel1.add(jTextField1);
 
+        jTextField2.setEditable(false);
         jTextField2.setText("Seleccione el Producto");
         jPanel1.add(jTextField2);
 

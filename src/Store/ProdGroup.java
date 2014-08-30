@@ -360,7 +360,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         SelectProv.getContentPane().setLayout(SelectProvLayout);
         SelectProvLayout.setHorizontalGroup(
             SelectProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
         );
         SelectProvLayout.setVerticalGroup(
             SelectProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,6 +456,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel6.add(jPanel8);
         jPanel8.setBounds(10, 430, 350, 60);
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
+        treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane3.setViewportView(treeCategoria);
 
         jPanel6.add(jScrollPane3);
@@ -494,7 +496,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel1.add(TEspec);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(10, 10, 180, 136);
+        jPanel1.setBounds(10, 10, 180, 132);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 8, 8));
@@ -517,15 +519,15 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(jPanel4);
         jPanel4.setBounds(200, 120, 560, 130);
         jPanel3.add(TPrecioC);
-        TPrecioC.setBounds(200, 260, 560, 28);
+        TPrecioC.setBounds(200, 260, 560, 27);
 
         TProveedor.setText("Proveedor:");
         jPanel3.add(TProveedor);
-        TProveedor.setBounds(10, 300, 180, 28);
+        TProveedor.setBounds(10, 300, 180, 27);
 
         TPrecio.setText("Precio:");
         jPanel3.add(TPrecio);
-        TPrecio.setBounds(10, 260, 180, 28);
+        TPrecio.setBounds(10, 260, 180, 27);
 
         ElegirProvButton.setText("Elegir");
         ElegirProvButton.addActionListener(new java.awt.event.ActionListener() {
@@ -534,13 +536,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(ElegirProvButton);
-        ElegirProvButton.setBounds(200, 300, 70, 30);
+        ElegirProvButton.setBounds(200, 300, 70, 29);
         jPanel3.add(TProveedorC);
-        TProveedorC.setBounds(280, 300, 480, 28);
+        TProveedorC.setBounds(280, 300, 480, 27);
 
         TCategorias.setText("Categorias:");
         jPanel3.add(TCategorias);
-        TCategorias.setBounds(10, 340, 180, 28);
+        TCategorias.setBounds(10, 340, 180, 27);
 
         ElegirCatButton.setText("Elegir");
         ElegirCatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -551,11 +553,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(ElegirCatButton);
         ElegirCatButton.setBounds(200, 340, 70, 30);
         jPanel3.add(TCategoriasC);
-        TCategoriasC.setBounds(280, 340, 480, 28);
+        TCategoriasC.setBounds(280, 340, 480, 27);
 
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(10, 380, 180, 28);
+        jTextField1.setBounds(10, 380, 180, 27);
 
         ElegirImaButton.setText("Elegir");
         ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -608,7 +610,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel9.add(RegistrarTodo);
 
         RegProdIF.getContentPane().add(jPanel9);
-        jPanel9.setBounds(370, 514, 410, 46);
+        jPanel9.setBounds(370, 514, 410, 45);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         RegProdIF.getContentPane().add(jLabel1);
@@ -628,8 +630,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
     private void ElegirCatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirCatButtonActionPerformed
         DeshabilitarTodo();
-        cargarCategorias();
-        SeleccionarCat.setVisible(true);
+        //cargarCategorias();
+        SelectCat.setVisible(true);
     }//GEN-LAST:event_ElegirCatButtonActionPerformed
 
     private void CerrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarButtonActionPerformed
@@ -659,18 +661,18 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     
     private void CerrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCatActionPerformed
         HabilitarTodo();
-        SeleccionarCat.setVisible(false);
+        SelectCat.setVisible(false);
     }//GEN-LAST:event_CerrarCatActionPerformed
 
     private void ActualizarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarCatActionPerformed
-        cargarCategorias();
+        //cargarCategorias();
     }//GEN-LAST:event_ActualizarCatActionPerformed
 
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
         if (seleccionado != null) {
-            if (seleccionado.isLeaf()) {
-                if(TCategoriasC.getText() == null)
+            if (seleccionado.isLeaf()) {//no solo siendo leaf significa que tiene productos
+                if(TCategoriasC.getText().equals(""))
                 {
                     //CatE[contCat] = seleccionado.toString();
                     TCategoriasC.setText(seleccionado.toString());
@@ -683,7 +685,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria sin subcategorias", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que contenga productos", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
         else
@@ -692,7 +694,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         }
         //contCat++;
         HabilitarTodo();
-        SeleccionarCat.setVisible(false);
+        SelectCat.setVisible(false);
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
     private int NoImaCont = 0;
