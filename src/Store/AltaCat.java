@@ -59,7 +59,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         treeCategoria = new javax.swing.JTree();
         jPanel4 = new javax.swing.JPanel();
-        Cancelar = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         Crear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
@@ -119,8 +119,13 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
 
-        Cancelar.setText("Cerrar");
-        jPanel4.add(Cancelar);
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(Cerrar);
 
         Crear.setText("Crear");
         Crear.addActionListener(new java.awt.event.ActionListener() {
@@ -219,6 +224,11 @@ public class AltaCat extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_CrearActionPerformed
 
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        ACatInstancia = null;
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
     public DefaultMutableTreeNode searchNode(String nodeStr) {
         DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
@@ -261,7 +271,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Cancelar;
+    private javax.swing.JButton Cerrar;
     private javax.swing.JButton Crear;
     private javax.swing.JButton ElegirPadre;
     private javax.swing.JTextField NombreCat;
