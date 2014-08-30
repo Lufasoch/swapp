@@ -120,11 +120,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
 
         Cancelar.setText("Cerrar");
-        Cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelarActionPerformed(evt);
-            }
-        });
         jPanel4.add(Cancelar);
 
         Crear.setText("Crear");
@@ -180,10 +175,10 @@ public class AltaCat extends javax.swing.JInternalFrame {
         setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {                                         
         ACatInstancia = null;
         this.dispose();
-    }//GEN-LAST:event_CancelarActionPerformed
+    }                                        
 
     private void ElegirPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirPadreActionPerformed
         PadreCat.setText(treeCategoria.getLastSelectedPathComponent().toString());

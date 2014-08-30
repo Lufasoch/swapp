@@ -34,6 +34,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         ArchivoMenu = new javax.swing.JMenu();
         AltaCategoria = new javax.swing.JMenuItem();
+        RegistrarProducto = new javax.swing.JMenuItem();
         RegistrarUsuario = new javax.swing.JMenuItem();
         CrearOrden = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
@@ -59,6 +60,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         ArchivoMenu.add(AltaCategoria);
+
+        RegistrarProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        RegistrarProducto.setText("Registrar Producto");
+        RegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistrarProductoActionPerformed(evt);
+            }
+        });
+        ArchivoMenu.add(RegistrarProducto);
 
         RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         RegistrarUsuario.setText("Registrar Usuario Nuevo");
@@ -262,6 +272,20 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AltaCategoriaActionPerformed
 
+    private void RegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarProductoActionPerformed
+        ProdGroup API = ProdGroup.getInstancia();
+        if (API.isVisible()) {
+            try {
+                API.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(API);
+            API.setVisible(true);
+        }
+    }//GEN-LAST:event_RegistrarProductoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -304,6 +328,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem ModificarProducto;
+    private javax.swing.JMenuItem RegistrarProducto;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenuItem VerInfoCliente;
