@@ -4,12 +4,12 @@
  */
 package Store;
 
-import direct.market.controller.IUsuarioController;
+//import direct.market.controller.IUsuarioController;
 import direct.market.datatype.DataUsuario;
 import direct.market.factory.Factory;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lufasoch
  */
-public class InfoCliente extends javax.swing.JInternalFrame {
+public final class InfoCliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form InfoCliente
@@ -28,7 +28,9 @@ public class InfoCliente extends javax.swing.JInternalFrame {
     public InfoCliente() {
         initComponents();
         this.validate();
-        Actualizar();
+        String DirI = "Recursos/Perfil.jpg";
+        PerfilLabel.setIcon(RZIma(DirI, 150, 150));
+        Actualizar();     
         
         
     }
@@ -73,11 +75,12 @@ public class InfoCliente extends javax.swing.JInternalFrame {
 
         ClientesTable.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
-        
+        if (clientes !=null){
         int c = clientes.size();
         for (int i = 0; i < c; i++) {
             String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
             DTM2.addRow(datos);
+        }
         }
     }
     
@@ -175,7 +178,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         TPanel.setLayout(TPanelLayout);
         TPanelLayout.setHorizontalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
         );
         TPanelLayout.setVerticalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +186,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(10, 50, 370, 410);
+        TPanel.setBounds(40, 50, 340, 410);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -198,7 +201,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         PerfilLabel.setBounds(10, 10, 150, 150);
 
         getContentPane().add(PPanel);
-        PPanel.setBounds(600, 50, 170, 170);
+        PPanel.setBounds(580, 50, 170, 170);
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         InfoPanel.setLayout(new java.awt.GridLayout(6, 2));
@@ -294,7 +297,7 @@ public class InfoCliente extends javax.swing.JInternalFrame {
         InfoPanel.add(TTipoUC);
 
         getContentPane().add(InfoPanel);
-        InfoPanel.setBounds(390, 240, 390, 220);
+        InfoPanel.setBounds(390, 240, 360, 220);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N

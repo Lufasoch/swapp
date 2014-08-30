@@ -63,10 +63,12 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
 
         ProveedorTable.setModel(DTM2);
         List<DataUsuario> proveedores = Factory.getInstance().getUsuarioController().getProveedores();
+        if (proveedores!= null){
         int p = proveedores.size();
         for (int i = 0; i < p; i++) {
             String datos[] = {proveedores.get(i).getNickname(), proveedores.get(i).getEmail()};
             DTM2.addRow(datos);
+        }
         }
     }
 
