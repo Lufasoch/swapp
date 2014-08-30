@@ -3,9 +3,14 @@
  * and open the template in the editor.
  */
 package Store;
+import direct.market.datatype.DataUsuario;
 import javax.swing.table.DefaultTableModel;
 import direct.market.domain.Producto;
 import direct.market.domain.EspecificacionProducto;
+import direct.market.factory.Factory;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
         
 
@@ -15,6 +20,7 @@ import direct.market.domain.EspecificacionProducto;
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
 public int cont=0;
+DefaultTableModel vacio = new DefaultTableModel(0,0);
     /**
      * Creates new form GenerarOC
      */
@@ -26,6 +32,7 @@ public int cont=0;
     }
     public GenerarOC() {
         initComponents();
+        this.validate();
         DefaultTableModel modelo = new DefaultTableModel(){
                                                             boolean[] canEdit = new boolean[]{false, false, true, false, false};
 
@@ -39,6 +46,10 @@ public int cont=0;
         String header[] = new String[] { "Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea" };
         modelo.setColumnIdentifiers(header);
         TArticulos.setModel(modelo);   
+        SelCliente.setVisible(false);
+        Actualizar();
+        GenOC.setVisible(true);
+
         
         
     }
@@ -52,6 +63,16 @@ public int cont=0;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SelCliente = new javax.swing.JInternalFrame();
+        SelCliTPanel = new javax.swing.JPanel();
+        jScrollVerClientes = new javax.swing.JScrollPane();
+        TCliente = new javax.swing.JTable();
+        SelCliBtnPanel = new javax.swing.JPanel();
+        BtnSelCli_Seleccionar = new javax.swing.JButton();
+        BtnSelCli_Actualizar = new javax.swing.JButton();
+        BtnSelCli_Cancelar = new javax.swing.JButton();
+        SelArticulo = new javax.swing.JInternalFrame();
+        GenOC = new javax.swing.JInternalFrame();
         PCabezal = new javax.swing.JPanel();
         TxtCliente = new javax.swing.JTextField();
         btn_selCli = new javax.swing.JButton();
@@ -76,17 +97,117 @@ public int cont=0;
         setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
 
+        SelCliente.setTitle("Seleccionar Cliente");
+        SelCliente.setVisible(true);
+
+        SelCliTPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        jScrollVerClientes.setPreferredSize(new java.awt.Dimension(330, 410));
+
+        TCliente.setAutoCreateRowSorter(true);
+        TCliente.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        TCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Nickname", "eMail"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TCliente.setFillsViewportHeight(true);
+        TCliente.setPreferredSize(new java.awt.Dimension(330, 200));
+        TCliente.getTableHeader().setReorderingAllowed(false);
+        jScrollVerClientes.setViewportView(TCliente);
+
+        javax.swing.GroupLayout SelCliTPanelLayout = new javax.swing.GroupLayout(SelCliTPanel);
+        SelCliTPanel.setLayout(SelCliTPanelLayout);
+        SelCliTPanelLayout.setHorizontalGroup(
+            SelCliTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+        );
+        SelCliTPanelLayout.setVerticalGroup(
+            SelCliTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+        );
+
+        SelCliente.getContentPane().add(SelCliTPanel, java.awt.BorderLayout.CENTER);
+
+        SelCliBtnPanel.setBackground(new java.awt.Color(214, 228, 237));
+        SelCliBtnPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        SelCliBtnPanel.setLayout(new java.awt.GridLayout(1, 4, 8, 0));
+
+        BtnSelCli_Seleccionar.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
+        BtnSelCli_Seleccionar.setText("Seleccionar");
+        BtnSelCli_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSelCli_SeleccionarActionPerformed(evt);
+            }
+        });
+        SelCliBtnPanel.add(BtnSelCli_Seleccionar);
+
+        BtnSelCli_Actualizar.setText("Actualizar");
+        BtnSelCli_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSelCli_ActualizarActionPerformed(evt);
+            }
+        });
+        SelCliBtnPanel.add(BtnSelCli_Actualizar);
+
+        BtnSelCli_Cancelar.setText("Cancelar");
+        BtnSelCli_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSelCli_CancelarActionPerformed(evt);
+            }
+        });
+        SelCliBtnPanel.add(BtnSelCli_Cancelar);
+
+        SelCliente.getContentPane().add(SelCliBtnPanel, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(SelCliente);
+        SelCliente.setBounds(0, 0, 320, 510);
+
+        SelArticulo.setVisible(true);
+        getContentPane().add(SelArticulo);
+        SelArticulo.setBounds(0, 0, 42, 30);
+
+        GenOC.setEnabled(false);
+        GenOC.setMinimumSize(new java.awt.Dimension(800, 600));
+        GenOC.setPreferredSize(new java.awt.Dimension(800, 600));
+        GenOC.setVisible(true);
+        GenOC.getContentPane().setLayout(null);
+
         PCabezal.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PCabezal.setLayout(null);
 
         TxtCliente.setEditable(false);
         TxtCliente.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         TxtCliente.setText("Cliente");
+        TxtCliente.setEnabled(false);
         TxtCliente.setFocusable(false);
         PCabezal.add(TxtCliente);
-        TxtCliente.setBounds(10, 10, 90, 28);
+        TxtCliente.setBounds(10, 10, 90, 30);
 
         btn_selCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/Botones/image15.png"))); // NOI18N
+        btn_selCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selCliActionPerformed(evt);
+            }
+        });
         PCabezal.add(btn_selCli);
         btn_selCli.setBounds(100, 10, 27, 26);
 
@@ -95,7 +216,6 @@ public int cont=0;
         txtemaildsp.setForeground(new java.awt.Color(1, 1, 1));
         txtemaildsp.setText("Email");
         txtemaildsp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        txtemaildsp.setEnabled(false);
         txtemaildsp.setFocusable(false);
         PCabezal.add(txtemaildsp);
         txtemaildsp.setBounds(420, 40, 340, 30);
@@ -103,23 +223,24 @@ public int cont=0;
         txtemail.setEditable(false);
         txtemail.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtemail.setText("Email");
+        txtemail.setEnabled(false);
         txtemail.setFocusable(false);
         PCabezal.add(txtemail);
-        txtemail.setBounds(370, 40, 50, 28);
+        txtemail.setBounds(370, 40, 50, 30);
 
         txtnickname.setEditable(false);
         txtnickname.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtnickname.setText("NickName");
+        txtnickname.setEnabled(false);
         txtnickname.setFocusable(false);
         PCabezal.add(txtnickname);
-        txtnickname.setBounds(10, 40, 90, 28);
+        txtnickname.setBounds(10, 40, 90, 30);
 
         txtNomAp.setEditable(false);
         txtNomAp.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtNomAp.setForeground(new java.awt.Color(1, 1, 1));
         txtNomAp.setText("Nombre, Apellido");
         txtNomAp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        txtNomAp.setEnabled(false);
         txtNomAp.setFocusable(false);
         PCabezal.add(txtNomAp);
         txtNomAp.setBounds(130, 10, 630, 30);
@@ -129,12 +250,11 @@ public int cont=0;
         txtnicknamedsp.setForeground(new java.awt.Color(1, 1, 1));
         txtnicknamedsp.setText("Nickname");
         txtnicknamedsp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        txtnicknamedsp.setEnabled(false);
         txtnicknamedsp.setFocusable(false);
         PCabezal.add(txtnicknamedsp);
         txtnicknamedsp.setBounds(100, 40, 270, 30);
 
-        getContentPane().add(PCabezal);
+        GenOC.getContentPane().add(PCabezal);
         PCabezal.setBounds(10, 30, 770, 80);
 
         SPArticulos.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -149,7 +269,7 @@ public int cont=0;
         ));
         SPArticulos.setViewportView(TArticulos);
 
-        getContentPane().add(SPArticulos);
+        GenOC.getContentPane().add(SPArticulos);
         SPArticulos.setBounds(10, 190, 770, 240);
 
         PBotones1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -166,7 +286,7 @@ public int cont=0;
         });
         PBotones1.add(Btn_Cancelar1);
 
-        getContentPane().add(PBotones1);
+        GenOC.getContentPane().add(PBotones1);
         PBotones1.setBounds(400, 500, 380, 50);
 
         PAddProducto.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -180,7 +300,7 @@ public int cont=0;
         });
         PAddProducto.add(Btn_AddProd);
 
-        getContentPane().add(PAddProducto);
+        GenOC.getContentPane().add(PAddProducto);
         PAddProducto.setBounds(10, 150, 160, 50);
 
         PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -189,6 +309,7 @@ public int cont=0;
         TxtTotal.setEditable(false);
         TxtTotal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         TxtTotal.setText("Total");
+        TxtTotal.setEnabled(false);
         TxtTotal.setFocusable(false);
         PTotales.add(TxtTotal);
 
@@ -197,16 +318,18 @@ public int cont=0;
         TxtTotalVal.setForeground(new java.awt.Color(1, 1, 1));
         TxtTotalVal.setText("Total");
         TxtTotalVal.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        TxtTotalVal.setEnabled(false);
         TxtTotalVal.setFocusable(false);
         PTotales.add(TxtTotalVal);
 
-        getContentPane().add(PTotales);
+        GenOC.getContentPane().add(PTotales);
         PTotales.setBounds(400, 420, 380, 50);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
-        getContentPane().add(BackgroundLabel);
+        GenOC.getContentPane().add(BackgroundLabel);
         BackgroundLabel.setBounds(0, 0, 800, 570);
+
+        getContentPane().add(GenOC);
+        GenOC.setBounds(0, 0, 800, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -242,26 +365,109 @@ public int cont=0;
 
     private void Btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Cancelar1ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel vacio = new DefaultTableModel(0,0);
+       
         TArticulos.setModel(vacio);
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
 
+    private void btn_selCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selCliActionPerformed
+        // TODO add your handling code here:
+        SelCliente.setVisible(true);
+        SelCliente.toFront();
+        HabilitarGenOC(false);
+        
+    }//GEN-LAST:event_btn_selCliActionPerformed
+
+    private void BtnSelCli_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_ActualizarActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_BtnSelCli_ActualizarActionPerformed
+
+    private void BtnSelCli_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_SeleccionarActionPerformed
+        try
+        {
+            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(),0);
+            DataUsuario dc = Factory.getInstance().getOrdenCompraController().getDataCliente(nick);
+            txtNomAp.setText((dc.getApellido()+", "+dc.getNombre()));
+            txtnicknamedsp.setText(dc.getNickname());
+            txtemaildsp.setText(dc.getEmail());
+//            TCliente.setModel(vacio);
+            SelCliente.setVisible(false);
+            HabilitarGenOC(true);
+        }
+        catch (IndexOutOfBoundsException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnSelCli_SeleccionarActionPerformed
+
+    private void BtnSelCli_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_CancelarActionPerformed
+//        TCliente.setModel(vacio);
+        SelCliente.setVisible(false);
+        HabilitarGenOC(true);
+    }//GEN-LAST:event_BtnSelCli_CancelarActionPerformed
+
+    private void Actualizar(){
+
+        String data[][] = {};
+        String header[] = new String[]{"Nickname", "eMail"};
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
+        {
+            boolean[] canEdit = new boolean[]{false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        TCliente.getColumnModel().getColumn(0).setPreferredWidth(23);
+        TCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        TCliente.setModel(DTM2);
+        List<DataUsuario> clientes = Factory.getInstance().getOrdenCompraController().getClientes();
+        
+        int c = clientes.size();
+        for (int i = 0; i < c; i++) {
+            String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
+            DTM2.addRow(datos);
+        }
+    }    
+    
+    private void HabilitarGenOC(boolean flg){
+        GenOC.setFocusable(flg);
+//        GenOC.setEnabled(flg);
+        Btn_Aceptar1.setEnabled(flg);
+        Btn_AddProd.setEnabled(flg);
+        Btn_Cancelar1.setEnabled(flg);
+        btn_selCli.setVisible(flg);
+        btn_selCli.setEnabled(flg);   
+        TArticulos.setEnabled(flg);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundLabel;
+    private javax.swing.JButton BtnSelCli_Actualizar;
+    private javax.swing.JButton BtnSelCli_Cancelar;
+    private javax.swing.JButton BtnSelCli_Seleccionar;
     private javax.swing.JButton Btn_Aceptar1;
     private javax.swing.JButton Btn_AddProd;
     private javax.swing.JButton Btn_Cancelar1;
+    private javax.swing.JInternalFrame GenOC;
     private javax.swing.JPanel PAddProducto;
     private javax.swing.JPanel PBotones1;
     private javax.swing.JPanel PCabezal;
     private javax.swing.JPanel PTotales;
     private javax.swing.JScrollPane SPArticulos;
+    private javax.swing.JInternalFrame SelArticulo;
+    private javax.swing.JPanel SelCliBtnPanel;
+    private javax.swing.JPanel SelCliTPanel;
+    private javax.swing.JInternalFrame SelCliente;
     private javax.swing.JTable TArticulos;
+    private javax.swing.JTable TCliente;
     private javax.swing.JTextField TxtCliente;
     private javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField TxtTotalVal;
     private javax.swing.JButton btn_selCli;
+    private javax.swing.JScrollPane jScrollVerClientes;
     private javax.swing.JTextField txtNomAp;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtemaildsp;

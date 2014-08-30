@@ -7,6 +7,7 @@ package Store;
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataProducto;
 import direct.market.factory.Factory;
+import java.beans.PropertyVetoException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -96,6 +97,8 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         listCategorias = new javax.swing.JList();
         lblMensaje = new javax.swing.JLabel();
 
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Ver Informacion de Producto");
         getContentPane().setLayout(null);
 
@@ -180,7 +183,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jPanel3.add(jButton1);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(620, 500, 170, 50);
+        jPanel3.setBounds(610, 500, 170, 50);
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -224,7 +227,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +270,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEspecificacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
         );
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
@@ -282,7 +285,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         );
         panelImagenLayout.setVerticalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 328, Short.MAX_VALUE)
+            .addGap(0, 339, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlImagenesLayout = new javax.swing.GroupLayout(pnlImagenes);
@@ -290,7 +293,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlImagenesLayout.setHorizontalGroup(
             pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlImagenesLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sliderImagenes, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
@@ -317,12 +320,12 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             .addGroup(pnlCategoriasLayout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         pnlCategoriasLayout.setVerticalGroup(
             pnlCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCategoriasLayout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -333,14 +336,14 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlInformacion.setBounds(10, 10, 330, 450);
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(440, 20, 350, 470);
+        jPanel4.setBounds(430, 20, 350, 470);
 
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(lblMensaje);
         lblMensaje.setBounds(0, -1, 800, 570);
 
-        pack();
+        setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

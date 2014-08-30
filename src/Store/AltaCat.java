@@ -4,6 +4,20 @@
  */
 package Store;
 
+import direct.market.datatype.DataCategoria;
+import direct.market.datatype.DataProducto;
+import direct.market.exceptions.CategoryException;
+import direct.market.factory.Factory;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+
 /**
  *
  * @author ubuntu
@@ -24,6 +38,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
     
     public AltaCat() {
         initComponents();
+        cargarCategorias();
     }
 
     /**
@@ -35,6 +50,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         ElegirPadre = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -43,16 +59,21 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         treeCategoria = new javax.swing.JTree();
         jPanel4 = new javax.swing.JPanel();
-        Cancelar = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         Crear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
-        ProductosCheckBox = new javax.swing.JCheckBox();
+        catProductos = new javax.swing.JRadioButton();
+        catSubCat = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         NombreCat = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        lblMensaje = new javax.swing.JLabel();
 
+        setMaximizable(true);
+        setMaximumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
 
         jPanel5.setBackground(new java.awt.Color(214, 228, 237));
@@ -79,7 +100,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel1.add(jTextField1);
 
         PadreCat.setEditable(false);
-        PadreCat.setText("Por defecto");
         jPanel1.add(PadreCat);
 
         getContentPane().add(jPanel1);
@@ -88,6 +108,8 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
         treeCategoria.setBorder(null);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
+        treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(treeCategoria);
 
         getContentPane().add(jScrollPane1);
@@ -97,15 +119,20 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel4.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
 
-        Cancelar.setText("Cancelar");
-        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelarActionPerformed(evt);
+                CerrarActionPerformed(evt);
             }
         });
-        jPanel4.add(Cancelar);
+        jPanel4.add(Cerrar);
 
         Crear.setText("Crear");
+        Crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearActionPerformed(evt);
+            }
+        });
         jPanel4.add(Crear);
 
         getContentPane().add(jPanel4);
@@ -113,18 +140,22 @@ public class AltaCat extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(214, 228, 237));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel3.setLayout(new java.awt.GridLayout(2, 1, 8, 8));
+        jPanel3.setLayout(new java.awt.GridLayout(3, 0));
 
         jTextField5.setEditable(false);
-        jTextField5.setText("La categoria contendra productos?");
+        jTextField5.setText("Seleccione tipo de Categoria");
         jPanel3.add(jTextField5);
 
-        ProductosCheckBox.setBackground(new java.awt.Color(254, 254, 254));
-        ProductosCheckBox.setText("La carpeta a creear solo contendra productos");
-        jPanel3.add(ProductosCheckBox);
+        buttonGroup1.add(catProductos);
+        catProductos.setText("La nueva Categoria solamente contedrá productos");
+        jPanel3.add(catProductos);
+
+        buttonGroup1.add(catSubCat);
+        catSubCat.setText("La nueva Categoría solamente contendrá sub Categorías");
+        jPanel3.add(catSubCat);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(330, 240, 440, 110);
+        jPanel3.setBounds(330, 240, 440, 160);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -142,24 +173,112 @@ public class AltaCat extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 570);
 
+        lblMensaje.setForeground(new java.awt.Color(240, 84, 84));
+        getContentPane().add(lblMensaje);
+        lblMensaje.setBounds(20, 540, 100, 0);
+
         setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        ACatInstancia = null;
+        this.dispose();
+    }                                        
+
     private void ElegirPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirPadreActionPerformed
-        // TODO add your handling code here:
+        PadreCat.setText(treeCategoria.getLastSelectedPathComponent().toString());
     }//GEN-LAST:event_ElegirPadreActionPerformed
 
-    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
+        if(catProductos.isSelected() || catSubCat.isSelected()){
+            boolean tipoCat = (catProductos.isSelected()?true:false);
+            try{
+                String padre = (PadreCat.getText().isEmpty()?"Categorias":PadreCat.getText());
+                Factory.getInstance().getCategoriaController().altaCategoria(padre, NombreCat.getText(), tipoCat);
+
+                JOptionPane.showMessageDialog(this, "Categoria creada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+
+                PadreCat.setText("");
+                NombreCat.setText("");
+                buttonGroup1.clearSelection();
+                
+                DefaultMutableTreeNode nodoPadre;
+                if(treeCategoria.getLastSelectedPathComponent().toString().equals("")){
+                    nodoPadre = searchNode(padre);
+                }else{
+                    nodoPadre = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+                }
+                
+                DefaultMutableTreeNode nuevoHijo = new DefaultMutableTreeNode(NombreCat.getText());
+                DefaultTreeModel model = (DefaultTreeModel) treeCategoria.getModel();
+                model.insertNodeInto(nuevoHijo, nodoPadre, nodoPadre.getChildCount());
+                
+                treeCategoria.setModel(model);
+                model.reload();
+                
+            }catch (CategoryException ex){
+                JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el tipo de Categoria", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_CrearActionPerformed
+
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        ACatInstancia = null;
         this.dispose();
-    }//GEN-LAST:event_CancelarActionPerformed
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    public DefaultMutableTreeNode searchNode(String nodeStr) {
+        DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
+
+        DefaultMutableTreeNode node = null;
+        Enumeration e = raiz.breadthFirstEnumeration();
+        while (e.hasMoreElements()) {
+            node = (DefaultMutableTreeNode) e.nextElement();
+            if (nodeStr.equals(node.getUserObject().toString())) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private void cargarCategorias() {
+        try {
+
+            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
+            DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
+            DefaultMutableTreeNode nuevo;
+            DefaultMutableTreeNode padre;
+            
+            for (DataCategoria dc : categorias) {
+                if(!dc.isContieneProductos()){
+                    if (dc.getParent().equals("Categorias")) {
+                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                        root.add(nuevo);
+                    } else {
+                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                        padre = searchNode(dc.getParent());
+                        modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Cancelar;
+    private javax.swing.JButton Cerrar;
     private javax.swing.JButton Crear;
     private javax.swing.JButton ElegirPadre;
     private javax.swing.JTextField NombreCat;
     private javax.swing.JTextField PadreCat;
-    private javax.swing.JCheckBox ProductosCheckBox;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton catProductos;
+    private javax.swing.JRadioButton catSubCat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -170,6 +289,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel lblMensaje;
     private javax.swing.JTree treeCategoria;
     // End of variables declaration//GEN-END:variables
     private static AltaCat ACatInstancia;
