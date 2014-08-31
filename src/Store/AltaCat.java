@@ -5,18 +5,15 @@
 package Store;
 
 import direct.market.datatype.DataCategoria;
-import direct.market.datatype.DataProducto;
 import direct.market.exceptions.CategoryException;
 import direct.market.factory.Factory;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 /**
  *
@@ -27,15 +24,14 @@ public class AltaCat extends javax.swing.JInternalFrame {
     /**
      * Creates new form AltaCat
      */
-    
     public static AltaCat getInstancia() {
         if (ACatInstancia == null) {
             ACatInstancia = new AltaCat();
-            
+
         }
         return ACatInstancia;
     }
-    
+
     public AltaCat() {
         initComponents();
         cargarCategorias();
@@ -180,29 +176,29 @@ public class AltaCat extends javax.swing.JInternalFrame {
         setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {
         ACatInstancia = null;
         this.dispose();
-    }                                        
+    }
 
     private void ElegirPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirPadreActionPerformed
         PadreCat.setText(treeCategoria.getLastSelectedPathComponent().toString());
     }//GEN-LAST:event_ElegirPadreActionPerformed
 
     private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
-        if(catProductos.isSelected() || catSubCat.isSelected()){
-            boolean contieneProductos = (catProductos.isSelected()?true:false);
-            try{
-                String padre = (PadreCat.getText().isEmpty()?"Categorias":PadreCat.getText());
+        if (catProductos.isSelected() || catSubCat.isSelected()) {
+            boolean contieneProductos = (catProductos.isSelected() ? true : false);
+            try {
+                String padre = (PadreCat.getText().isEmpty() ? "Categorias" : PadreCat.getText());
                 Factory.getInstance().getCategoriaController().altaCategoria(padre, NombreCat.getText(), contieneProductos);
 
                 JOptionPane.showMessageDialog(this, "Categoria creada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-              
-                if(catSubCat.isSelected()){
+
+                if (catSubCat.isSelected()) {
                     DefaultMutableTreeNode nodoPadre;
-                    if(treeCategoria.getLastSelectedPathComponent().toString().equals("")){
+                    if (padre.equals("Categorias") /*!treeCategoria.isSelectionEmpty() && treeCategoria.getLastSelectedPathComponent().toString().equals("")*/) {
                         nodoPadre = searchNode(padre);
-                    }else{
+                    } else {
                         nodoPadre = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
                     }
 
@@ -213,16 +209,16 @@ public class AltaCat extends javax.swing.JInternalFrame {
                     treeCategoria.setModel(model);
                     model.reload();
                 }
-                
+
                 PadreCat.setText("");
                 NombreCat.setText("");
                 buttonGroup1.clearSelection();
-                
-                
-            }catch (CategoryException ex){
+
+
+            } catch (CategoryException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar el tipo de Categoria", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_CrearActionPerformed
@@ -249,33 +245,33 @@ public class AltaCat extends javax.swing.JInternalFrame {
 
     private void cargarCategorias() {
         try {
-
             List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
             DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
             DefaultMutableTreeNode nuevo;
             DefaultMutableTreeNode padre;
-            
-            for (DataCategoria dc : categorias) {
-                if(!dc.isContieneProductos()){
-                    if (dc.getParent().equals("Categorias")) {
-                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                        root.add(nuevo);
+
+            if (!categorias.isEmpty()) {
+                for (DataCategoria dc : categorias) {
+                    if (!dc.isContieneProductos()) {
+                        if (dc.getParent().equals("Categorias")) {
+                            nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                            root.add(nuevo);
+                        } else {
+                            nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                            padre = searchNode(dc.getParent());
+                            modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+                        }
                     } else {
-                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                        padre = searchNode(dc.getParent());
-                        modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+                        //mejora a futuro:
+                        //codigo para cargar las categorias de productos con otro iconito
                     }
-                }else{
-                    //mejora a futuro:
-                    //codigo para cargar las categorias de productos con otro iconito
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cerrar;
     private javax.swing.JButton Crear;

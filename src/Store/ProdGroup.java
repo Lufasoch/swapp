@@ -8,6 +8,7 @@ import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataEspecificacionProducto;
 import direct.market.datatype.DataProducto;
 import direct.market.datatype.DataUsuario;
+import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.awt.Image;
 import java.io.File;
@@ -16,8 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,7 +24,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -729,6 +727,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             //TCategoriasC.getText() tiene todas las categorias separadas por ", "
             //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
             //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
+            
             DataProducto dataProd = new DataProducto();
             //Cargo datos basicos del dataProd
             dataProd.setNombre(TTituloC.getText());
@@ -767,12 +766,16 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
             dataEsp.setImagenes(imagenes);
             
+            dataProd.setDataEspecificacion(dataEsp);
+            
             //Llamo a altaProducto con el dataProducto cargado.
             Factory.getInstance().getProductoController().altaProducto(dataProd);
             
             NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
+        }catch(ProductoException pe){
+            JOptionPane.showMessageDialog(this, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);            
         }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);            
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_RegistrarTodoActionPerformed
 
