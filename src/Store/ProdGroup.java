@@ -8,6 +8,7 @@ import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataEspecificacionProducto;
 import direct.market.datatype.DataProducto;
 import direct.market.datatype.DataUsuario;
+import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.awt.Image;
@@ -39,6 +40,9 @@ import javax.swing.tree.DefaultTreeModel;
  * @author ubuntu
  */
 public class ProdGroup extends javax.swing.JInternalFrame {
+
+    private int NoImaCont = 0;
+    private String ImaI[] = new String[10];
 
     /**
      * Creates new form ProdGroup
@@ -670,34 +674,37 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActualizarCatActionPerformed
 
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
-        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-        if (seleccionado != null) {
-            String nombreCategoria = seleccionado.getUserObject().toString();
-            DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
-            if (dataCat.isContieneProductos()) {
-                if (TCategoriasC.getText().equals("")) {
-                    //CatE[contCat] = seleccionado.toString();
-                    TCategoriasC.setText("- " + seleccionado.toString() + " -");
-                } else {
-                    if (TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")) {
-                        JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
-                    } else {
+        try {
+            DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+            if (seleccionado != null) {
+                String nombreCategoria = seleccionado.getUserObject().toString();
+                DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
+                if (dataCat.isContieneProductos()) {
+                    if (TCategoriasC.getText().equals("")) {
                         //CatE[contCat] = seleccionado.toString();
-                        TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                        TCategoriasC.setText("- " + seleccionado.toString() + " -");
+                    } else {
+                        if (TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")) {
+                            JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
+                        } else {
+                            //CatE[contCat] = seleccionado.toString();
+                            TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que contenga productos", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que contenga productos", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Warning", JOptionPane.WARNING_MESSAGE);
+        } catch (CategoryException ce) {
+            JOptionPane.showMessageDialog(this, ce.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         }
+
         //contCat++;
         HabilitarTodo();
         SelectCat.setVisible(false);
     }//GEN-LAST:event_SeleccionarCatActionPerformed
-    private int NoImaCont = 0;
-    private String ImaI[] = new String[10];
 
     private void CancelarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarTodoActionPerformed
         NoImaCont = 0;
@@ -718,12 +725,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
             DataProducto dataProd = new DataProducto();
             //Cargo datos basicos del dataProd
+            //      falta verificar campos no vacios (unicidad adentro?)
             dataProd.setNombre(TTituloC.getText());
             dataProd.setReferencia(TNoRefC.getText());
 
             //Cargo las categorias ingresadas en una lista de DataCategorias
+            //      falta verificar que tenga al menos una categoria
             List<DataCategoria> listaDataCat = new ArrayList<DataCategoria>();
-            //List<DataCategoria> allCategorias = Factory.getInstance().getCategoriaController().getCategorias();
 
             String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+", "");
             String listaNombreCategorias[] = listaCatRecortada.split("-");
@@ -734,17 +742,20 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             dataProd.setDataCategorias(listaDataCat);
 
             //Cargo dataProveedor
+            //      falta verificar campo no vacio
             DataUsuario dataProv = new DataUsuario();
             dataProv.setNickname(TProveedorC.getText());
             dataProd.setDataProveedor(dataProv);
 
             //Defino DataEspecificacion
+            //      falta verificar campos no vacios
             DataEspecificacionProducto dataEsp = new DataEspecificacionProducto();
             dataEsp.setDescripcion(TDescripcionC.getText());
             dataEsp.setEspecificacion(TEspecC.getText());
             dataEsp.setPrecio(Double.parseDouble(TPrecioC.getText()));
 
             //Cargo imagenes a la lista de string de imagenes
+            //      falta verificar al menos una (ver caso de uso)
             List<String> imagenes = new ArrayList<String>();
             for (int j = 0; j < ImaList.getComponentCount(); j++) {
                 imagenes.add(ImaList.getModel().getElementAt(j).toString());

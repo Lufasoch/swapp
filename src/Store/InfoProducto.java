@@ -6,9 +6,11 @@ package Store;
 
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataProducto;
+import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -372,7 +374,12 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             //lista categorias
             DefaultListModel dlm = new DefaultListModel();
 
-            List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+            List<DataCategoria> catList = new ArrayList<DataCategoria>();
+            try {
+                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+            } catch (CategoryException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             for(DataCategoria dc: catList){
                 dlm.addElement(dc.getNombre());
@@ -393,7 +400,12 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         DefaultListModel dlm = new DefaultListModel();
         if (seleccionado != null) {
             if (seleccionado.isLeaf()) {//arreglar
-                List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+                List<DataProducto> productos = new ArrayList<DataProducto>();
+                try {
+                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+                } catch (CategoryException ex) {
+                    Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 for (DataProducto dp : productos) {
                     dlm.addElement(dp.getNombre());
