@@ -4,10 +4,12 @@
  */
 package Store;
 
+import direct.market.datatype.DataOC;
+import direct.market.domain.OrdenCompra;
+import direct.market.factory.Factory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import javax.swing.JInternalFrame;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,9 +38,10 @@ public class InfoOC extends javax.swing.JInternalFrame {
     
     public void Actualizar()
     {
-        int[] NOrdenes = {458, 5366, 7552};
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date[] fechaOC = {new Date(99,7,14), new Date(106,11,8), new Date(112,3,21),};
+//        int[] NOrdenes = {458, 5366, 7552};
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Date[] fechaOC = {new Date(99,7,14), new Date(106,11,8), new Date(112,3,21),};
+        List<DataOC> ordenesCompraList= Factory.getInstance().getOrdenCompraController().getOrdenesCompra();
         DefaultTableModel DTM = new DefaultTableModel()
             {
                 boolean[] canEdit = new boolean[]{false, false};
@@ -52,15 +55,20 @@ public class InfoOC extends javax.swing.JInternalFrame {
             DTM.setColumnIdentifiers(header);
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 //ARRIBA//CAMBIAR MODELO DE LA TABLA
-
-            int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-            while(cont < 3)
-            {
-                //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
-                DTM.addRow(new Object[] { NOrdenes[cont], sdf.format(fechaOC[cont]) }); 
-                cont++;
-            }
+            int c = ordenesCompraList.size();
+        for (int i = 0; i < c; i++) {
+            String datos[] = {Integer.valueOf(ordenesCompraList.get(i).getNumero()).toString(), sdf.format(ordenesCompraList.get(i).getFecha())};
+            DTM.addRow(datos);
+        }
+//            int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
+//            while(cont < 3)
+//            {
+//                //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
+//          //      DTM.addRow(new Object[] { NOrdenes[cont], sdf.format(fechaOC[cont]) }); 
+//                cont++;
+//            }
     }    
     
     /**

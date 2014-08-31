@@ -415,13 +415,13 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             //ARRIBA//CAMBIAR MODELO DE LA TABLA
-            /*if (du != null) {
+            if (du != null) {
                 int lc = du.getListaCompras().size();
                 for (int i = 0; i < lc; i++) {
                     Integer datos[] = {du.getListaCompras().get(i).getNumero()};
                     DTM.addRow(datos);
                 }
-            }*/
+            }
 
             /*
              int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        

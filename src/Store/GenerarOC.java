@@ -540,6 +540,8 @@ double totalOC;
                     double totallinea= cantidad*preciounitario;
                     Object linea[] = {dp.getReferencia(),dp.getNombre(),cantidad,preciounitario,totallinea};
                     totalOC = totalOC + totallinea;
+                    TxtTotalVal.setText(Double.valueOf(totalOC).toString());
+                    
                     ta.addRow(linea);
                     TArticulos.setModel(ta);
                     SelArticulo.setVisible(false);
@@ -585,13 +587,13 @@ double totalOC;
         if (max<=0)
             throw new OCException("No existen articulos en la Orden de Compra");
         
-        for (int i=1; i>=max;i++){
+        for (int i=0; i<max;i++){
             int cantidad = (Integer) ta.getValueAt(i, 2);         
             DataLineaOC dl= new DataLineaOC(cantidad,Factory.getInstance().getProductoController().buscarProductoPorName(ta.getValueAt(i, 1).toString()));
             lineas.add(dl);
         }
-            
-        numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc, lineas);
+           doc.setLineas(lineas);
+        numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
         String msg= "OC Número " + numOC + " creada correctamente";
         JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
         HabilitarGenOC(false);
@@ -652,8 +654,8 @@ double totalOC;
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     root.add(nuevo);
                     if (dc.isContieneProductos()){
-                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
-                        for (DataProducto dp : productos) {
+//                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
+                        for (DataProducto dp : dc.getDataProductos()) {
                             nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
                             nuevo.add(nuevoprod);                          
                         }                       
