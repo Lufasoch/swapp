@@ -4,12 +4,17 @@
  */
 package Store;
 import direct.market.datatype.DataCategoria;
+import direct.market.datatype.DataLineaOC;
+import direct.market.datatype.DataOC;
 import direct.market.datatype.DataProducto;
 import direct.market.datatype.DataUsuario;
 import javax.swing.table.DefaultTableModel;
-import direct.market.domain.Producto;
-import direct.market.domain.EspecificacionProducto;
+import direct.market.exceptions.CategoryException;
+import direct.market.exceptions.OCException;
 import direct.market.factory.Factory;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,7 +33,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
 public int cont=0;
+Date fechaOC = new Date();
 DefaultTableModel vacio = new DefaultTableModel(0,0);
+float totalOC;
     /**
      * Creates new form GenerarOC
      */
@@ -75,6 +82,8 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         Actualizar();
         cargarCategorias();
         GenOC.setVisible(true);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        txtFecha.setText(sdf.format(fechaOC));
 
         
         
@@ -97,7 +106,6 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         btnSelArt_Seleccionar = new javax.swing.JButton();
         lblcantidad = new javax.swing.JTextField();
         txtcantidad = new javax.swing.JTextField();
-        btnSelArt_Actualizar = new javax.swing.JButton();
         btnSelArt_Cancelar = new javax.swing.JButton();
         SelCliente = new javax.swing.JInternalFrame();
         SelCliTPanel = new javax.swing.JPanel();
@@ -123,6 +131,9 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         Btn_Cancelar1 = new javax.swing.JButton();
         PAddProducto = new javax.swing.JPanel();
         Btn_AddProd = new javax.swing.JButton();
+        PFecha = new javax.swing.JPanel();
+        lblFecha = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
         PTotales = new javax.swing.JPanel();
         TxtTotal = new javax.swing.JTextField();
         TxtTotalVal = new javax.swing.JTextField();
@@ -147,7 +158,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         panelCategoria.setLayout(panelCategoriaLayout);
         panelCategoriaLayout.setHorizontalGroup(
             panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
         );
         panelCategoriaLayout.setVerticalGroup(
             panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,14 +188,6 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         lblcantidad.setFocusable(false);
         jPanel2.add(lblcantidad);
         jPanel2.add(txtcantidad);
-
-        btnSelArt_Actualizar.setText("Actualizar");
-        btnSelArt_Actualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelArt_ActualizarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnSelArt_Actualizar);
 
         btnSelArt_Cancelar.setText("Cancelar");
         btnSelArt_Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +315,6 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         txtemaildsp.setEditable(false);
         txtemaildsp.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtemaildsp.setForeground(new java.awt.Color(1, 1, 1));
-        txtemaildsp.setText("Email");
         txtemaildsp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         txtemaildsp.setFocusable(false);
         PCabezal.add(txtemaildsp);
@@ -337,7 +339,6 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         txtNomAp.setEditable(false);
         txtNomAp.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtNomAp.setForeground(new java.awt.Color(1, 1, 1));
-        txtNomAp.setText("Nombre, Apellido");
         txtNomAp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         txtNomAp.setFocusable(false);
         PCabezal.add(txtNomAp);
@@ -346,14 +347,13 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         txtnicknamedsp.setEditable(false);
         txtnicknamedsp.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtnicknamedsp.setForeground(new java.awt.Color(1, 1, 1));
-        txtnicknamedsp.setText("Nickname");
         txtnicknamedsp.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         txtnicknamedsp.setFocusable(false);
         PCabezal.add(txtnicknamedsp);
         txtnicknamedsp.setBounds(100, 40, 270, 30);
 
         GenOC.getContentPane().add(PCabezal);
-        PCabezal.setBounds(10, 30, 770, 80);
+        PCabezal.setBounds(10, 50, 770, 80);
 
         SPArticulos.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -374,6 +374,11 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         PBotones1.setLayout(new java.awt.GridLayout(1, 2));
 
         Btn_Aceptar1.setText("Aceptar");
+        Btn_Aceptar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Aceptar1ActionPerformed(evt);
+            }
+        });
         PBotones1.add(Btn_Aceptar1);
 
         Btn_Cancelar1.setText("Cancelar");
@@ -401,6 +406,28 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         GenOC.getContentPane().add(PAddProducto);
         PAddProducto.setBounds(10, 150, 160, 50);
 
+        PFecha.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        PFecha.setLayout(null);
+
+        lblFecha.setEditable(false);
+        lblFecha.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        lblFecha.setText("Fecha");
+        lblFecha.setEnabled(false);
+        lblFecha.setFocusable(false);
+        PFecha.add(lblFecha);
+        lblFecha.setBounds(8, 8, 90, 34);
+
+        txtFecha.setEditable(false);
+        txtFecha.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        txtFecha.setForeground(new java.awt.Color(1, 1, 1));
+        txtFecha.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        txtFecha.setFocusable(false);
+        PFecha.add(txtFecha);
+        txtFecha.setBounds(102, 8, 180, 34);
+
+        GenOC.getContentPane().add(PFecha);
+        PFecha.setBounds(490, 10, 290, 50);
+
         PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PTotales.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -414,7 +441,6 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         TxtTotalVal.setEditable(false);
         TxtTotalVal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         TxtTotalVal.setForeground(new java.awt.Color(1, 1, 1));
-        TxtTotalVal.setText("Total");
         TxtTotalVal.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         TxtTotalVal.setFocusable(false);
         PTotales.add(TxtTotalVal);
@@ -435,33 +461,9 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
     
     private void Btn_AddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddProdActionPerformed
         // TODO add your handling code here:
-        //hardcode hasta nuevo aviso ! :p
-//        Producto p = new Producto("Producto1","P1",null);
-//        EspecificacionProducto esp = new EspecificacionProducto();
-//        esp.setDescripcion("Soborocotongo");
-//        esp.setEspecificaciones("Soborocotongo");
-//        esp.setPrecio(100);
-//        p.setEspecificacion(esp);  
-//        //
-//        
-//        DefaultTableModel tart= (DefaultTableModel) TArticulos.getModel();
-//        tart.addRow(new Object[]{});
-//        TArticulos.setModel(tart);
-//        int col = 0;
-//        TArticulos.setValueAt(p.getReferencia(), cont, col);
-//        col++;
-//        TArticulos.setValueAt(p.getNombre(), cont, col);
-//        col++;
-//        TArticulos.setValueAt(0, cont, col);
-//        col++;
-//        TArticulos.setValueAt(esp.getPrecio(), cont, col);
-//        col++;
-//        TArticulos.setValueAt(0, cont, col);
-//        cont++;
-        cargarCategorias();
-        SelArticulo.setVisible(true);      
-        SelCliente.toFront();
-        
+
+        SelArticulo.setVisible(true);                    
+        Btn_AddProd.setVisible(false);
         HabilitarGenOC(false);
              
     }//GEN-LAST:event_Btn_AddProdActionPerformed
@@ -470,6 +472,13 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         // TODO add your handling code here:
        
         TArticulos.setModel(vacio);
+        txtemaildsp.setText("");
+        txtnicknamedsp.setText("");
+        txtNomAp.setText("");
+        TxtTotalVal.setText("");
+        txtFecha.setText("");
+        HabilitarGenOC(true);
+        Btn_Cancelar1.setText("Cancelar");
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
 
@@ -477,6 +486,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         // TODO add your handling code here:
         SelCliente.setVisible(true);
         SelCliente.toFront();
+        btn_selCli.setVisible(false);
         HabilitarGenOC(false);
         
     }//GEN-LAST:event_btn_selCliActionPerformed
@@ -489,7 +499,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         try
         {
             String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(),0);
-            DataUsuario dc = Factory.getInstance().getOrdenCompraController().getDataCliente(nick);
+            DataUsuario dc = Factory.getInstance().getUsuarioController().getDataCliente(nick);
             txtNomAp.setText((dc.getApellido()+", "+dc.getNombre()));
             txtnicknamedsp.setText(dc.getNickname());
             txtemaildsp.setText(dc.getEmail());
@@ -506,22 +516,92 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
     private void BtnSelCli_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_CancelarActionPerformed
 
         SelCliente.setVisible(false);
+        btn_selCli.setVisible(true);
         HabilitarGenOC(true);
     }//GEN-LAST:event_BtnSelCli_CancelarActionPerformed
 
     private void btnSelArt_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_SeleccionarActionPerformed
+        
+        try{
+            DefaultTreeModel tc = (DefaultTreeModel) treeCategoria.getModel();
+            DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+            if (seleccionado!=null){
+                if ((seleccionado.isLeaf() && (!"Vacía".equals(seleccionado.getUserObject().toString())))){
+                    DataProducto dp = Factory.getInstance().getProductoController().buscarProductoPorName(seleccionado.getUserObject().toString());
+                    DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();                    
+                    int cantidad = Integer.parseInt(txtcantidad.getText());
+                    if (cantidad == 0){
+                        throw new CategoryException("La cantidad debe ser mayor a 0.");                        
+                    }
 
+                    float preciounitario = dp.getDataEspecificacion().getPrecio();
+                    float totallinea= cantidad*preciounitario;
+                    Object linea[] = {dp.getReferencia(),dp.getNombre(),cantidad,preciounitario,totallinea};
+                    totalOC = totalOC + totallinea;
+                    ta.addRow(linea);
+                    TArticulos.setModel(ta);
+                    SelArticulo.setVisible(false);
+                    Btn_AddProd.setVisible(true);
+                    HabilitarGenOC(true);
+                }else{
+                    throw new CategoryException("No ha seleccionado ningún producto.");
+                }
+                    
+                    
+                
+            }else{
+                throw new CategoryException("No ha seleccionado ningún producto.");
+            }
+
+
+            
+                    
+        }catch(CategoryException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        
+     
+            
     }//GEN-LAST:event_btnSelArt_SeleccionarActionPerformed
 
     private void btnSelArt_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_CancelarActionPerformed
         SelArticulo.setVisible(false);
+        Btn_AddProd.setVisible(true);
         HabilitarGenOC(true);
     }//GEN-LAST:event_btnSelArt_CancelarActionPerformed
 
-    private void btnSelArt_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_ActualizarActionPerformed
+    private void Btn_Aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Aceptar1ActionPerformed
         // TODO add your handling code here:
-        cargarCategorias();
-    }//GEN-LAST:event_btnSelArt_ActualizarActionPerformed
+    try {
+        int numOC = 0;
+        DataOC doc= new DataOC(numOC,fechaOC,totalOC);
+        DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
+        List<DataLineaOC> lineas = new ArrayList<DataLineaOC>();
+        int max = ta.getRowCount();
+        if (max<=0)
+            throw new OCException("No existen articulos en la Orden de Compra");
+        
+        for (int i=1; i>=max;i++){
+            int cantidad = (Integer) ta.getValueAt(i, 2);         
+            DataLineaOC dl= new DataLineaOC(cantidad,Factory.getInstance().getProductoController().buscarProductoPorName(ta.getValueAt(i, 1).toString()));
+            lineas.add(dl);
+        }
+            
+        numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc, lineas);
+        String msg= "OC Número " + numOC + " creada correctamente";
+        JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
+        HabilitarGenOC(false);
+        Btn_Cancelar1.setText("Cerrar");
+        Btn_Cancelar1.setEnabled(true);
+        
+    } catch (OCException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
+    }
+        
+
+
+        
+    }//GEN-LAST:event_Btn_Aceptar1ActionPerformed
 
     private void Actualizar(){
 
@@ -541,7 +621,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         TCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TCliente.setModel(DTM2);
-        List<DataUsuario> clientes = Factory.getInstance().getOrdenCompraController().getClientes();
+        List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
         
         int c = clientes.size();
         for (int i = 0; i < c; i++) {
@@ -550,52 +630,102 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         }
     }    
     
-    
-       private void cargarCategorias() {
+    private void cargarCategorias() {
         try {
 
             List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
 
-            DefaultTreeModel modeloTree = (DefaultTreeModel) treeCategoria.getModel();
-            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
+            DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
             DefaultMutableTreeNode nuevo;
-            DefaultMutableTreeNode nuevoprod;
             DefaultMutableTreeNode padre;
+            DefaultMutableTreeNode nuevoprod;
 
             for (DataCategoria dc : categorias) {
                 if (dc.getParent().equals("Categorias")) {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     root.add(nuevo);
                     if (dc.isContieneProductos()){
-                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
-                        List<DataProducto> productos = Factory.getInstance().getOrdenCompraController().getProductosCategoria(dc);
+                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
                         for (DataProducto dp : productos) {
-                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
+                            nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
                             nuevo.add(nuevoprod);                          
-                                    
-                        }
-                                
+                        }                       
+                    }else{
+                        nuevoprod = new DefaultMutableTreeNode("Vacía");
+                        nuevo.add(nuevoprod);  
                     }
+                        
                 } else {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     padre = searchNode(dc.getParent());
-                    modeloTree.insertNodeInto(nuevo, padre, padre.getChildCount());
+                    modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
                     if (dc.isContieneProductos()){
-                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
-                        List<DataProducto> productos = Factory.getInstance().getOrdenCompraController().getProductosCategoria(dc);
+                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
                         for (DataProducto dp : productos) {
-                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
+                            nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
                             nuevo.add(nuevoprod);                          
-                                    
-                        }
-                    }
+                        }                       
+                    }else{
+                        nuevoprod = new DefaultMutableTreeNode("Vacía");
+                        nuevo.add(nuevoprod);  
+                    }                    
+                    
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
+    }    
+//       private void cargarCategorias() {
+//           
+//           
+//           
+//           
+//        try {
+//
+//            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
+//
+//            DefaultTreeModel modeloTree = (DefaultTreeModel) treeCategoria.getModel();
+//            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
+//            DefaultMutableTreeNode nuevo;
+//            DefaultMutableTreeNode nuevoprod;
+//            DefaultMutableTreeNode padre;
+//
+//            for (DataCategoria dc : categorias) {
+//                if (dc.getParent().equals("Categorias")) {
+//                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+//                    root.add(nuevo);
+//                    if (dc.isContieneProductos()){
+//                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
+//                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
+//                        for (DataProducto dp : productos) {
+//                            nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
+//                            nuevo.add(nuevoprod);                          
+//                                    
+//                        }
+//                                
+//                    }
+//                } else {
+//                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
+//                    padre = searchNode(dc.getParent());
+//                    modeloTree.insertNodeInto(nuevo, padre, padre.getChildCount());
+//                    if (dc.isContieneProductos()){
+//                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
+//                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
+//                        for (DataProducto dp : productos) {
+//                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
+//                            nuevo.add(nuevoprod);                          
+//                                    
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//    
     
     private void HabilitarGenOC(boolean flg){
         GenOC.setFocusable(flg);
@@ -603,9 +733,8 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
         Btn_Aceptar1.setEnabled(flg);
         Btn_AddProd.setEnabled(flg);
         Btn_Cancelar1.setEnabled(flg);
-        btn_selCli.setVisible(flg);
         btn_selCli.setEnabled(flg);
-        Btn_AddProd.setVisible(flg);
+        Btn_AddProd.setEnabled(flg);
         TArticulos.setEnabled(flg);
     }
     
@@ -623,6 +752,7 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
     private javax.swing.JPanel PAddProducto;
     private javax.swing.JPanel PBotones1;
     private javax.swing.JPanel PCabezal;
+    private javax.swing.JPanel PFecha;
     private javax.swing.JPanel PTotales;
     private javax.swing.JScrollPane SPArticulos;
     private javax.swing.JInternalFrame SelArticulo;
@@ -634,16 +764,17 @@ DefaultTableModel vacio = new DefaultTableModel(0,0);
     private javax.swing.JTextField TxtCliente;
     private javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField TxtTotalVal;
-    private javax.swing.JButton btnSelArt_Actualizar;
     private javax.swing.JButton btnSelArt_Cancelar;
     private javax.swing.JButton btnSelArt_Seleccionar;
     private javax.swing.JButton btn_selCli;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollVerClientes;
+    private javax.swing.JTextField lblFecha;
     private javax.swing.JTextField lblcantidad;
     private javax.swing.JPanel panelCategoria;
     private javax.swing.JTree treeCategoria;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNomAp;
     private javax.swing.JTextField txtcantidad;
     private javax.swing.JTextField txtemail;
