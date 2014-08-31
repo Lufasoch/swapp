@@ -361,40 +361,38 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             DataProducto dprod = null;
             try {
                 dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+
+
+                tfNombre.setText(dprod.getNombre());
+                tfReferencia.setText(dprod.getReferencia());
+                tfProveedor.setText(dprod.getDataProveedor().getCompania());
+                taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
+                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
+
+                //lista categorias
+                DefaultListModel dlm = new DefaultListModel();
+
+                List<DataCategoria> catList = new ArrayList<DataCategoria>();
+                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+
+                for (DataCategoria dc : catList) {
+                    dlm.addElement(dc.getNombre());
+                }
+
+                listCategorias.setModel(dlm);
+            } catch (CategoryException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ProductoException ex) {
                 Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            tfNombre.setText(dprod.getNombre());
-            tfReferencia.setText(dprod.getReferencia());
-            tfProveedor.setText(dprod.getDataProveedor().getCompania());
-            taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
-            taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
-
-            //lista categorias
-            DefaultListModel dlm = new DefaultListModel();
-
-            List<DataCategoria> catList = new ArrayList<DataCategoria>();
-            try {
-                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
-            } catch (CategoryException ex) {
-                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            for(DataCategoria dc: catList){
-                dlm.addElement(dc.getNombre());
-
-            }
-            listCategorias.setModel(dlm);
-
-        }else{
+        } else {
             lblMensaje.setText("Debe seleccionar un producto");
         }
     }//GEN-LAST:event_btProductoActionPerformed
 
     private void btCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCategoriaActionPerformed
         lblMensaje.setText("");
-
         DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
         DefaultListModel dlm = new DefaultListModel();
@@ -406,11 +404,9 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 } catch (CategoryException ex) {
                     Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 for (DataProducto dp : productos) {
                     dlm.addElement(dp.getNombre());
                 }
-
                 listProductos.setModel(dlm);
             } else {
                 lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
@@ -419,6 +415,8 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             lblMensaje.setText("Debe seleccionar una categoria");
         }
     }//GEN-LAST:event_btCategoriaActionPerformed
+
+    
 
     private void cargarCategorias() {
         try {
@@ -438,13 +436,15 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     padre = searchNode(dc.getParent());
                     modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+
+
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InfoProducto.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCategoria;
     private javax.swing.JButton btProducto;
@@ -483,5 +483,4 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
     private static InfoProducto IProdInstancia;
-    
 }
