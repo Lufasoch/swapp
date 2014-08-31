@@ -386,7 +386,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
         DefaultListModel dlm = new DefaultListModel();
         if (seleccionado != null) {
-            if (seleccionado.isLeaf()) {
+            if (seleccionado.isLeaf()) {//arreglar
                 List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
 
                 for (DataProducto dp : productos) {

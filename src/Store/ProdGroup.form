@@ -514,6 +514,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="TProveedor">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="Proveedor:"/>
               </Properties>
               <Constraints>
@@ -524,6 +525,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="TPrecio">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="Precio:"/>
               </Properties>
               <Constraints>
@@ -554,6 +556,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="TCategorias">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="Categorias:"/>
               </Properties>
               <Constraints>
@@ -584,6 +587,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField1">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="Im&#xe1;genes:"/>
               </Properties>
               <Constraints>

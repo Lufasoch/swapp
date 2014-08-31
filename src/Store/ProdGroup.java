@@ -5,6 +5,8 @@
 package Store;
 
 import direct.market.datatype.DataCategoria;
+import direct.market.datatype.DataEspecificacionProducto;
+import direct.market.datatype.DataProducto;
 import direct.market.datatype.DataUsuario;
 import direct.market.factory.Factory;
 import java.awt.Image;
@@ -14,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -521,10 +525,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(TPrecioC);
         TPrecioC.setBounds(200, 260, 560, 27);
 
+        TProveedor.setEditable(false);
         TProveedor.setText("Proveedor:");
         jPanel3.add(TProveedor);
         TProveedor.setBounds(10, 300, 180, 27);
 
+        TPrecio.setEditable(false);
         TPrecio.setText("Precio:");
         jPanel3.add(TPrecio);
         TPrecio.setBounds(10, 260, 180, 27);
@@ -540,6 +546,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(TProveedorC);
         TProveedorC.setBounds(280, 300, 480, 27);
 
+        TCategorias.setEditable(false);
         TCategorias.setText("Categorias:");
         jPanel3.add(TCategorias);
         TCategorias.setBounds(10, 340, 180, 27);
@@ -555,6 +562,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(TCategoriasC);
         TCategoriasC.setBounds(280, 340, 480, 27);
 
+        jTextField1.setEditable(false);
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
         jTextField1.setBounds(10, 380, 180, 27);
@@ -671,16 +679,22 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
         if (seleccionado != null) {
-            if (seleccionado.isLeaf()) {//no solo siendo leaf significa que tiene productos
+            String nombreCategoria = seleccionado.getUserObject().toString();
+            DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
+            if (dataCat.isContieneProductos()) {
                 if(TCategoriasC.getText().equals(""))
                 {
                     //CatE[contCat] = seleccionado.toString();
-                    TCategoriasC.setText(seleccionado.toString());
+                    TCategoriasC.setText("- " + seleccionado.toString() + " -");
                 }
                 else
                 {
+                    if(TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")){
+                        JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
+                    }else{
                     //CatE[contCat] = seleccionado.toString();
-                    TCategoriasC.setText(TCategoriasC.getText() + ", " + seleccionado.toString());
+                    TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                    }
                 }
             }
             else
@@ -711,15 +725,55 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_LimpiarTodoActionPerformed
 
     private void RegistrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTodoActionPerformed
-        //TCategoriasC.getText() tiene todas las categorias separadas por ", "
-        //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
-        //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
-        
-        
+        try{
+            //TCategoriasC.getText() tiene todas las categorias separadas por ", "
+            //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
+            //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
+            DataProducto dataProd = new DataProducto();
+            //Cargo datos basicos del dataProd
+            dataProd.setNombre(TTituloC.getText());
+            dataProd.setReferencia(TNoRefC.getText());
+            
+            //Cargo las categorias ingresadas en una lista de DataCategorias
+            List<DataCategoria> listaDataCat = null;
+            List<DataCategoria> allCategorias = Factory.getInstance().getCategoriaController().getCategorias();
 
-        
-        
-        NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
+            String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+","");
+            String listaNombreCategorias[] = listaCatRecortada.split("-");
+            for(int i = 0; i < listaNombreCategorias.length; i++){
+                for(DataCategoria dc : allCategorias){
+                    if(dc.getNombre().equals(listaNombreCategorias[i])){
+                        listaDataCat.add(dc);
+                    }
+                }
+            }
+            dataProd.setDataCategorias(listaDataCat);
+            
+            //Cargo dataProveedor
+            DataUsuario dataProv = new DataUsuario();
+            dataProv.setNickname(TProveedorC.getText());
+            dataProd.setDataProveedor(dataProv);
+            
+            //Defino DataEspecificacion
+            DataEspecificacionProducto dataEsp = new DataEspecificacionProducto();
+            dataEsp.setDescripcion(TDescripcionC.getText());
+            dataEsp.setEspecificacion(TEspecC.getText());
+            dataEsp.setPrecio(Double.parseDouble(TPrecioC.getText()));
+            
+            //Cargo imagenes a la lista de string de imagenes
+            List<String> imagenes = null; 
+            for(int j = 0; j < ImaList.getComponentCount(); j++){
+                imagenes.add(ImaList.getModel().getElementAt(j).toString());
+            }
+            dataEsp.setImagenes(imagenes);
+            
+            //Llamo a altaProducto con el dataProducto cargado.
+            Factory.getInstance().getProductoController().altaProducto(dataProd);
+            
+            NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);            
+        }
     }//GEN-LAST:event_RegistrarTodoActionPerformed
 
     private void ElegirImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirImaButtonActionPerformed
@@ -748,10 +802,10 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             int pos = name.lastIndexOf('.');
             String ext = name.substring(pos + 1);
 
-            File directorio = new File("src/Store/Recursos/Usuarios/TempPic/");
+            File directorio = new File("src/Store/Recursos/Productos/TempPic/");
             directorio.mkdir();
 
-            File destino = new File("src/Store/Recursos/Usuarios/TempPic/tmp" + "." + ext);
+            File destino = new File("src/Store/Recursos/Productos/TempPic/tmp" + "." + ext);
             try {
                 InputStream in = new FileInputStream(fileImagen);
                 OutputStream out = new FileOutputStream(destino);
