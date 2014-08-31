@@ -35,7 +35,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 public int cont=0;
 Date fechaOC = new Date();
 DefaultTableModel vacio = new DefaultTableModel(0,0);
-float totalOC;
+double totalOC;
     /**
      * Creates new form GenerarOC
      */
@@ -158,13 +158,13 @@ float totalOC;
         panelCategoria.setLayout(panelCategoriaLayout);
         panelCategoriaLayout.setHorizontalGroup(
             panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
         );
         panelCategoriaLayout.setVerticalGroup(
             panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCategoriaLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
         );
 
         SelArticulo.getContentPane().add(panelCategoria, java.awt.BorderLayout.CENTER);
@@ -247,7 +247,7 @@ float totalOC;
         );
         SelCliTPanelLayout.setVerticalGroup(
             SelCliTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
         );
 
         SelCliente.getContentPane().add(SelCliTPanel, java.awt.BorderLayout.CENTER);
@@ -284,7 +284,7 @@ float totalOC;
         SelCliente.getContentPane().add(SelCliBtnPanel, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(SelCliente);
-        SelCliente.setBounds(0, -20, 320, 510);
+        SelCliente.setBounds(0, -20, 329, 516);
 
         GenOC.setEnabled(false);
         GenOC.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -534,8 +534,8 @@ float totalOC;
                         throw new CategoryException("La cantidad debe ser mayor a 0.");                        
                     }
 
-                    float preciounitario = dp.getDataEspecificacion().getPrecio();
-                    float totallinea= cantidad*preciounitario;
+                    double preciounitario = dp.getDataEspecificacion().getPrecio();
+                    double totallinea= cantidad*preciounitario;
                     Object linea[] = {dp.getReferencia(),dp.getNombre(),cantidad,preciounitario,totallinea};
                     totalOC = totalOC + totallinea;
                     ta.addRow(linea);
