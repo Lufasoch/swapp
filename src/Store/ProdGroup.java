@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,11 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-
 ///
-
-
-
 ///
 /**
  *
@@ -61,7 +58,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         }
         return PGInstancia;
     }
-    
+
     public DefaultMutableTreeNode searchNode(String nodeStr) {
         DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
@@ -76,37 +73,36 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         }
         return null;
     }
-    
+
     private void cargarCategorias() {
         try {
-
             List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
-
             DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
             DefaultMutableTreeNode nuevo;
             DefaultMutableTreeNode padre;
 
-            for (DataCategoria dc : categorias) {
-                if (dc.getParent().equals("Categorias")) {
-                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                    root.add(nuevo);
-                } else {
-                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                    padre = searchNode(dc.getParent());
-                    modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+            if (!categorias.isEmpty()) {
+                for (DataCategoria dc : categorias) {
+                    if (dc.getParent().equals("Categorias")) {
+                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                        root.add(nuevo);
+                    } else {
+                        nuevo = new DefaultMutableTreeNode(dc.getNombre());
+                        padre = searchNode(dc.getParent());
+                        modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
+                    }
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void ActualizarProv() {
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
-        {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -126,7 +122,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             DTM2.addRow(datos);
         }
     }
-    
+
     public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto) {
         ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
         Image img = IcoIco.getImage();
@@ -134,12 +130,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         IcoIco = new ImageIcon(newimg);
         return IcoIco;
     }
-    
-    public void DeshabilitarTodo()
-    {
+
+    public void DeshabilitarTodo() {
         RegProdIF.setFocusable(false);
-        
-        
+
+
         this.TCategorias.setFocusable(false);
         this.TCategoriasC.setFocusable(false);
         this.TDescripcion.setFocusable(false);
@@ -154,24 +149,23 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setFocusable(false);
         this.TTitulo.setFocusable(false);
         this.TTituloC.setFocusable(false);
-        
-        
+
+
         this.ImaList.setFocusable(false);
-        
-        
-        this.ElegirProvButton.setFocusable(false);        
+
+
+        this.ElegirProvButton.setFocusable(false);
         this.ElegirImaButton.setFocusable(false);
         this.ElegirCatButton.setFocusable(false);
         this.CancelarTodo.setFocusable(false);
         this.RegistrarTodo.setFocusable(false);
         this.LimpiarTodo.setFocusable(false);
     }
-    
-    public void HabilitarTodo()
-    {
+
+    public void HabilitarTodo() {
         RegProdIF.setFocusable(true);
-        
-        
+
+
         this.TCategorias.setFocusable(true);
         this.TCategoriasC.setFocusable(true);
         this.TDescripcion.setFocusable(true);
@@ -186,11 +180,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setFocusable(true);
         this.TTitulo.setFocusable(true);
         this.TTituloC.setFocusable(true);
-        
-        
+
+
         this.ImaList.setFocusable(true);
-        
-        
+
+
         this.ElegirProvButton.setFocusable(true);
         this.ElegirImaButton.setFocusable(true);
         this.ElegirCatButton.setFocusable(true);
@@ -198,16 +192,14 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.RegistrarTodo.setFocusable(true);
         this.LimpiarTodo.setFocusable(true);
     }
-    
-    public void LimpiarIma()
-    {
+
+    public void LimpiarIma() {
         txtFotoPath.setText("");
         String DirI = "Recursos/x.jpg";
         LImagen.setIcon(RZIma(DirI, LImagen.getWidth(), LImagen.getHeight()));
     }
-    
-    public void LimpiarTodo()
-    {        
+
+    public void LimpiarTodo() {
         this.TCategoriasC.setText("");
         this.TDescripcionC.setText("");
         this.TEspecC.setText("");
@@ -215,11 +207,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TPrecioC.setText("");
         this.TProveedorC.setText("");
         this.TTituloC.setText("");
-        
-        
+
+
         DefaultListModel listaModel_limpio = new DefaultListModel();
         ImaList.setModel(listaModel_limpio);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -285,6 +278,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         RegistrarTodo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        setTitle("Alta de Producto");
         getContentPane().setLayout(null);
 
         SelectProv.setVisible(false);
@@ -499,7 +493,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel1.add(TEspec);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(10, 10, 180, 136);
+        jPanel1.setBounds(10, 10, 180, 132);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 8, 8));
@@ -522,17 +516,17 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(jPanel4);
         jPanel4.setBounds(200, 120, 560, 130);
         jPanel3.add(TPrecioC);
-        TPrecioC.setBounds(200, 260, 560, 28);
+        TPrecioC.setBounds(200, 260, 560, 27);
 
         TProveedor.setEditable(false);
         TProveedor.setText("Proveedor:");
         jPanel3.add(TProveedor);
-        TProveedor.setBounds(10, 300, 180, 28);
+        TProveedor.setBounds(10, 300, 180, 27);
 
         TPrecio.setEditable(false);
         TPrecio.setText("Precio:");
         jPanel3.add(TPrecio);
-        TPrecio.setBounds(10, 260, 180, 28);
+        TPrecio.setBounds(10, 260, 180, 27);
 
         ElegirProvButton.setText("Elegir");
         ElegirProvButton.addActionListener(new java.awt.event.ActionListener() {
@@ -541,16 +535,16 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(ElegirProvButton);
-        ElegirProvButton.setBounds(200, 300, 70, 30);
+        ElegirProvButton.setBounds(200, 300, 70, 29);
 
         TProveedorC.setEditable(false);
         jPanel3.add(TProveedorC);
-        TProveedorC.setBounds(280, 300, 480, 28);
+        TProveedorC.setBounds(280, 300, 480, 27);
 
         TCategorias.setEditable(false);
         TCategorias.setText("Categorias:");
         jPanel3.add(TCategorias);
-        TCategorias.setBounds(10, 340, 180, 28);
+        TCategorias.setBounds(10, 340, 180, 27);
 
         ElegirCatButton.setText("Elegir");
         ElegirCatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -563,12 +557,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
         TCategoriasC.setEditable(false);
         jPanel3.add(TCategoriasC);
-        TCategoriasC.setBounds(280, 340, 480, 28);
+        TCategoriasC.setBounds(280, 340, 480, 27);
 
         jTextField1.setEditable(false);
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(10, 380, 180, 28);
+        jTextField1.setBounds(10, 380, 180, 27);
 
         ElegirImaButton.setText("Elegir");
         ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -621,7 +615,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel9.add(RegistrarTodo);
 
         RegProdIF.getContentPane().add(jPanel9);
-        jPanel9.setBounds(370, 514, 410, 46);
+        jPanel9.setBounds(370, 514, 410, 45);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         RegProdIF.getContentPane().add(jLabel1);
@@ -655,21 +649,17 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActializarButtonActionPerformed
 
     private void SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarActionPerformed
-        try
-        {
+        try {
             this.TProveedorC.setText(ProveedorTable.getValueAt(ProveedorTable.getSelectedRow(), 0).toString());
             HabilitarTodo();
             SelectProv.setVisible(false);
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor de la lista", "Warning", JOptionPane.WARNING_MESSAGE);
-        }        
+        }
     }//GEN-LAST:event_SeleccionarActionPerformed
 
     //private int contCat = 0;
     //String CatE[];
-    
     private void CerrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCatActionPerformed
         HabilitarTodo();
         SelectCat.setVisible(false);
@@ -685,38 +675,30 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             String nombreCategoria = seleccionado.getUserObject().toString();
             DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
             if (dataCat.isContieneProductos()) {
-                if(TCategoriasC.getText().equals(""))
-                {
+                if (TCategoriasC.getText().equals("")) {
                     //CatE[contCat] = seleccionado.toString();
                     TCategoriasC.setText("- " + seleccionado.toString() + " -");
-                }
-                else
-                {
-                    if(TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")){
+                } else {
+                    if (TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")) {
                         JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
-                    }else{
-                    //CatE[contCat] = seleccionado.toString();
-                    TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                    } else {
+                        //CatE[contCat] = seleccionado.toString();
+                        TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
                     }
                 }
-            }
-            else
-            {
+            } else {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que contenga productos", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         //contCat++;
         HabilitarTodo();
         SelectCat.setVisible(false);
     }//GEN-LAST:event_SeleccionarCatActionPerformed
-
     private int NoImaCont = 0;
     private String ImaI[] = new String[10];
-    
+
     private void CancelarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarTodoActionPerformed
         NoImaCont = 0;
         PGInstancia = null;
@@ -729,58 +711,55 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_LimpiarTodoActionPerformed
 
     private void RegistrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTodoActionPerformed
-        try{
+        try {
             //TCategoriasC.getText() tiene todas las categorias separadas por ", "
             //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
             //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
-            
+
             DataProducto dataProd = new DataProducto();
             //Cargo datos basicos del dataProd
             dataProd.setNombre(TTituloC.getText());
             dataProd.setReferencia(TNoRefC.getText());
-            
-            //Cargo las categorias ingresadas en una lista de DataCategorias
-            List<DataCategoria> listaDataCat = null;
-            List<DataCategoria> allCategorias = Factory.getInstance().getCategoriaController().getCategorias();
 
-            String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+","");
+            //Cargo las categorias ingresadas en una lista de DataCategorias
+            List<DataCategoria> listaDataCat = new ArrayList<DataCategoria>();
+            //List<DataCategoria> allCategorias = Factory.getInstance().getCategoriaController().getCategorias();
+
+            String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+", "");
             String listaNombreCategorias[] = listaCatRecortada.split("-");
-            for(int i = 0; i < listaNombreCategorias.length; i++){
-                for(DataCategoria dc : allCategorias){
-                    if(dc.getNombre().equals(listaNombreCategorias[i])){
-                        listaDataCat.add(dc);
-                    }
-                }
+            for (int i = 1; i < listaNombreCategorias.length; i++) {
+                DataCategoria dc = (DataCategoria) Factory.getInstance().getCategoriaController().getCategoriaPorNombre(listaNombreCategorias[i]);
+                listaDataCat.add(dc);
             }
             dataProd.setDataCategorias(listaDataCat);
-            
+
             //Cargo dataProveedor
             DataUsuario dataProv = new DataUsuario();
             dataProv.setNickname(TProveedorC.getText());
             dataProd.setDataProveedor(dataProv);
-            
+
             //Defino DataEspecificacion
             DataEspecificacionProducto dataEsp = new DataEspecificacionProducto();
             dataEsp.setDescripcion(TDescripcionC.getText());
             dataEsp.setEspecificacion(TEspecC.getText());
             dataEsp.setPrecio(Double.parseDouble(TPrecioC.getText()));
-            
+
             //Cargo imagenes a la lista de string de imagenes
-            List<String> imagenes = null; 
-            for(int j = 0; j < ImaList.getComponentCount(); j++){
+            List<String> imagenes = new ArrayList<String>();
+            for (int j = 0; j < ImaList.getComponentCount(); j++) {
                 imagenes.add(ImaList.getModel().getElementAt(j).toString());
             }
             dataEsp.setImagenes(imagenes);
-            
+
             dataProd.setDataEspecificacion(dataEsp);
-            
+
             //Llamo a altaProducto con el dataProducto cargado.
             Factory.getInstance().getProductoController().altaProducto(dataProd);
-            
+
             NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
-        }catch(ProductoException pe){
-            JOptionPane.showMessageDialog(this, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);            
-        }catch(Exception ex){
+        } catch (ProductoException pe) {
+            JOptionPane.showMessageDialog(this, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_RegistrarTodoActionPerformed
@@ -789,9 +768,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         DeshabilitarTodo();
         SelectIma.setVisible(true);
     }//GEN-LAST:event_ElegirImaButtonActionPerformed
-
     private File fileImagen = null;
-    
+
     private void AddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddImaEve
         JFileChooser buscarImagen = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes (bmp, jpg, png)", new String[]{"bmp", "jpg", "png"});
@@ -806,7 +784,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             ImageIcon imageIcon = new ImageIcon(fileImagen.getPath());
             LImagen.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(LImagen.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             LImagen.repaint();
-            
+
             String name = fileImagen.getName();
             int pos = name.lastIndexOf('.');
             String ext = name.substring(pos + 1);
@@ -834,14 +812,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_AddImaEve
-
     private DefaultListModel listaModel = new DefaultListModel();
-    
+
     private void AgregarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarImaButtonActionPerformed
-        if(txtFotoPath.getText() != null)
-        {
-            if(NoImaCont == 0)
-                listaModel = new DefaultListModel();            
+        if (txtFotoPath.getText() != null) {
+            if (NoImaCont == 0) {
+                listaModel = new DefaultListModel();
+            }
             //DefaultListModel listaModel = new DefaultListModel();
             ImaList.setModel(listaModel);
             listaModel.addElement(fileImagen.getAbsolutePath());
@@ -851,13 +828,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             LimpiarIma();
             SelectIma.setVisible(false);
             HabilitarTodo();
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una Imágen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_AgregarImaButtonActionPerformed
 
     private void CerrarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarImaButtonActionPerformed
@@ -865,7 +840,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         SelectIma.setVisible(false);
         HabilitarTodo();
     }//GEN-LAST:event_CerrarImaButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActializarButton;
     private javax.swing.JButton ActualizarCat;

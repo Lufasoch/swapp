@@ -11,6 +11,7 @@ import direct.market.datatype.DataUsuario;
 import javax.swing.table.DefaultTableModel;
 import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.OCException;
+import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -559,7 +560,9 @@ double totalOC;
                     
         }catch(CategoryException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        } catch (ProductoException ex) {
+        Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
      
             
@@ -597,6 +600,8 @@ double totalOC;
         
     } catch (OCException ex) {
         JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
+    } catch (ProductoException ex) {
+        Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
     }
         
 

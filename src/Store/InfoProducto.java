@@ -6,6 +6,7 @@ package Store;
 
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataProducto;
+import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.beans.PropertyVetoException;
 import java.util.Enumeration;
@@ -355,7 +356,12 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
     private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
         if (!listProductos.isSelectionEmpty()) {
-            DataProducto dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+            DataProducto dprod = null;
+            try {
+                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+            } catch (ProductoException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             tfNombre.setText(dprod.getNombre());
             tfReferencia.setText(dprod.getReferencia());
