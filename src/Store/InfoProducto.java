@@ -6,6 +6,7 @@ package Store;
 
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataProducto;
+import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.beans.PropertyVetoException;
@@ -359,9 +360,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             DataProducto dprod = null;
             try {
                 dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
-            } catch (ProductoException ex) {
-                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
 
             tfNombre.setText(dprod.getNombre());
             tfReferencia.setText(dprod.getReferencia());
@@ -372,15 +371,24 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             //lista categorias
             DefaultListModel dlm = new DefaultListModel();
 
-            List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+            List<DataCategoria> catList;
+            try {
+                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+            
 
-            for(DataCategoria dc: catList){
+            for (DataCategoria dc : catList) {
                 dlm.addElement(dc.getNombre());
 
             }
             listCategorias.setModel(dlm);
+            } catch (CategoryException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            } catch (ProductoException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        }else{
+        } else {
             lblMensaje.setText("Debe seleccionar un producto");
         }
     }//GEN-LAST:event_btProductoActionPerformed
@@ -393,13 +401,19 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         DefaultListModel dlm = new DefaultListModel();
         if (seleccionado != null) {
             if (seleccionado.isLeaf()) {//arreglar
-                List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+                List<DataProducto> productos;
+                try {
+                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
 
-                for (DataProducto dp : productos) {
-                    dlm.addElement(dp.getNombre());
+
+                    for (DataProducto dp : productos) {
+                        dlm.addElement(dp.getNombre());
+                    }
+
+                    listProductos.setModel(dlm);
+                } catch (CategoryException ex) {
+                    Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                listProductos.setModel(dlm);
             } else {
                 lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
             }
@@ -432,7 +446,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCategoria;
     private javax.swing.JButton btProducto;
@@ -471,5 +484,4 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
     private static InfoProducto IProdInstancia;
-    
 }
