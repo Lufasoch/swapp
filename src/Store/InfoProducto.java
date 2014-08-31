@@ -373,7 +373,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 DefaultListModel dlm = new DefaultListModel();
 
                 List<DataCategoria> catList = new ArrayList<DataCategoria>();
-                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(dprod.getReferencia());
 
                 for (DataCategoria dc : catList) {
                     dlm.addElement(dc.getNombre());

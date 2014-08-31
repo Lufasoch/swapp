@@ -511,6 +511,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         TEspecC.setColumns(20);
+        TEspecC.setLineWrap(true);
         TEspecC.setRows(5);
         TEspecC.setWrapStyleWord(true);
         jScrollPane1.setViewportView(TEspecC);
@@ -725,7 +726,16 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
             DataProducto dataProd = new DataProducto();
             //Cargo datos basicos del dataProd
-            //      falta verificar campos no vacios (unicidad adentro?)
+            //Verifico campos no vacios
+            if (TTituloC.getText().equals("")
+                    || TNoRefC.getText().equals("")
+                    || TDescripcionC.getText().equals("")
+                    || TEspecC.getText().equals("")
+                    || TPrecioC.getText().equals("")
+                    || TProveedorC.getText().equals("")
+                    || TCategoriasC.getText().equals("")) {
+                throw new Exception("Debe llenar todos los campos obligatorios");
+            }
             dataProd.setNombre(TTituloC.getText());
             dataProd.setReferencia(TNoRefC.getText());
 
@@ -737,6 +747,9 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             String listaNombreCategorias[] = listaCatRecortada.split("-");
             for (int i = 1; i < listaNombreCategorias.length; i++) {
                 DataCategoria dc = (DataCategoria) Factory.getInstance().getCategoriaController().getCategoriaPorNombre(listaNombreCategorias[i]);
+                if (!dc.isContieneProductos()) {
+                    throw new Exception("La categoria " + dc.getNombre() + " no puede contener productos");
+                }
                 listaDataCat.add(dc);
             }
             dataProd.setDataCategorias(listaDataCat);
@@ -755,19 +768,25 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble(TPrecioC.getText()));
 
             //Cargo imagenes a la lista de string de imagenes
-            //      falta verificar al menos una (ver caso de uso)
-            List<String> imagenes = new ArrayList<String>();
-            for (int j = 0; j < ImaList.getComponentCount(); j++) {
-                imagenes.add(ImaList.getModel().getElementAt(j).toString());
+            if (ImaList.getModel().getSize() > 0) {
+                List<String> imagenes = new ArrayList<String>();
+                for (int j = 0; j < ImaList.getModel().getSize(); j++) {
+                    imagenes.add(ImaList.getModel().getElementAt(j).toString());
+                }
+                if (!imagenes.isEmpty()) {
+                    dataEsp.setImagenes(imagenes);
+                }
             }
-            dataEsp.setImagenes(imagenes);
 
             dataProd.setDataEspecificacion(dataEsp);
 
             //Llamo a altaProducto con el dataProducto cargado.
             Factory.getInstance().getProductoController().altaProducto(dataProd);
+            JOptionPane.showMessageDialog(this, "Producto creado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
 
+            LimpiarTodo();
             NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
+
         } catch (ProductoException pe) {
             JOptionPane.showMessageDialog(this, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
