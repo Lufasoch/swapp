@@ -479,6 +479,7 @@ double totalOC;
         txtFecha.setText("");
         HabilitarGenOC(true);
         Btn_Cancelar1.setText("Cancelar");
+        GenOC=null;
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
 

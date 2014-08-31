@@ -90,6 +90,11 @@ public class Menu extends javax.swing.JFrame {
 
         Salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
         ArchivoMenu.add(Salir);
 
         jMenuBar1.add(ArchivoMenu);
@@ -285,6 +290,11 @@ public class Menu extends javax.swing.JFrame {
             API.setVisible(true);
         }
     }//GEN-LAST:event_RegistrarProductoActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
 
     /**
      * @param args the command line arguments
