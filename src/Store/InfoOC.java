@@ -277,6 +277,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
         DefaultTableModel vacio = new DefaultTableModel(0,0);
         OrdenInfoTable.setModel(vacio);
+        IOCInstancia=null;
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
 

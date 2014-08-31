@@ -496,11 +496,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         TDescripcion.setText("Descripcion:");
         jPanel1.add(TDescripcion);
 
+        TEspec.setEditable(false);
         TEspec.setText("Especificaciones:");
         jPanel1.add(TEspec);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(10, 10, 180, 132);
+        jPanel1.setBounds(10, 10, 180, 136);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 8, 8));
@@ -523,17 +524,17 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(jPanel4);
         jPanel4.setBounds(200, 120, 560, 130);
         jPanel3.add(TPrecioC);
-        TPrecioC.setBounds(200, 260, 560, 27);
+        TPrecioC.setBounds(200, 260, 560, 28);
 
         TProveedor.setEditable(false);
         TProveedor.setText("Proveedor:");
         jPanel3.add(TProveedor);
-        TProveedor.setBounds(10, 300, 180, 27);
+        TProveedor.setBounds(10, 300, 180, 28);
 
         TPrecio.setEditable(false);
         TPrecio.setText("Precio:");
         jPanel3.add(TPrecio);
-        TPrecio.setBounds(10, 260, 180, 27);
+        TPrecio.setBounds(10, 260, 180, 28);
 
         ElegirProvButton.setText("Elegir");
         ElegirProvButton.addActionListener(new java.awt.event.ActionListener() {
@@ -542,14 +543,16 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(ElegirProvButton);
-        ElegirProvButton.setBounds(200, 300, 70, 29);
+        ElegirProvButton.setBounds(200, 300, 70, 30);
+
+        TProveedorC.setEditable(false);
         jPanel3.add(TProveedorC);
-        TProveedorC.setBounds(280, 300, 480, 27);
+        TProveedorC.setBounds(280, 300, 480, 28);
 
         TCategorias.setEditable(false);
         TCategorias.setText("Categorias:");
         jPanel3.add(TCategorias);
-        TCategorias.setBounds(10, 340, 180, 27);
+        TCategorias.setBounds(10, 340, 180, 28);
 
         ElegirCatButton.setText("Elegir");
         ElegirCatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -559,13 +562,15 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         });
         jPanel3.add(ElegirCatButton);
         ElegirCatButton.setBounds(200, 340, 70, 30);
+
+        TCategoriasC.setEditable(false);
         jPanel3.add(TCategoriasC);
-        TCategoriasC.setBounds(280, 340, 480, 27);
+        TCategoriasC.setBounds(280, 340, 480, 28);
 
         jTextField1.setEditable(false);
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(10, 380, 180, 27);
+        jTextField1.setBounds(10, 380, 180, 28);
 
         ElegirImaButton.setText("Elegir");
         ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -618,7 +623,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel9.add(RegistrarTodo);
 
         RegProdIF.getContentPane().add(jPanel9);
-        jPanel9.setBounds(370, 514, 410, 45);
+        jPanel9.setBounds(370, 514, 410, 46);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         RegProdIF.getContentPane().add(jLabel1);
@@ -716,6 +721,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     
     private void CancelarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarTodoActionPerformed
         NoImaCont = 0;
+        PGInstancia = null;
         this.dispose();
     }//GEN-LAST:event_CancelarTodoActionPerformed
 

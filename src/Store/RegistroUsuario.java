@@ -393,7 +393,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         
             limpiarCampos();
-            this.dispose();
+            //this.dispose();
         } /*catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
         }*/ catch (UsuarioException ex) {
@@ -406,7 +406,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
     private void CancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarButtonActionPerformed
         limpiarCampos();
-
+        RUInstancia = null;
         this.dispose();
     }//GEN-LAST:event_CancelarButtonActionPerformed
 

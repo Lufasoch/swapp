@@ -30,38 +30,36 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         this.validate();
         String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI, 150, 150));
-        Actualizar();     
-        
-        
+        Actualizar();
+
+
     }
 
-    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto)
-    {
+    public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto) {
         ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
-        Image img = IcoIco.getImage();  
-        Image newimg = img.getScaledInstance(Ancho, Alto,  java.awt.Image.SCALE_SMOOTH);          
-        IcoIco = new ImageIcon(newimg); 
+        Image img = IcoIco.getImage();
+        Image newimg = img.getScaledInstance(Ancho, Alto, java.awt.Image.SCALE_SMOOTH);
+        IcoIco = new ImageIcon(newimg);
         return IcoIco;
     }
-    
+
     public static InfoCliente getInstancia() {
         if (ICInstancia == null) {
             ICInstancia = new InfoCliente();
         }
         return ICInstancia;
     }
-    
-    public void Actualizar(){
+
+    public void Actualizar() {
         limpiarCampos();
         //// Agregar imagen y cambiar tamaño de la foto del perfil ////        
         String DirI = "Recursos/Perfil.jpg";
-        PerfilLabel.setIcon(RZIma(DirI,150,150));
+        PerfilLabel.setIcon(RZIma(DirI, 150, 150));
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
-        {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -75,25 +73,25 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
         ClientesTable.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
-        if (clientes !=null){
-        int c = clientes.size();
-        for (int i = 0; i < c; i++) {
-            String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
-            DTM2.addRow(datos);
-        }
+        if (clientes != null) {
+            int c = clientes.size();
+            for (int i = 0; i < c; i++) {
+                String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
+                DTM2.addRow(datos);
+            }
         }
     }
-    
-    public void limpiarCampos()
-    {
+
+    public void limpiarCampos() {
         TTipoUC.setText("");
         TNicknameC.setText("");
         TNombreC.setText("");
         TApellidoC.setText("");
         TeMailC.setText("");
         TFechaNacC.setText("");
-       // PerfilLabel.setIcon(RZIma("Recursos/Perfil.jpg",150,150));
+        // PerfilLabel.setIcon(RZIma("Recursos/Perfil.jpg",150,150));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -378,15 +376,14 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
-        try
-        {
+        try {
             String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
-            DataUsuario du=Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
+            DataUsuario du = Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
             //BUSCAR USUARIO A LA BASE DE DATOS
 
             //ABAJO//DATOS DEVUELTOS
 //            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
-            int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
+           // int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
 //            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
 //            java.util.Date FechaU = new Date(88,9,19);     
             //ARRIBA//DATOS DEVUELTOS    
@@ -404,9 +401,8 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             ImageIcon imageIcon = new ImageIcon(du.getImagen());
             PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             PerfilLabel.repaint();
-                //ABAJO//CAMBIAR MODELO DE LA TABLA
-            DefaultTableModel DTM = new DefaultTableModel()
-            {
+            //ABAJO//CAMBIAR MODELO DE LA TABLA
+            DefaultTableModel DTM = new DefaultTableModel() {
                 boolean[] canEdit = new boolean[]{false};
 
                 @Override
@@ -414,36 +410,39 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
                     return canEdit[columnIndex];
                 }
             };
-            String header[] = new String[] { "No. Orden" };
+            String header[] = new String[]{"No. Orden"};
             DTM.setColumnIdentifiers(header);
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                //ARRIBA//CAMBIAR MODELO DE LA TABLA
-
-            int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-            while(cont < 9)
-            {
-                //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden() });
-                DTM.addRow(new Object[] { NOrdenes[cont] }); 
-                cont++;
+            //ARRIBA//CAMBIAR MODELO DE LA TABLA
+            if (du != null) {
+                int lc = du.getListaCompras().size();
+                for (int i = 0; i < lc; i++) {
+                    Integer datos[] = {du.getListaCompras().get(i).getNumero()};
+                    DTM.addRow(datos);
+                }
             }
-            //ARRIBA//IMPRIMIR DATOS
-        } 
-        catch (IndexOutOfBoundsException ex)
-        {
+
+            /*
+             int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
+             while(cont < 9)
+             {
+             //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden() });
+             DTM.addRow(new Object[] { NOrdenes[cont] }); 
+             cont++;
+             }
+             //ARRIBA//IMPRIMIR DATOS*/
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
     private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
-        try
-        {
-          ///////////////////////
-         //VER ORDEN DE COMPRA//
-        ///////////////////////
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
+        try {
+            ///////////////////////
+            //VER ORDEN DE COMPRA//
+            ///////////////////////
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_OrdenButtonActionPerformed
@@ -461,7 +460,6 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
         Actualizar();
     }//GEN-LAST:event_SeMuestraSeActualiza
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JLabel BackgroundLabel;
