@@ -247,18 +247,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
                 OrdenInfoTable.setModel(DTM2);
                 OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-                    //ARRIBA//CAMBIAR MODELO DE LA TABLA
-          
-//                double total = 0;
-//                int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-//                while(cont < 3)
-//                {
-//                    //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
-//                    DTM2.addRow(new Object[] { CodP[cont], NomP[cont], PreUniP[cont], CantP[cont], PreUniP[cont]*CantP[cont] }); 
-//                    total = total + PreUniP[cont]*CantP[cont];
-//                    cont++;
-//                }
-//                String total2 = String.valueOf(total);
+
                 for(DataLineaOC dlo: doc.getLineas()){
                        DTM2.addRow(new Object[] { dlo.getProducto().getNombre(), dlo.getProducto().getDataEspecificacion().getPrecio(), dlo.getCantidad(), dlo.getTotalLinea() }); 
                 }

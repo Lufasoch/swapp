@@ -5,6 +5,8 @@
 package Store;
 
 //import direct.market.controller.IUsuarioController;
+import direct.market.datatype.DataLineaOC;
+import direct.market.datatype.DataOC;
 import direct.market.datatype.DataUsuario;
 import direct.market.factory.Factory;
 import java.awt.Image;
@@ -57,6 +59,12 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         PerfilLabel.setIcon(RZIma(DirI, 150, 150));
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
+        
+        DefaultTableModel vacio = new DefaultTableModel(0,0);
+        String header2[] = new String[]{"No. Orden"};
+            vacio.setColumnIdentifiers(header2);
+        OrdenesTable.setModel(vacio);
+        
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
         DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
@@ -101,6 +109,15 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        VerOCF = new javax.swing.JInternalFrame();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        OrdenInfoTable = new javax.swing.JTable();
+        PTotales = new javax.swing.JPanel();
+        TxtTotal = new javax.swing.JTextField();
+        TxtTotalVal = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        Cerrar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         TPanel = new javax.swing.JPanel();
         jScrollVerClientes = new javax.swing.JScrollPane();
         ClientesTable = new javax.swing.JTable();
@@ -135,6 +152,85 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             e1.printStackTrace();
         }
         getContentPane().setLayout(null);
+
+        VerOCF.setFocusable(false);
+        VerOCF.setVisible(false);
+        VerOCF.getContentPane().setLayout(null);
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        OrdenInfoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Precio unitario", "Cantidad", "Sub-Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(OrdenInfoTable);
+
+        VerOCF.getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(0, 0, 520, 400);
+
+        PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        PTotales.setLayout(new java.awt.GridLayout(1, 2));
+
+        TxtTotal.setEditable(false);
+        TxtTotal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        TxtTotal.setText("Total");
+        TxtTotal.setFocusable(false);
+        PTotales.add(TxtTotal);
+
+        TxtTotalVal.setEditable(false);
+        TxtTotalVal.setBackground(new java.awt.Color(254, 254, 254));
+        TxtTotalVal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        TxtTotalVal.setForeground(new java.awt.Color(1, 1, 1));
+        TxtTotalVal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TxtTotalVal.setText("Total");
+        TxtTotalVal.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        TxtTotalVal.setDisabledTextColor(new java.awt.Color(1, 1, 1));
+        TxtTotalVal.setEnabled(false);
+        TxtTotalVal.setFocusable(false);
+        PTotales.add(TxtTotalVal);
+
+        VerOCF.getContentPane().add(PTotales);
+        PTotales.setBounds(210, 390, 310, 50);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
+
+        Cerrar1.setText("Cerrar");
+        Cerrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Cerrar1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Cerrar1);
+
+        VerOCF.getContentPane().add(jPanel3);
+        jPanel3.setBounds(350, 450, 170, 50);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
+        VerOCF.getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 520, 510);
+
+        getContentPane().add(VerOCF);
+        VerOCF.setBounds(30, 0, 530, 540);
 
         TPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -383,7 +479,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
             //ABAJO//DATOS DEVUELTOS
 //            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
-           // int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
+            // int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
 //            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
 //            java.util.Date FechaU = new Date(88,9,19);     
             //ARRIBA//DATOS DEVUELTOS    
@@ -428,11 +524,40 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
+    private void desabilitar()
+    {
+        Cerrar.setEnabled(false);
+        OrdenButton.setEnabled(false);
+        OrdenButton.setFocusable(false);
+    }
+    
     private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
+        
         try {
-            ///////////////////////
-            //VER ORDEN DE COMPRA//
-            ///////////////////////
+            VerOCF.setVisible(true);
+
+            String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
+            DataOC doc = Factory.getInstance().getOrdenCompraController().getDataOC(nroCompRow);
+
+
+            DefaultTableModel DTM2 = new DefaultTableModel() {
+                boolean[] canEdit = new boolean[]{false, false, false, false};
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            };
+            String header[] = new String[]{"Nombre", "Precio U.", "Cantidad", "Sub total"};
+            DTM2.setColumnIdentifiers(header);
+            OrdenInfoTable.setModel(DTM2);
+            OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+
+            for (DataLineaOC dlo : doc.getLineas()) {
+                DTM2.addRow(new Object[]{dlo.getProducto().getNombre(), dlo.getProducto().getDataEspecificacion().getPrecio(), dlo.getCantidad(), dlo.getTotalLinea()});
+            }
+            TxtTotalVal.setText(Double.valueOf(doc.getPrecio_total()).toString());
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
@@ -451,15 +576,24 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
         Actualizar();
     }//GEN-LAST:event_SeMuestraSeActualiza
+
+    private void Cerrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cerrar1ActionPerformed
+        DefaultTableModel vacio = new DefaultTableModel(0, 0);
+        OrdenInfoTable.setModel(vacio);
+        VerOCF.setVisible(false);
+    }//GEN-LAST:event_Cerrar1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton Cerrar;
+    private javax.swing.JButton Cerrar1;
     private javax.swing.JTable ClientesTable;
     private javax.swing.JPanel InfoPanel;
     private javax.swing.JButton OrdenButton;
+    private javax.swing.JTable OrdenInfoTable;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PPanel;
+    private javax.swing.JPanel PTotales;
     private javax.swing.JLabel PerfilLabel;
     private javax.swing.JTextField TApellido;
     private javax.swing.JTextField TApellidoC;
@@ -474,9 +608,15 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TTipoUC;
     private javax.swing.JTextField TeMail;
     private javax.swing.JTextField TeMailC;
+    private javax.swing.JTextField TxtTotal;
+    private javax.swing.JTextField TxtTotalVal;
     private javax.swing.JButton VerInfoButton;
+    private javax.swing.JInternalFrame VerOCF;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollVerClientes;
     // End of variables declaration//GEN-END:variables
     private static InfoCliente ICInstancia;

@@ -7,6 +7,7 @@ package Store;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -174,8 +175,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(RUs);
-            RUs.setVisible(true);
+            try {
+                this.Escritorio.add(RUs);
+                RUs.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
@@ -188,8 +193,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(ICli);
-            ICli.setVisible(true);
+            try {
+                this.Escritorio.add(ICli);
+                ICli.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_VerInfoClienteActionPerformed
 
@@ -202,8 +211,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(IPro);
-            IPro.setVisible(true);
+            try {
+                this.Escritorio.add(IPro);
+                IPro.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_VerInfoProveedorActionPerformed
 
@@ -216,8 +229,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(GOC);
-            GOC.setVisible(true);
+            try {
+                this.Escritorio.add(GOC);
+                GOC.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_CrearOrdenActionPerformed
 
@@ -230,8 +247,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(IProd);
-            IProd.setVisible(true);
+            try {
+                this.Escritorio.add(IProd);
+                IProd.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_VerInfoProductoActionPerformed
 
@@ -244,8 +265,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(MProd);
-            MProd.setVisible(true);
+            try {
+                this.Escritorio.add(MProd);
+                MProd.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_ModificarProductoActionPerformed
 
@@ -258,8 +283,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(OCI);
-            OCI.setVisible(true);
+            try {
+                this.Escritorio.add(OCI);
+                OCI.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -272,8 +301,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(ACat);
-            ACat.setVisible(true);
+            try {
+                this.Escritorio.add(ACat);
+                ACat.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_AltaCategoriaActionPerformed
 
@@ -286,8 +319,12 @@ public class Menu extends javax.swing.JFrame {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            this.Escritorio.add(API);
-            API.setVisible(true);
+            try {
+                this.Escritorio.add(API);
+                API.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_RegistrarProductoActionPerformed
 
