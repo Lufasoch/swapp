@@ -232,7 +232,7 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         jPanel1.add(CancelarOC, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 440, 190, 46);
+        jPanel1.setBounds(40, 440, 190, 110);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);

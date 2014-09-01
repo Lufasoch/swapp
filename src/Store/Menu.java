@@ -40,6 +40,7 @@ public class Menu extends javax.swing.JFrame {
         Salir = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
         menuModificarProducto = new javax.swing.JMenuItem();
+        menuCancelarOC = new javax.swing.JMenuItem();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
         VerInfoProveedor = new javax.swing.JMenuItem();
@@ -108,6 +109,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         EditarMenu.add(menuModificarProducto);
+
+        menuCancelarOC.setText("Cancelar Orden de Compra");
+        menuCancelarOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCancelarOCActionPerformed(evt);
+            }
+        });
+        EditarMenu.add(menuCancelarOC);
 
         jMenuBar1.add(EditarMenu);
 
@@ -297,6 +306,20 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
 
+    private void menuCancelarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCancelarOCActionPerformed
+        CancelarOC CancelOC = CancelarOC.getInstancia();
+        if (CancelOC.isVisible()) {
+            try {
+                CancelOC.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(CancelOC);
+            CancelOC.setVisible(true);
+        }
+    }//GEN-LAST:event_menuCancelarOCActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -346,6 +369,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem VerInfoProveedor;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuCancelarOC;
     private javax.swing.JMenuItem menuModificarProducto;
     // End of variables declaration//GEN-END:variables
 }
