@@ -36,24 +36,24 @@ import javax.swing.tree.DefaultTreeModel;
  * @author kavesa
  */
 public class ModificarProducto extends javax.swing.JInternalFrame {
+
     private File fileImagen;
-    private int NoImaCont;
+    private int NoImaCont = 0;
     private int NoCatCont;
     private String oldReferencia;
-    private String[] ImaI;
+    //private String[] ImaI;
     private DefaultListModel listaModel = new DefaultListModel();
     private DefaultListModel listaModelCat = new DefaultListModel();
-
 
     public static ModificarProducto getInstancia() {
         if (MProdInstancia == null) {
             MProdInstancia = new ModificarProducto();
-            
+
         }
         return MProdInstancia;
     }
-    
-        /**
+
+    /**
      * Creates new form InfoProducto
      */
     public ModificarProducto() {
@@ -67,8 +67,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         lblNicknameProveedor.setVisible(false);
 
     }
-    
-    private void LimpiarCampos(){
+
+    private void LimpiarCampos() {
         tfNombre.setText("");
         tfPrecio.setText("");
         tfProveedor.setText("");
@@ -76,13 +76,15 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         lblNicknameProveedor.setText("");
         taDescripcion.setText("");
         taEspecificacion.setText("");
-        listCategorias.removeAll();
+
+        listaModelCat.clear();
         listCategorias.repaint();
-        ImaList.removeAll();
+
+        listaModel.clear();
         ImaList.repaint();
     }
 
-   public DefaultMutableTreeNode searchNode(String nodeStr, JTree arbol) {
+    public DefaultMutableTreeNode searchNode(String nodeStr, JTree arbol) {
         DefaultTreeModel modelito = (DefaultTreeModel) arbol.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
 
@@ -550,54 +552,54 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        try{            
+        try {
             DataProducto dp = new DataProducto();
             DataEspecificacionProducto dep = new DataEspecificacionProducto();
-            
+
             dp.setNombre(tfNombre.getText());
             dp.setReferencia(tfReferencia.getText());
             dp.setDataProveedor(Factory.getInstance().getUsuarioController().getDataProveedor(lblNicknameProveedor.getText()));
             dep.setDescripcion(taDescripcion.getText());
             dep.setEspecificacion(taEspecificacion.getText());
             dep.setPrecio(Double.parseDouble(tfPrecio.getText()));
-                        
+
             List<String> limagenes = new ArrayList<String>();
             DefaultListModel dim = (DefaultListModel) ImaList.getModel();
             int max = dim.getSize();
-            for (int i=0; i<max;i++){
+            for (int i = 0; i < max; i++) {
                 String image = dim.getElementAt(i).toString();
-                limagenes.add(image);              
+                limagenes.add(image);
             }
             dep.setImagenes(limagenes);
-            
+
             List<DataCategoria> lcategorias = new ArrayList<DataCategoria>();
             DataCategoria categoria;
             DefaultListModel dlm = (DefaultListModel) listCategorias.getModel();
             max = dlm.getSize();
-            for (int i=0; i<max;i++){
+            for (int i = 0; i < max; i++) {
                 String cat = dlm.getElementAt(i).toString();
                 categoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(cat);
-                lcategorias.add(categoria);              
+                lcategorias.add(categoria);
             }
-            
+
             dp.setDataCategorias(lcategorias);
             dp.setDataEspecificacion(dep);
-            
-            if (dp.getReferencia().equals(oldReferencia)){
+
+            if (dp.getReferencia().equals(oldReferencia)) {
                 Factory.getInstance().getProductoController().modificarProducto(dp);
-            }else{
+            } else {
                 Factory.getInstance().getProductoController().modificarProductoConReferenciaModificada(dp, oldReferencia);
             }
-            
+
             JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             //limpiar campos
             //MProdInstancia = null;
             //this.dispose();
             LimpiarCampos();
-                    
-        }catch (ProductoException ex){
+
+        } catch (ProductoException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }catch (CategoryException ex){
+        } catch (CategoryException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
@@ -615,11 +617,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                 lblNicknameProveedor.setVisible(false);
                 tfProveedor.setText(dprod.getDataProveedor().getCompania());
                 taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
-                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());               
+                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
                 tfPrecio.setText(String.valueOf(dprod.getDataEspecificacion().getPrecio()));
-                
+
                 habilitartodo(true, true);
-                    
+
                 //lista categorias
                 //DefaultListModel dlm = new DefaultListModel();
                 List<DataCategoria> catList = new ArrayList<DataCategoria>();
@@ -634,11 +636,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
                 DefaultListModel dlm2 = new DefaultListModel();
                 List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
-                for (String imagen : imagenes){
+                for (String imagen : imagenes) {
                     dlm2.addElement(imagen);
                 }
                 ImaList.setModel(dlm2);
-                    
+
             } catch (CategoryException ex) {
                 Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ProductoException ex) {
@@ -700,17 +702,17 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                 listaModelCat.addElement(cat);
                 NoCatCont++;
                 habilitartodo(true, true);
-                SelCategoria.setVisible(false);                
+                SelCategoria.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Esa categoria ya se encuentra ingresada en la lista.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
 
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una categoría.", "Warning", JOptionPane.WARNING_MESSAGE);
-        }        
-        
-        
-        
+        }
+
+
+
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
     private void LImagenAddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LImagenAddImaEve
@@ -754,7 +756,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_LImagenAddImaEve
-    
+
     public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto) {
         ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
         Image img = IcoIco.getImage();
@@ -762,7 +764,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         IcoIco = new ImageIcon(newimg);
         return IcoIco;
     }
-    
+
     public void LimpiarIma() {
         txtFotoPath.setText("");
         String DirI = "Recursos/x.jpg";
@@ -772,24 +774,23 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         LimpiarIma();
         habilitartodo(true, true);
         SelImagen.setVisible(false);
-        
+
     }//GEN-LAST:event_CerrarImaButtonActionPerformed
 
     private void AgregarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarImaButtonActionPerformed
         if (txtFotoPath.getText() != null) {
-            ImaList.setModel(listaModel);
-            /*if (NoImaCont == 0) {
+            if (NoImaCont == 0) {
                 listaModel = new DefaultListModel();
-            }*/
-            //DefaultListModel listaModel = new DefaultListModel();
-            //ImaList.setModel(listaModel);
+                listaModel.clear();
+                ImaList.setModel(listaModel);
+            }
             listaModel.addElement(fileImagen.getAbsolutePath());
-            ImaI[NoImaCont] = fileImagen.getAbsolutePath();
+            //ImaI[NoImaCont] = fileImagen.getAbsolutePath();
             txtFotoPath.setText(fileImagen.getAbsolutePath());
             NoImaCont++;
             LimpiarIma();
             habilitartodo(true, true);
-            SelImagen.setVisible(false);           
+            SelImagen.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una Imágen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
@@ -814,17 +815,17 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DefaultListModel dlm = (DefaultListModel) ImaList.getModel();
         int selectedIndex = ImaList.getSelectedIndex();
-        dlm.remove(selectedIndex);        
-        
+        dlm.remove(selectedIndex);
+
     }//GEN-LAST:event_QuitarImagenActionPerformed
 
     private void RemoveCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveCategoriaActionPerformed
         // TODO add your handling code here:
         DefaultListModel dlm = (DefaultListModel) listCategorias.getModel();
         int selectedIndex = listCategorias.getSelectedIndex();
-        dlm.remove(selectedIndex);  
+        dlm.remove(selectedIndex);
     }//GEN-LAST:event_RemoveCategoriaActionPerformed
-    
+
     private void cargarCategorias() {
         try {
 
@@ -850,9 +851,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void cargarCategoriasSelect() {
-        
+
         try {
 
             List<DataCategoria> categorias1 = Factory.getInstance().getCategoriaController().getCategorias();
@@ -876,9 +877,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             Logger.getLogger(ModificarProducto.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-    }   
-    
-    private void habilitartodo(boolean flg, boolean flgbotonera){
+    }
+
+    private void habilitartodo(boolean flg, boolean flgbotonera) {
 
         tfReferencia.setEditable(flg);
         //tfProveedor.setEditable(flg);
@@ -892,14 +893,14 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         RemoveCategoria.setEnabled(flg);
         pnlInformacion.setEnabled(flg);
         tfPrecio.setEnabled(flg);
-        
+
         listProductos.setEnabled(flgbotonera);
         treeCategoria.setEnabled(flgbotonera);
         btCategoria.setEnabled(flgbotonera);
         btProducto.setEnabled(flgbotonera);
         btn_cancelar.setEnabled(flgbotonera);
         btn_modificar.setEnabled(flgbotonera);
-              
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarCat;
