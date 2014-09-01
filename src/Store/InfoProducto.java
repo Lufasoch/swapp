@@ -9,6 +9,7 @@ import direct.market.datatype.DataProducto;
 import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
+import java.awt.Image;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -93,8 +95,9 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         taEspecificacion = new javax.swing.JTextArea();
         pnlImagenes = new javax.swing.JPanel();
-        sliderImagenes = new javax.swing.JSlider();
         panelImagen = new javax.swing.JPanel();
+        lblImagenActual = new javax.swing.JLabel();
+        cbImagenes = new javax.swing.JComboBox();
         pnlCategorias = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listCategorias = new javax.swing.JList();
@@ -195,6 +198,11 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jPanel4.setLayout(null);
 
         pnlInformacion.setBorder(null);
+        pnlInformacion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pnlInformacionFocusGained(evt);
+            }
+        });
 
         tfNombre.setEditable(false);
 
@@ -286,31 +294,37 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         panelImagen.setLayout(panelImagenLayout);
         panelImagenLayout.setHorizontalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelImagenLayout.setVerticalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
         );
+
+        cbImagenes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbImagenesItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlImagenesLayout = new javax.swing.GroupLayout(pnlImagenes);
         pnlImagenes.setLayout(pnlImagenesLayout);
         pnlImagenesLayout.setHorizontalGroup(
             pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlImagenesLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(pnlImagenesLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sliderImagenes, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
-                .addGap(26, 26, 26))
+                    .addComponent(cbImagenes, 0, 282, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         pnlImagenesLayout.setVerticalGroup(
             pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlImagenesLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
+                .addComponent(cbImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sliderImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -379,6 +393,15 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                     dlm.addElement(dc.getNombre());
                 }
 
+                if (!dprod.getDataEspecificacion().getImagenes().isEmpty()) {
+                    List<String> imagenes = new ArrayList<String>();
+                    imagenes = dprod.getDataEspecificacion().getImagenes();
+                    for (String imagen : imagenes) {
+                        cbImagenes.addItem(imagen);
+                    }
+                    //cbImagenes.setSelectedIndex(0);
+                }
+
                 listCategorias.setModel(dlm);
             } catch (CategoryException ex) {
                 Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
@@ -416,7 +439,21 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btCategoriaActionPerformed
 
-    
+    private void pnlInformacionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlInformacionFocusGained
+        
+        ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
+        lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+        lblImagenActual.repaint();
+            
+    }//GEN-LAST:event_pnlInformacionFocusGained
+
+    private void cbImagenesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbImagenesItemStateChanged
+                
+        ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
+        lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+        lblImagenActual.repaint();
+
+    }//GEN-LAST:event_cbImagenesItemStateChanged
 
     private void cargarCategorias() {
         try {
@@ -448,6 +485,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCategoria;
     private javax.swing.JButton btProducto;
+    private javax.swing.JComboBox cbImagenes;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -460,6 +498,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblImagenActual;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JList listCategorias;
     private javax.swing.JList listProductos;
@@ -469,7 +508,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlImagenes;
     private javax.swing.JTabbedPane pnlInformacion;
-    private javax.swing.JSlider sliderImagenes;
     private javax.swing.JTextArea taDescripcion;
     private javax.swing.JTextArea taEspecificacion;
     private javax.swing.JTextField tfNombre;
