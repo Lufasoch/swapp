@@ -820,7 +820,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             String ext = name.substring(pos + 1);
 
             File directorio = new File("src/Store/Recursos/Productos/TempPic/");
-            directorio.mkdir();
+            directorio.mkdirs();
 
             File destino = new File("src/Store/Recursos/Productos/TempPic/tmp" + "." + ext);
             try {
