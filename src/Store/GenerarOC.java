@@ -75,7 +75,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         };
 
 
-        String header[] = new String[]{"Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea"};
+        String header[] = new String[]{"Código", "Nombre", "Cantidad", "Precio Unitario", "Total Linea"};
         modelo.setColumnIdentifiers(header);
         TArticulos.setModel(modelo);
         SelCliente.setVisible(false);
@@ -83,7 +83,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         Actualizar();
         cargarCategorias();
         GenOC.setVisible(true);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         txtFecha.setText(sdf.format(fechaOC));
 
 
@@ -138,6 +138,9 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         PTotales = new javax.swing.JPanel();
         TxtTotal = new javax.swing.JTextField();
         TxtTotalVal = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        NroOCtext = new javax.swing.JTextField();
         BackgroundLabel = new javax.swing.JLabel();
 
         setTitle("Orden de Compra");
@@ -146,7 +149,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 
         SelArticulo.setTitle("Seleccionar Artículo");
         SelArticulo.setPreferredSize(new java.awt.Dimension(324, 470));
-        SelArticulo.setVisible(true);
+        SelArticulo.setVisible(false);
 
         panelCategoria.setBackground(new java.awt.Color(214, 228, 237));
         panelCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -165,7 +168,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             panelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCategoriaLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
         );
 
         SelArticulo.getContentPane().add(panelCategoria, java.awt.BorderLayout.CENTER);
@@ -204,7 +207,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         SelArticulo.setBounds(0, 0, 510, 470);
 
         SelCliente.setTitle("Seleccionar Cliente");
-        SelCliente.setVisible(true);
+        SelCliente.setVisible(false);
 
         SelCliTPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -248,7 +251,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         );
         SelCliTPanelLayout.setVerticalGroup(
             SelCliTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
         );
 
         SelCliente.getContentPane().add(SelCliTPanel, java.awt.BorderLayout.CENTER);
@@ -285,7 +288,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         SelCliente.getContentPane().add(SelCliBtnPanel, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(SelCliente);
-        SelCliente.setBounds(0, -20, 329, 516);
+        SelCliente.setBounds(0, -20, 329, 552);
 
         GenOC.setEnabled(false);
         GenOC.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -407,11 +410,13 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         GenOC.getContentPane().add(PAddProducto);
         PAddProducto.setBounds(10, 150, 160, 50);
 
+        PFecha.setBackground(new java.awt.Color(214, 228, 237));
         PFecha.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PFecha.setLayout(null);
 
         lblFecha.setEditable(false);
         lblFecha.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        lblFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lblFecha.setText("Fecha");
         lblFecha.setEnabled(false);
         lblFecha.setFocusable(false);
@@ -421,6 +426,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         txtFecha.setEditable(false);
         txtFecha.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         txtFecha.setForeground(new java.awt.Color(1, 1, 1));
+        txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFecha.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         txtFecha.setFocusable(false);
         PFecha.add(txtFecha);
@@ -449,12 +455,31 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         GenOC.getContentPane().add(PTotales);
         PTotales.setBounds(400, 420, 380, 50);
 
+        jPanel1.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout(1, 2, 8, 8));
+
+        jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Nro. Orden");
+        jTextField1.setEnabled(false);
+        jPanel1.add(jTextField1);
+
+        NroOCtext.setEditable(false);
+        NroOCtext.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        NroOCtext.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(NroOCtext);
+
+        GenOC.getContentPane().add(jPanel1);
+        jPanel1.setBounds(10, 10, 280, 50);
+
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         GenOC.getContentPane().add(BackgroundLabel);
         BackgroundLabel.setBounds(0, 0, 800, 570);
 
         getContentPane().add(GenOC);
-        GenOC.setBounds(0, 0, 800, 600);
+        GenOC.setBounds(0, -20, 790, 620);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -527,9 +552,15 @@ public class GenerarOC extends javax.swing.JInternalFrame {
                 if ((seleccionado.isLeaf() && (!"Vacía".equals(seleccionado.getUserObject().toString())))) {
                     DataProducto dp = Factory.getInstance().getProductoController().buscarProductoPorName(seleccionado.getUserObject().toString());
                     DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
+                    if (txtcantidad.getText().isEmpty()) {
+                        throw new OCException("El campo cantidad no puede ser vacio");
+                    }
                     int cantidad = Integer.parseInt(txtcantidad.getText());
                     if (cantidad == 0) {
-                        throw new CategoryException("La cantidad debe ser mayor a 0.");
+                        throw new OCException("La cantidad debe ser mayor a 0.");
+                    }
+                    if (!isNumeric(txtcantidad.getText().trim())) {
+                        throw new OCException("El campo cantidad debe ser numerico.");
                     }
 
                     double preciounitario = dp.getDataEspecificacion().getPrecio();
@@ -546,20 +577,15 @@ public class GenerarOC extends javax.swing.JInternalFrame {
                 } else {
                     throw new CategoryException("No ha seleccionado ningún producto.");
                 }
-
-
-
             } else {
                 throw new CategoryException("No ha seleccionado ningún producto.");
             }
-
-
-
-
         } catch (CategoryException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         } catch (ProductoException ex) {
             Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (OCException oc) {
+            JOptionPane.showMessageDialog(this, oc.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
 
 
@@ -594,10 +620,11 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             String msg = "OC Número " + numOC + " creada correctamente";
             JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             HabilitarGenOC(false);
+            NroOCtext.setText(Integer.valueOf(numOC).toString());
             Btn_Cancelar1.setText("Cerrar");
             Btn_Cancelar1.setEnabled(true);
-            DataOC dataOrdenCompra=Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
-            DataUsuario dataUsuario=Factory.getInstance().getUsuarioController().getDataCliente((String) TCliente.getValueAt(TCliente.getSelectedRow(), 0));
+            DataOC dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            DataUsuario dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente((String) TCliente.getValueAt(TCliente.getSelectedRow(), 0));
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
@@ -611,6 +638,9 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_Btn_Aceptar1ActionPerformed
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
 
     private void Actualizar() {
 
@@ -705,6 +735,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private javax.swing.JButton Btn_AddProd;
     private javax.swing.JButton Btn_Cancelar1;
     private javax.swing.JInternalFrame GenOC;
+    private javax.swing.JTextField NroOCtext;
     private javax.swing.JPanel PAddProducto;
     private javax.swing.JPanel PBotones1;
     private javax.swing.JPanel PCabezal;
@@ -723,9 +754,11 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSelArt_Cancelar;
     private javax.swing.JButton btnSelArt_Seleccionar;
     private javax.swing.JButton btn_selCli;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollVerClientes;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField lblFecha;
     private javax.swing.JTextField lblcantidad;
     private javax.swing.JPanel panelCategoria;
