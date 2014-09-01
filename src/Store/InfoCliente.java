@@ -8,11 +8,14 @@ package Store;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
 import direct.market.datatype.DataUsuario;
+import direct.market.exceptions.UsuarioException;
 import direct.market.factory.Factory;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 //import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -154,7 +157,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         VerOCF.setFocusable(false);
-        VerOCF.setVisible(true);
+        VerOCF.setVisible(false);
         VerOCF.getContentPane().setLayout(null);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -521,6 +524,8 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
+        } catch (UsuarioException ex) {
+            Logger.getLogger(InfoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_VerInfoButtonActionPerformed
 
