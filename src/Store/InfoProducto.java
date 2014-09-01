@@ -394,13 +394,17 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 }
 
                 if (!dprod.getDataEspecificacion().getImagenes().isEmpty()) {
+                    cbImagenes.removeAllItems();
                     List<String> imagenes = new ArrayList<String>();
                     imagenes = dprod.getDataEspecificacion().getImagenes();
                     for (String imagen : imagenes) {
                         cbImagenes.addItem(imagen);
                     }
                     //cbImagenes.setSelectedIndex(0);
+                } else {
+                    cbImagenes.removeAllItems();
                 }
+                reloadTabImagenes();
 
                 listCategorias.setModel(dlm);
             } catch (CategoryException ex) {
@@ -440,21 +444,27 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btCategoriaActionPerformed
 
     private void pnlInformacionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlInformacionFocusGained
-        
-        ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
-        lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
-        lblImagenActual.repaint();
-            
+        reloadTabImagenes();
+
     }//GEN-LAST:event_pnlInformacionFocusGained
 
     private void cbImagenesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbImagenesItemStateChanged
-                
-        ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
-        lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
-        lblImagenActual.repaint();
+        reloadTabImagenes();
 
     }//GEN-LAST:event_cbImagenesItemStateChanged
 
+    private void reloadTabImagenes(){
+        if (cbImagenes.getItemCount() > 0) {
+            ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
+            lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            lblImagenActual.repaint();
+        }else{
+            lblImagenActual.setIcon(null);
+            lblImagenActual.revalidate();
+        }
+
+    }
+    
     private void cargarCategorias() {
         try {
 
