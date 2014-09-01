@@ -423,15 +423,6 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
                 }
             }
 
-            /*
-             int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-             while(cont < 9)
-             {
-             //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden() });
-             DTM.addRow(new Object[] { NOrdenes[cont] }); 
-             cont++;
-             }
-             //ARRIBA//IMPRIMIR DATOS*/
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }

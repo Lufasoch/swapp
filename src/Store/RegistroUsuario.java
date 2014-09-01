@@ -419,7 +419,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         eMailC.setText("");
         FechaNacC.setDate(null);
         EmpresaC.setText("");
-        SitioWeb.setText("");
+        SitioWebC.setText("");
         String DirI = "Recursos/Perfil.jpg";
         PerfilLabel.setIcon(RZIma(DirI, 150, 150));
         PanelProveedor01.setVisible(false);

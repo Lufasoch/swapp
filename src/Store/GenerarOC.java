@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package Store;
+
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
@@ -25,18 +26,17 @@ import javax.swing.ListSelectionModel;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-
-        
-
 /**
  *
  * @author jpmc21891
  */
 public class GenerarOC extends javax.swing.JInternalFrame {
-public int cont=0;
-Date fechaOC = new Date();
-DefaultTableModel vacio = new DefaultTableModel(0,0);
-double totalOC;
+
+    public int cont = 0;
+    Date fechaOC = new Date();
+    DefaultTableModel vacio = new DefaultTableModel(0, 0);
+    double totalOC;
+
     /**
      * Creates new form GenerarOC
      */
@@ -46,7 +46,7 @@ double totalOC;
         }
         return IGenerarOC;
     }
-    
+
     public DefaultMutableTreeNode searchNode(String nodeStr) {
         DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
@@ -61,23 +61,23 @@ double totalOC;
         }
         return null;
     }
-    
+
     public GenerarOC() {
         initComponents();
         this.validate();
-        DefaultTableModel modelo = new DefaultTableModel(){
-                                                            boolean[] canEdit = new boolean[]{false, false, true, false, false};
+        DefaultTableModel modelo = new DefaultTableModel() {
+            boolean[] canEdit = new boolean[]{false, false, true, false, false};
 
-                                                            @Override
-                                                            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                                                                return canEdit[columnIndex];
-                                                            }
-                                                        };
-        
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
 
-        String header[] = new String[] { "Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea" };
+
+        String header[] = new String[]{"Código", "Descripción", "Cantidad", "Precio Unitario", "Total Linea"};
         modelo.setColumnIdentifiers(header);
-        TArticulos.setModel(modelo);   
+        TArticulos.setModel(modelo);
         SelCliente.setVisible(false);
         SelArticulo.setVisible(false);
         Actualizar();
@@ -86,8 +86,8 @@ double totalOC;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txtFecha.setText(sdf.format(fechaOC));
 
-        
-        
+
+
     }
 
     /**
@@ -459,19 +459,18 @@ double totalOC;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private void Btn_AddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AddProdActionPerformed
         // TODO add your handling code here:
 
-        SelArticulo.setVisible(true);                    
+        SelArticulo.setVisible(true);
         Btn_AddProd.setVisible(false);
         HabilitarGenOC(false);
-             
+
     }//GEN-LAST:event_Btn_AddProdActionPerformed
 
     private void Btn_Cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Cancelar1ActionPerformed
         // TODO add your handling code here:
-       
+
         TArticulos.setModel(vacio);
         txtemaildsp.setText("");
         txtnicknamedsp.setText("");
@@ -480,7 +479,7 @@ double totalOC;
         txtFecha.setText("");
         HabilitarGenOC(true);
         Btn_Cancelar1.setText("Cancelar");
-        GenOC=null;
+        IGenerarOC = null;
         this.dispose();
     }//GEN-LAST:event_Btn_Cancelar1ActionPerformed
 
@@ -490,7 +489,7 @@ double totalOC;
         SelCliente.toFront();
         btn_selCli.setVisible(false);
         HabilitarGenOC(false);
-        
+
     }//GEN-LAST:event_btn_selCliActionPerformed
 
     private void BtnSelCli_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_ActualizarActionPerformed
@@ -498,19 +497,16 @@ double totalOC;
     }//GEN-LAST:event_BtnSelCli_ActualizarActionPerformed
 
     private void BtnSelCli_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSelCli_SeleccionarActionPerformed
-        try
-        {
-            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(),0);
+        try {
+            String nick = (String) TCliente.getValueAt(TCliente.getSelectedRow(), 0);
             DataUsuario dc = Factory.getInstance().getUsuarioController().getDataCliente(nick);
-            txtNomAp.setText((dc.getApellido()+", "+dc.getNombre()));
+            txtNomAp.setText((dc.getApellido() + ", " + dc.getNombre()));
             txtnicknamedsp.setText(dc.getNickname());
             txtemaildsp.setText(dc.getEmail());
 //            TCliente.setModel(vacio);
             SelCliente.setVisible(false);
             HabilitarGenOC(true);
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_BtnSelCli_SeleccionarActionPerformed
@@ -523,51 +519,51 @@ double totalOC;
     }//GEN-LAST:event_BtnSelCli_CancelarActionPerformed
 
     private void btnSelArt_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_SeleccionarActionPerformed
-        
-        try{
+
+        try {
             DefaultTreeModel tc = (DefaultTreeModel) treeCategoria.getModel();
             DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-            if (seleccionado!=null){
-                if ((seleccionado.isLeaf() && (!"Vacía".equals(seleccionado.getUserObject().toString())))){
+            if (seleccionado != null) {
+                if ((seleccionado.isLeaf() && (!"Vacía".equals(seleccionado.getUserObject().toString())))) {
                     DataProducto dp = Factory.getInstance().getProductoController().buscarProductoPorName(seleccionado.getUserObject().toString());
-                    DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();                    
+                    DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
                     int cantidad = Integer.parseInt(txtcantidad.getText());
-                    if (cantidad == 0){
-                        throw new CategoryException("La cantidad debe ser mayor a 0.");                        
+                    if (cantidad == 0) {
+                        throw new CategoryException("La cantidad debe ser mayor a 0.");
                     }
 
                     double preciounitario = dp.getDataEspecificacion().getPrecio();
-                    double totallinea= cantidad*preciounitario;
-                    Object linea[] = {dp.getReferencia(),dp.getNombre(),cantidad,preciounitario,totallinea};
+                    double totallinea = cantidad * preciounitario;
+                    Object linea[] = {dp.getReferencia(), dp.getNombre(), cantidad, preciounitario, totallinea};
                     totalOC = totalOC + totallinea;
                     TxtTotalVal.setText(Double.valueOf(totalOC).toString());
-                    
+
                     ta.addRow(linea);
                     TArticulos.setModel(ta);
                     SelArticulo.setVisible(false);
                     Btn_AddProd.setVisible(true);
                     HabilitarGenOC(true);
-                }else{
+                } else {
                     throw new CategoryException("No ha seleccionado ningún producto.");
                 }
-                    
-                    
-                
-            }else{
+
+
+
+            } else {
                 throw new CategoryException("No ha seleccionado ningún producto.");
             }
 
 
-            
-                    
-        }catch(CategoryException ex){
+
+
+        } catch (CategoryException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         } catch (ProductoException ex) {
-        Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
-     
-            
+            Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }//GEN-LAST:event_btnSelArt_SeleccionarActionPerformed
 
     private void btnSelArt_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelArt_CancelarActionPerformed
@@ -578,45 +574,49 @@ double totalOC;
 
     private void Btn_Aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Aceptar1ActionPerformed
         // TODO add your handling code here:
-    try {
-        int numOC = 0;
-        DataOC doc= new DataOC(numOC,fechaOC,totalOC);
-        DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
-        List<DataLineaOC> lineas = new ArrayList<DataLineaOC>();
-        int max = ta.getRowCount();
-        if (max<=0)
-            throw new OCException("No existen articulos en la Orden de Compra");
-        
-        for (int i=0; i<max;i++){
-            int cantidad = (Integer) ta.getValueAt(i, 2);         
-            DataLineaOC dl= new DataLineaOC(cantidad,Factory.getInstance().getProductoController().buscarProductoPorName(ta.getValueAt(i, 1).toString()));
-            lineas.add(dl);
+        try {
+            int numOC = 0;
+            DataOC doc = new DataOC(numOC, fechaOC, totalOC);
+            DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
+            List<DataLineaOC> lineas = new ArrayList<DataLineaOC>();
+            int max = ta.getRowCount();
+            if (max <= 0) {
+                throw new OCException("No existen articulos en la Orden de Compra");
+            }
+
+            for (int i = 0; i < max; i++) {
+                int cantidad = (Integer) ta.getValueAt(i, 2);
+                DataLineaOC dl = new DataLineaOC(cantidad, Factory.getInstance().getProductoController().buscarProductoPorName(ta.getValueAt(i, 1).toString()));
+                lineas.add(dl);
+            }
+            doc.setLineas(lineas);
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+            String msg = "OC Número " + numOC + " creada correctamente";
+            JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            HabilitarGenOC(false);
+            Btn_Cancelar1.setText("Cerrar");
+            Btn_Cancelar1.setEnabled(true);
+            DataOC dataOrdenCompra=Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            DataUsuario dataUsuario=Factory.getInstance().getUsuarioController().getDataCliente((String) TCliente.getValueAt(TCliente.getSelectedRow(), 0));
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+        } catch (OCException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
+        } catch (ProductoException ex) {
+            Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
         }
-           doc.setLineas(lineas);
-        numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
-        String msg= "OC Número " + numOC + " creada correctamente";
-        JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
-        HabilitarGenOC(false);
-        Btn_Cancelar1.setText("Cerrar");
-        Btn_Cancelar1.setEnabled(true);
-        
-    } catch (OCException ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
-    } catch (ProductoException ex) {
-        Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
-    }
-        
 
 
-        
+
+
     }//GEN-LAST:event_Btn_Aceptar1ActionPerformed
 
-    private void Actualizar(){
+    private void Actualizar() {
 
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
-        {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -630,14 +630,14 @@ double totalOC;
 
         TCliente.setModel(DTM2);
         List<DataUsuario> clientes = Factory.getInstance().getUsuarioController().getClientes();
-        
+
         int c = clientes.size();
         for (int i = 0; i < c; i++) {
             String datos[] = {clientes.get(i).getNickname(), clientes.get(i).getEmail()};
             DTM2.addRow(datos);
         }
-    }    
-    
+    }
+
     private void cargarCategorias() {
         try {
 
@@ -653,89 +653,40 @@ double totalOC;
                 if (dc.getParent().equals("Categorias")) {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     root.add(nuevo);
-                    if (dc.isContieneProductos()){
+                    if (dc.isContieneProductos()) {
 //                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
                         for (DataProducto dp : dc.getDataProductos()) {
                             nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
-                            nuevo.add(nuevoprod);                          
-                        }                       
-                    }else{
+                            nuevo.add(nuevoprod);
+                        }
+                    } else {
                         nuevoprod = new DefaultMutableTreeNode("Vacía");
-                        nuevo.add(nuevoprod);  
+                        nuevo.add(nuevoprod);
                     }
-                        
+
                 } else {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     padre = searchNode(dc.getParent());
                     modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
-                    if (dc.isContieneProductos()){
+                    if (dc.isContieneProductos()) {
                         List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
                         for (DataProducto dp : productos) {
                             nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
-                            nuevo.add(nuevoprod);                          
-                        }                       
-                    }else{
+                            nuevo.add(nuevoprod);
+                        }
+                    } else {
                         nuevoprod = new DefaultMutableTreeNode("Vacía");
-                        nuevo.add(nuevoprod);  
-                    }                    
-                    
+                        nuevo.add(nuevoprod);
+                    }
+
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-//       private void cargarCategorias() {
-//           
-//           
-//           
-//           
-//        try {
-//
-//            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
-//
-//            DefaultTreeModel modeloTree = (DefaultTreeModel) treeCategoria.getModel();
-//            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeloTree.getRoot();
-//            DefaultMutableTreeNode nuevo;
-//            DefaultMutableTreeNode nuevoprod;
-//            DefaultMutableTreeNode padre;
-//
-//            for (DataCategoria dc : categorias) {
-//                if (dc.getParent().equals("Categorias")) {
-//                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
-//                    root.add(nuevo);
-//                    if (dc.isContieneProductos()){
-//                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
-//                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
-//                        for (DataProducto dp : productos) {
-//                            nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
-//                            nuevo.add(nuevoprod);                          
-//                                    
-//                        }
-//                                
-//                    }
-//                } else {
-//                    nuevo = new DefaultMutableTreeNode(dc.getNombre());
-//                    padre = searchNode(dc.getParent());
-//                    modeloTree.insertNodeInto(nuevo, padre, padre.getChildCount());
-//                    if (dc.isContieneProductos()){
-//                            //BUSCAR Y ENGANCHAR PRODUCTOS CORRESPONDIENTES
-//                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
-//                        for (DataProducto dp : productos) {
-//                            nuevoprod = new DefaultMutableTreeNode(dc.getNombre());
-//                            nuevo.add(nuevoprod);                          
-//                                    
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-    
-    private void HabilitarGenOC(boolean flg){
+    }
+
+    private void HabilitarGenOC(boolean flg) {
         GenOC.setFocusable(flg);
 //        GenOC.setEnabled(flg);
         Btn_Aceptar1.setEnabled(flg);
@@ -745,9 +696,6 @@ double totalOC;
         Btn_AddProd.setEnabled(flg);
         TArticulos.setEnabled(flg);
     }
-    
-    
-  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton BtnSelCli_Actualizar;
@@ -791,6 +739,4 @@ double totalOC;
     private javax.swing.JTextField txtnicknamedsp;
     // End of variables declaration//GEN-END:variables
     private static GenerarOC IGenerarOC;
-
-
 }
