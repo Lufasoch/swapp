@@ -4,10 +4,14 @@
  */
 package Store;
 
+import direct.market.datatype.DataLineaOC;
+import direct.market.datatype.DataOC;
 import direct.market.exceptions.OCException;
 import direct.market.factory.Factory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,36 +39,32 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         }
         return IOCInstancia;
     }
-    
-    public void Actualizar()
-    {
-        int[] NOrdenes = {458, 5366, 7552};
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date[] fechaOC = {new Date(99,7,14), new Date(106,11,8), new Date(112,3,21),};
-        DefaultTableModel DTM = new DefaultTableModel()
-            {
-                boolean[] canEdit = new boolean[]{false, false};
 
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return canEdit[columnIndex];
-                }
-            };
-            String header[] = new String[] { "Nro Orden", "Fecha" };
-            DTM.setColumnIdentifiers(header);
-            OrdenesTable.setModel(DTM);
-            OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                //ARRIBA//CAMBIAR MODELO DE LA TABLA
+    public void Actualizar() {
+        List<DataOC> ordenesCompraList = Factory.getInstance().getOrdenCompraController().getOrdenesCompra();
+        DefaultTableModel DTM = new DefaultTableModel() {
+            boolean[] canEdit = new boolean[]{false, false};
 
-            int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-            while(cont < 3)
-            {
-                //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
-                DTM.addRow(new Object[] { NOrdenes[cont], sdf.format(fechaOC[cont]) }); 
-                cont++;
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
             }
-    }    
-    
+        };
+        String header[] = new String[]{"Nro Orden", "Fecha"};
+        DTM.setColumnIdentifiers(header);
+        OrdenesTable.setModel(DTM);
+        OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //ARRIBA//CAMBIAR MODELO DE LA TABLA
+        if (ordenesCompraList != null) {
+            int c = ordenesCompraList.size();
+            for (int i = 0; i < c; i++) {
+                String datos[] = {Integer.valueOf(ordenesCompraList.get(i).getNumero()).toString(), sdf.format(ordenesCompraList.get(i).getFecha())};
+                DTM.addRow(datos);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +90,7 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         CancelarOC = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
+        setTitle("Cancelar Orden de Compra");
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
@@ -243,71 +244,67 @@ public class CancelarOC extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void DetallesOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetallesOCActionPerformed
-        try
-        {
-            String nicknameP = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
-        
-            int[] CodP = { 1 , 2563, 179 };
-            String[] NomP = { "Radeon R9 280x", "AMD Phenom II X6 1100t", "Kingstom 4Gb 1333Mhz" };
-            double[] PreUniP = { 329.99, 165.99, 53.00 };
-            int[] CantP = { 2, 1, 4 };
+        try {
+            String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
+            DataOC doc = Factory.getInstance().getOrdenCompraController().getDataOC(nroCompRow);
 
-            DefaultTableModel DTM2 = new DefaultTableModel()
-                {
-                    boolean[] canEdit = new boolean[]{false, false, false, false, false};
 
-                    @Override
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return canEdit[columnIndex];
-                    }
-                };
-                String header[] = new String[] { "Codigo", "Nombre", "Precio U.", "Cantidad", "Sub total" };
-                DTM2.setColumnIdentifiers(header);
-                OrdenInfoTable.setModel(DTM2);
-                OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-                    //ARRIBA//CAMBIAR MODELO DE LA TABLA
-                double total = 0;
-                int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
-                while(cont < 3)
-                {
-                    //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
-                    DTM2.addRow(new Object[] { CodP[cont], NomP[cont], PreUniP[cont], CantP[cont], PreUniP[cont]*CantP[cont] }); 
-                    total = total + PreUniP[cont]*CantP[cont];
-                    cont++;
+            DefaultTableModel DTM2 = new DefaultTableModel() {
+                boolean[] canEdit = new boolean[]{false, false, false, false};
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
                 }
-                String total2 = String.valueOf(total);
-                TxtTotalVal.setText(total2);
-            } 
-        catch (IndexOutOfBoundsException ex)
-        {
+            };
+            String header[] = new String[]{"Nombre", "Precio U.", "Cantidad", "Sub total"};
+            DTM2.setColumnIdentifiers(header);
+            OrdenInfoTable.setModel(DTM2);
+            OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            //ARRIBA//CAMBIAR MODELO DE LA TABLA
+
+//                double total = 0;
+//                int cont = 0;//MIENTRAS NO TENGO UNA LISTA DE CLIENTES USO UN CONTADOR        
+//                while(cont < 3)
+//                {
+//                    //DTM.addRow(new Object[] { DATA_ORDEN_DE_COMPRA_ITEM.getNroOrden(), sdf.format(DATA_ORDEN_DE_COMPRA_ITEM.getFecha()) });
+//                    DTM2.addRow(new Object[] { CodP[cont], NomP[cont], PreUniP[cont], CantP[cont], PreUniP[cont]*CantP[cont] }); 
+//                    total = total + PreUniP[cont]*CantP[cont];
+//                    cont++;
+//                }
+//                String total2 = String.valueOf(total);
+            for (DataLineaOC dlo : doc.getLineas()) {
+                DTM2.addRow(new Object[]{dlo.getProducto().getNombre(), dlo.getProducto().getDataEspecificacion().getPrecio(), dlo.getCantidad(), dlo.getTotalLinea()});
+            }
+            TxtTotalVal.setText(Double.valueOf(doc.getPrecio_total()).toString());
+        } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_DetallesOCActionPerformed
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        DefaultTableModel vacio = new DefaultTableModel(0,0);
+        DefaultTableModel vacio = new DefaultTableModel(0, 0);
         OrdenInfoTable.setModel(vacio);
-        CancelarOC=null;
+        CancelarOC = null;
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
 
     private void CancelarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarOCActionPerformed
         // TODO add your handling code here:
-        try{
-            DefaultTableModel m = (DefaultTableModel) OrdenInfoTable.getModel();
-            int numOC = (Integer) m.getValueAt(OrdenInfoTable.getSelectedRow(),0);
+        try {
+            DefaultTableModel m = (DefaultTableModel) OrdenesTable.getModel();
+            Integer numOC = Integer.valueOf(m.getValueAt(OrdenesTable.getSelectedRow(), 0).toString());
             Factory.getInstance().getOrdenCompraController().cancelarOrdenCompra(numOC);
-        }
-        catch (IndexOutOfBoundsException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            Actualizar();
+        } catch (IndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         } catch (OCException ex) {
             Logger.getLogger(CancelarOC.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_CancelarOCActionPerformed
 
+    }//GEN-LAST:event_CancelarOCActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
@@ -325,5 +322,5 @@ public class CancelarOC extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
-private static CancelarOC IOCInstancia;
+    private static CancelarOC IOCInstancia;
 }
