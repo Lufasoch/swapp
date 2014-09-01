@@ -41,7 +41,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private int NoCatCont;
     private String oldReferencia;
     private String[] ImaI;
-    private DefaultListModel listaModel;
+    private DefaultListModel listaModel = new DefaultListModel();
     private DefaultListModel listaModelCat = new DefaultListModel();
 
 
@@ -64,6 +64,22 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         btn_modificar.setEnabled(false);
         SelCategoria.setVisible(false);
         SelImagen.setVisible(false);
+        lblNicknameProveedor.setVisible(false);
+
+    }
+    
+    private void LimpiarCampos(){
+        tfNombre.setText("");
+        tfPrecio.setText("");
+        tfProveedor.setText("");
+        tfReferencia.setText("");
+        lblNicknameProveedor.setText("");
+        taDescripcion.setText("");
+        taEspecificacion.setText("");
+        listCategorias.removeAll();
+        listCategorias.repaint();
+        ImaList.removeAll();
+        ImaList.repaint();
     }
 
    public DefaultMutableTreeNode searchNode(String nodeStr, JTree arbol) {
@@ -134,6 +150,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         taEspecificacion = new javax.swing.JTextArea();
         txtPrecio = new javax.swing.JLabel();
         tfPrecio = new javax.swing.JTextField();
+        lblNicknameProveedor = new javax.swing.JLabel();
         pnlImagenes = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         ImaList = new javax.swing.JList();
@@ -211,16 +228,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelImagenLayout.setVerticalGroup(
             SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 448, Short.MAX_VALUE)
             .addGroup(SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelImagenLayout.createSequentialGroup()
-                    .addGap(0, 4, Short.MAX_VALUE)
+                    .addGap(0, 9, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 5, Short.MAX_VALUE)))
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelImagen);
-        SelImagen.setBounds(0, 0, 331, 471);
+        SelImagen.setBounds(0, 0, 331, 480);
 
         SelCategoria.setTitle("Seleccionar Categorias");
         SelCategoria.setVisible(true);
@@ -279,16 +296,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelCategoriaLayout.setVerticalGroup(
             SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
             .addGroup(SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelCategoriaLayout.createSequentialGroup()
-                    .addGap(0, 4, Short.MAX_VALUE)
+                    .addGap(0, 9, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 5, Short.MAX_VALUE)))
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelCategoria);
-        SelCategoria.setBounds(0, 0, 381, 541);
+        SelCategoria.setBounds(0, 0, 381, 550);
 
         ModificarProd.setVisible(true);
         ModificarProd.getContentPane().setLayout(null);
@@ -428,6 +445,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         txtPrecio.setBounds(10, 160, 73, 17);
         pnlDatos.add(tfPrecio);
         tfPrecio.setBounds(120, 150, 190, 27);
+        pnlDatos.add(lblNicknameProveedor);
+        lblNicknameProveedor.setBounds(20, 100, 0, 0);
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
 
@@ -537,7 +556,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             
             dp.setNombre(tfNombre.getText());
             dp.setReferencia(tfReferencia.getText());
-            dp.setDataProveedor(Factory.getInstance().getUsuarioController().getDataProveedor(tfProveedor.getText()));
+            dp.setDataProveedor(Factory.getInstance().getUsuarioController().getDataProveedor(lblNicknameProveedor.getText()));
             dep.setDescripcion(taDescripcion.getText());
             dep.setEspecificacion(taEspecificacion.getText());
             dep.setPrecio(Double.parseDouble(tfPrecio.getText()));
@@ -569,9 +588,13 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }else{
                 Factory.getInstance().getProductoController().modificarProductoConReferenciaModificada(dp, oldReferencia);
             }
-                        
-            MProdInstancia = null;
-            this.dispose();
+            
+            JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            //limpiar campos
+            //MProdInstancia = null;
+            //this.dispose();
+            LimpiarCampos();
+                    
         }catch (ProductoException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }catch (CategoryException ex){
@@ -588,6 +611,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                 tfNombre.setText(dprod.getNombre());
                 tfReferencia.setText(dprod.getReferencia());
                 oldReferencia = dprod.getReferencia();
+                lblNicknameProveedor.setText(dprod.getDataProveedor().getNickname());
+                lblNicknameProveedor.setVisible(false);
                 tfProveedor.setText(dprod.getDataProveedor().getCompania());
                 taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
                 taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());               
@@ -752,11 +777,12 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
     private void AgregarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarImaButtonActionPerformed
         if (txtFotoPath.getText() != null) {
-            if (NoImaCont == 0) {
-                listaModel = new DefaultListModel();
-            }
-            //DefaultListModel listaModel = new DefaultListModel();
             ImaList.setModel(listaModel);
+            /*if (NoImaCont == 0) {
+                listaModel = new DefaultListModel();
+            }*/
+            //DefaultListModel listaModel = new DefaultListModel();
+            //ImaList.setModel(listaModel);
             listaModel.addElement(fileImagen.getAbsolutePath());
             ImaI[NoImaCont] = fileImagen.getAbsolutePath();
             txtFotoPath.setText(fileImagen.getAbsolutePath());
@@ -855,7 +881,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private void habilitartodo(boolean flg, boolean flgbotonera){
 
         tfReferencia.setEditable(flg);
-        tfProveedor.setEditable(flg);
+        //tfProveedor.setEditable(flg);
         taDescripcion.setEditable(flg);
         taEspecificacion.setEditable(flg);
         ImaList.setEnabled(flg);
@@ -912,6 +938,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblNicknameProveedor;
     private javax.swing.JList listCategorias;
     private javax.swing.JList listProductos;
     private javax.swing.JPanel panelCategoria;

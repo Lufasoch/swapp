@@ -391,7 +391,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
            // Factory.getUsuarioController().altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), "", tipo, EmpresaC.getText(), SitioWebC.getText());
 
-        
+            JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             limpiarCampos();
             //this.dispose();
         } /*catch (IOException ex) {
