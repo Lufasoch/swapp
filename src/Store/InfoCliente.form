@@ -30,7 +30,7 @@
     <Container class="javax.swing.JInternalFrame" name="VerOCF">
       <Properties>
         <Property name="focusable" type="boolean" value="false"/>
-        <Property name="visible" type="boolean" value="false"/>
+        <Property name="visible" type="boolean" value="true"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -97,7 +97,8 @@
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="2"/>
+            <Property name="columns" type="int" value="3"/>
+            <Property name="horizontalGap" type="int" value="8"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
@@ -151,7 +152,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="350" y="450" width="170" height="50"/>
+              <AbsoluteConstraints x="340" y="450" width="170" height="50"/>
             </Constraint>
           </Constraints>
 

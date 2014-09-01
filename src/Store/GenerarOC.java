@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.OCException;
 import direct.market.exceptions.ProductoException;
+import direct.market.exceptions.UsuarioException;
 import direct.market.factory.Factory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         Actualizar();
         cargarCategorias();
         GenOC.setVisible(true);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txtFecha.setText(sdf.format(fechaOC));
 
 
@@ -149,7 +150,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 
         SelArticulo.setTitle("Seleccionar Artículo");
         SelArticulo.setPreferredSize(new java.awt.Dimension(324, 470));
-        SelArticulo.setVisible(false);
+        SelArticulo.setVisible(true);
 
         panelCategoria.setBackground(new java.awt.Color(214, 228, 237));
         panelCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -533,6 +534,8 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             HabilitarGenOC(true);
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
+        } catch (UsuarioException ex) {
+            Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BtnSelCli_SeleccionarActionPerformed
 
@@ -555,14 +558,13 @@ public class GenerarOC extends javax.swing.JInternalFrame {
                     if (txtcantidad.getText().isEmpty()) {
                         throw new OCException("El campo cantidad no puede ser vacio");
                     }
+                    if (!isNumeric(txtcantidad.getText())) {
+                        throw new OCException("El campo cantidad debe ser numerico.");
+                    }
                     int cantidad = Integer.parseInt(txtcantidad.getText());
                     if (cantidad == 0) {
                         throw new OCException("La cantidad debe ser mayor a 0.");
-                    }
-                    if (!isNumeric(txtcantidad.getText().trim())) {
-                        throw new OCException("El campo cantidad debe ser numerico.");
-                    }
-
+                    }     
                     double preciounitario = dp.getDataEspecificacion().getPrecio();
                     double totallinea = cantidad * preciounitario;
                     Object linea[] = {dp.getReferencia(), dp.getNombre(), cantidad, preciounitario, totallinea};
@@ -601,6 +603,10 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private void Btn_Aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Aceptar1ActionPerformed
         // TODO add your handling code here:
         try {
+            if (txtNomAp.getText().isEmpty()){
+                throw new OCException("Debe seleccionar un cliente.");
+            }
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm");
             int numOC = 0;
             DataOC doc = new DataOC(numOC, fechaOC, totalOC);
             DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
@@ -621,6 +627,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             HabilitarGenOC(false);
             NroOCtext.setText(Integer.valueOf(numOC).toString());
+            txtFecha.setText(sdf1.format(fechaOC));
             Btn_Cancelar1.setText("Cerrar");
             Btn_Cancelar1.setEnabled(true);
             DataOC dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
@@ -632,15 +639,26 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Atencion", JOptionPane.WARNING_MESSAGE);
         } catch (ProductoException ex) {
             Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UsuarioException exu) {
+            Logger.getLogger(GenerarOC.class.getName()).log(Level.SEVERE, null, exu);
         }
 
 
 
 
     }//GEN-LAST:event_Btn_Aceptar1ActionPerformed
-    public static boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");
-    }
+//    public static boolean isNumeric(String str) {
+//        return str.matches("-?\\d+(\\.\\d+)?");
+//    }
+    
+    private boolean isNumeric(String cadena){
+	try {
+		Integer.parseInt(cadena);
+		return true;
+	} catch (NumberFormatException nfe){
+		return false;
+	}
+}
 
     private void Actualizar() {
 

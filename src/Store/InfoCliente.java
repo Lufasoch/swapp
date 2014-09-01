@@ -154,7 +154,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         VerOCF.setFocusable(false);
-        VerOCF.setVisible(false);
+        VerOCF.setVisible(true);
         VerOCF.getContentPane().setLayout(null);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -188,7 +188,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         jScrollPane2.setBounds(0, 0, 520, 400);
 
         PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        PTotales.setLayout(new java.awt.GridLayout(1, 2));
+        PTotales.setLayout(new java.awt.GridLayout(1, 3, 8, 0));
 
         TxtTotal.setEditable(false);
         TxtTotal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
@@ -223,7 +223,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         jPanel3.add(Cerrar1);
 
         VerOCF.getContentPane().add(jPanel3);
-        jPanel3.setBounds(350, 450, 170, 50);
+        jPanel3.setBounds(340, 450, 170, 50);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         VerOCF.getContentPane().add(jLabel1);
@@ -526,14 +526,26 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
     private void desabilitar()
     {
-        Cerrar.setEnabled(false);
-        OrdenButton.setEnabled(false);
-        OrdenButton.setFocusable(false);
+        TPanel.setVisible(false);
+        jScrollPane1.setVisible(false);
+        PPanel.setVisible(false);
+        jPanel1.setVisible(false);
+        InfoPanel.setVisible(false);
+    }
+    
+    private void habilitar()
+    {
+        TPanel.setVisible(true);
+        jScrollPane1.setVisible(true);
+        PPanel.setVisible(true);
+        jPanel1.setVisible(true);
+        InfoPanel.setVisible(true);
     }
     
     private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
         
         try {
+            desabilitar();
             VerOCF.setVisible(true);
 
             String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
@@ -578,6 +590,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_SeMuestraSeActualiza
 
     private void Cerrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cerrar1ActionPerformed
+        habilitar();
         DefaultTableModel vacio = new DefaultTableModel(0, 0);
         OrdenInfoTable.setModel(vacio);
         VerOCF.setVisible(false);
