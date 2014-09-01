@@ -467,7 +467,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     
     private void cargarCategorias() {
         try {
-
             List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
 
             DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
