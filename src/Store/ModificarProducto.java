@@ -7,12 +7,10 @@ package Store;
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataEspecificacionProducto;
 import direct.market.datatype.DataProducto;
-import direct.market.datatype.DataUsuario;
 import direct.market.exceptions.CategoryException;
 import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.awt.Image;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,25 +26,32 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.JTree;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 
 /**
  *
  * @author kavesa
  */
 public class ModificarProducto extends javax.swing.JInternalFrame {
+
     private File fileImagen;
-    private int NoImaCont;
+    private int NoImaCont = 0;
     private int NoCatCont;
     private String oldReferencia;
-    private String[] ImaI;
-    private DefaultListModel listaModel;
-    private DefaultListModel listaModelCat;
+    //private String[] ImaI;
+    private DefaultListModel listaModel = new DefaultListModel();
+    private DefaultListModel listaModelCat = new DefaultListModel();
+
+    public static ModificarProducto getInstancia() {
+        if (MProdInstancia == null) {
+            MProdInstancia = new ModificarProducto();
+
+        }
+        return MProdInstancia;
+    }
 
     /**
      * Creates new form InfoProducto
@@ -59,18 +64,28 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         btn_modificar.setEnabled(false);
         SelCategoria.setVisible(false);
         SelImagen.setVisible(false);
-        SelectProv.setVisible(false);
+        lblNicknameProveedor.setVisible(false);
+
     }
 
-    public static ModificarProducto getInstancia() {
-        if (IProdInstancia == null) {
-            IProdInstancia = new ModificarProducto();
-        }
-        return IProdInstancia;
+    private void LimpiarCampos() {
+        tfNombre.setText("");
+        tfPrecio.setText("");
+        tfProveedor.setText("");
+        tfReferencia.setText("");
+        lblNicknameProveedor.setText("");
+        taDescripcion.setText("");
+        taEspecificacion.setText("");
+
+        listaModelCat.clear();
+        listCategorias.repaint();
+
+        listaModel.clear();
+        ImaList.repaint();
     }
 
-    public DefaultMutableTreeNode searchNode(String nodeStr) {
-        DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
+    public DefaultMutableTreeNode searchNode(String nodeStr, JTree arbol) {
+        DefaultTreeModel modelito = (DefaultTreeModel) arbol.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelito.getRoot();
 
         DefaultMutableTreeNode node = null;
@@ -93,15 +108,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        SelectProv = new javax.swing.JInternalFrame();
-        jPanel5 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        ProveedorTable = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
-        SelProvCerrarButton = new javax.swing.JButton();
-        SelProvActualizarButton = new javax.swing.JButton();
-        SelProvSeleccionar = new javax.swing.JButton();
         SelImagen = new javax.swing.JInternalFrame();
         jPanel10 = new javax.swing.JPanel();
         txtFotoPath = new javax.swing.JTextField();
@@ -144,9 +150,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         taDescripcion = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         taEspecificacion = new javax.swing.JTextArea();
-        SelProveedor = new javax.swing.JButton();
         txtPrecio = new javax.swing.JLabel();
         tfPrecio = new javax.swing.JTextField();
+        lblNicknameProveedor = new javax.swing.JLabel();
         pnlImagenes = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         ImaList = new javax.swing.JList();
@@ -164,100 +170,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         setMaximizable(true);
         setResizable(true);
-        setTitle("Ver Informacion de Producto");
+        setTitle("Modificar Producto");
         setPreferredSize(new java.awt.Dimension(850, 650));
         getContentPane().setLayout(null);
 
-        SelectProv.setVisible(false);
-
-        jPanel5.setBackground(new java.awt.Color(214, 228, 237));
-        jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel5.setLayout(null);
-
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("Seleccione el proveedor");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jTextField3);
-        jTextField3.setBounds(10, 10, 350, 41);
-
-        ProveedorTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null}
-            },
-            new String [] {
-                "Nickname", "eMail"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane6.setViewportView(ProveedorTable);
-
-        jPanel5.add(jScrollPane6);
-        jScrollPane6.setBounds(10, 60, 350, 380);
-
-        jPanel7.setBackground(new java.awt.Color(214, 228, 237));
-        jPanel7.setLayout(new java.awt.GridLayout(1, 3, 8, 8));
-
-        SelProvCerrarButton.setText("Cerrar");
-        SelProvCerrarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelProvCerrarButtonActionPerformed(evt);
-            }
-        });
-        jPanel7.add(SelProvCerrarButton);
-
-        SelProvActualizarButton.setText("Actualizar");
-        SelProvActualizarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelProvActualizarButtonActionPerformed(evt);
-            }
-        });
-        jPanel7.add(SelProvActualizarButton);
-
-        SelProvSeleccionar.setText("Seleccionar");
-        SelProvSeleccionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelProvSeleccionarActionPerformed(evt);
-            }
-        });
-        jPanel7.add(SelProvSeleccionar);
-
-        jPanel5.add(jPanel7);
-        jPanel7.setBounds(10, 450, 350, 40);
-
-        javax.swing.GroupLayout SelectProvLayout = new javax.swing.GroupLayout(SelectProv.getContentPane());
-        SelectProv.getContentPane().setLayout(SelectProvLayout);
-        SelectProvLayout.setHorizontalGroup(
-            SelectProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-        );
-        SelectProvLayout.setVerticalGroup(
-            SelectProvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        getContentPane().add(SelectProv);
-        SelectProv.setBounds(30, 10, 370, 530);
-
+        SelImagen.setTitle("Seleccionar Imagenes");
         SelImagen.setVisible(true);
 
         jPanel10.setBackground(new java.awt.Color(214, 228, 237));
@@ -313,17 +230,18 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelImagenLayout.setVerticalGroup(
             SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGap(0, 448, Short.MAX_VALUE)
             .addGroup(SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelImagenLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 9, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelImagen);
-        SelImagen.setBounds(0, 0, 322, 460);
+        SelImagen.setBounds(0, 0, 331, 480);
 
+        SelCategoria.setTitle("Seleccionar Categorias");
         SelCategoria.setVisible(true);
 
         jPanel6.setBackground(new java.awt.Color(214, 228, 237));
@@ -380,16 +298,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelCategoriaLayout.setVerticalGroup(
             SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
             .addGroup(SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelCategoriaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 9, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 9, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelCategoria);
-        SelCategoria.setBounds(0, 0, 372, 530);
+        SelCategoria.setBounds(0, 0, 381, 550);
 
         ModificarProd.setVisible(true);
         ModificarProd.getContentPane().setLayout(null);
@@ -471,38 +389,36 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         pnlInformacion.setBorder(null);
 
         pnlDatos.setLayout(null);
-
-        tfNombre.setEditable(false);
         pnlDatos.add(tfNombre);
-        tfNombre.setBounds(123, 18, 191, 28);
+        tfNombre.setBounds(123, 18, 191, 27);
 
         tfReferencia.setEditable(false);
         pnlDatos.add(tfReferencia);
-        tfReferencia.setBounds(123, 64, 191, 28);
+        tfReferencia.setBounds(123, 64, 191, 27);
 
         tfProveedor.setEditable(false);
         pnlDatos.add(tfProveedor);
-        tfProveedor.setBounds(154, 110, 160, 28);
+        tfProveedor.setBounds(120, 110, 190, 27);
 
         txtNombre.setText("Nombre");
         pnlDatos.add(txtNombre);
-        txtNombre.setBounds(12, 23, 57, 18);
+        txtNombre.setBounds(12, 23, 52, 17);
 
         txtNumeroReferencia.setText("Referencia");
         pnlDatos.add(txtNumeroReferencia);
-        txtNumeroReferencia.setBounds(12, 69, 75, 18);
+        txtNumeroReferencia.setBounds(12, 69, 67, 17);
 
         txtProveedor.setText("Proveedor");
         pnlDatos.add(txtProveedor);
-        txtProveedor.setBounds(10, 120, 73, 18);
+        txtProveedor.setBounds(10, 120, 65, 17);
 
         txtDescripcion.setText("Descripcion");
         pnlDatos.add(txtDescripcion);
-        txtDescripcion.setBounds(10, 190, 82, 18);
+        txtDescripcion.setBounds(10, 190, 74, 17);
 
         txtEspecificacion.setText("Especificacion");
         pnlDatos.add(txtEspecificacion);
-        txtEspecificacion.setBounds(10, 310, 99, 18);
+        txtEspecificacion.setBounds(10, 310, 89, 17);
 
         jScrollPane4.setAutoscrolls(true);
         jScrollPane4.setPreferredSize(new java.awt.Dimension(262, 40));
@@ -526,20 +442,13 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         pnlDatos.add(jScrollPane5);
         jScrollPane5.setBounds(0, 326, 326, 90);
 
-        SelProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/Botones/image15.png"))); // NOI18N
-        SelProveedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelProveedorActionPerformed(evt);
-            }
-        });
-        pnlDatos.add(SelProveedor);
-        SelProveedor.setBounds(120, 110, 30, 26);
-
         txtPrecio.setText("Precio");
         pnlDatos.add(txtPrecio);
-        txtPrecio.setBounds(10, 160, 73, 18);
+        txtPrecio.setBounds(10, 160, 73, 17);
         pnlDatos.add(tfPrecio);
-        tfPrecio.setBounds(120, 150, 190, 28);
+        tfPrecio.setBounds(120, 150, 190, 27);
+        pnlDatos.add(lblNicknameProveedor);
+        lblNicknameProveedor.setBounds(20, 100, 0, 0);
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
 
@@ -562,7 +471,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlImagenes.add(AddImagen);
-        AddImagen.setBounds(238, 23, 80, 30);
+        AddImagen.setBounds(238, 23, 80, 29);
 
         QuitarImagen.setText("Quitar");
         QuitarImagen.addActionListener(new java.awt.event.ActionListener() {
@@ -571,7 +480,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlImagenes.add(QuitarImagen);
-        QuitarImagen.setBounds(238, 65, 80, 30);
+        QuitarImagen.setBounds(238, 65, 80, 29);
 
         pnlInformacion.addTab("Imagenes", pnlImagenes);
 
@@ -589,7 +498,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlCategorias.add(AddCategoria);
-        AddCategoria.setBounds(228, 20, 80, 30);
+        AddCategoria.setBounds(228, 20, 80, 29);
 
         RemoveCategoria.setText("Quitar");
         RemoveCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -598,7 +507,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlCategorias.add(RemoveCategoria);
-        RemoveCategoria.setBounds(230, 60, 80, 30);
+        RemoveCategoria.setBounds(230, 60, 80, 29);
 
         pnlInformacion.addTab("Categorias", pnlCategorias);
 
@@ -643,56 +552,56 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        try{            
+        try {
             DataProducto dp = new DataProducto();
             DataEspecificacionProducto dep = new DataEspecificacionProducto();
-            
+
             dp.setNombre(tfNombre.getText());
             dp.setReferencia(tfReferencia.getText());
-            dp.setDataProveedor(Factory.getInstance().getUsuarioController().getDataProveedor(tfProveedor.getText()));
+            dp.setDataProveedor(Factory.getInstance().getUsuarioController().getDataProveedor(lblNicknameProveedor.getText()));
             dep.setDescripcion(taDescripcion.getText());
             dep.setEspecificacion(taEspecificacion.getText());
             dep.setPrecio(Double.parseDouble(tfPrecio.getText()));
-            
-            
+
             List<String> limagenes = new ArrayList<String>();
             DefaultListModel dim = (DefaultListModel) ImaList.getModel();
             int max = dim.getSize();
-            for (int i=1; i<=max;i++){
+            for (int i = 0; i < max; i++) {
                 String image = dim.getElementAt(i).toString();
-                limagenes.add(image);              
+                limagenes.add(image);
             }
             dep.setImagenes(limagenes);
-            
+
             List<DataCategoria> lcategorias = new ArrayList<DataCategoria>();
             DataCategoria categoria;
             DefaultListModel dlm = (DefaultListModel) listCategorias.getModel();
             max = dlm.getSize();
-            for (int i=1; i<=max;i++){
+            for (int i = 0; i < max; i++) {
                 String cat = dlm.getElementAt(i).toString();
                 categoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(cat);
-                lcategorias.add(categoria);              
+                lcategorias.add(categoria);
             }
-            
+
             dp.setDataCategorias(lcategorias);
             dp.setDataEspecificacion(dep);
-            
-            if (dp.getReferencia().equals(oldReferencia)){
+
+            if (dp.getReferencia().equals(oldReferencia)) {
                 Factory.getInstance().getProductoController().modificarProducto(dp);
-            }else{
+            } else {
                 Factory.getInstance().getProductoController().modificarProductoConReferenciaModificada(dp, oldReferencia);
             }
-            
-            
-            IProdInstancia = null;
-            this.dispose();
-        }catch (ProductoException ex){
+
+            JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            //limpiar campos
+            //MProdInstancia = null;
+            //this.dispose();
+            LimpiarCampos();
+
+        } catch (ProductoException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }catch (CategoryException ex){
+        } catch (CategoryException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-            
-
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
@@ -701,35 +610,37 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             try {
                 dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
 
-
                 tfNombre.setText(dprod.getNombre());
                 tfReferencia.setText(dprod.getReferencia());
                 oldReferencia = dprod.getReferencia();
+                lblNicknameProveedor.setText(dprod.getDataProveedor().getNickname());
+                lblNicknameProveedor.setVisible(false);
                 tfProveedor.setText(dprod.getDataProveedor().getCompania());
                 taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
-                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());               
+                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
                 tfPrecio.setText(String.valueOf(dprod.getDataEspecificacion().getPrecio()));
-                
+
                 habilitartodo(true, true);
-                    
+
                 //lista categorias
-                DefaultListModel dlm = new DefaultListModel();
-                DefaultListModel dlm2 = new DefaultListModel();
+                //DefaultListModel dlm = new DefaultListModel();
                 List<DataCategoria> catList = new ArrayList<DataCategoria>();
-                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(listProductos.getSelectedValue().toString());
+                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(tfReferencia.getText());
+                NoCatCont = catList.size();
 
                 for (DataCategoria dc : catList) {
-                    dlm.addElement(dc.getNombre());
+                    listaModelCat.addElement(dc.getNombre());
                 }
 
-                listCategorias.setModel(dlm);
+                listCategorias.setModel(listaModelCat);
 
+                DefaultListModel dlm2 = new DefaultListModel();
                 List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
-                for (String imagen : imagenes){
+                for (String imagen : imagenes) {
                     dlm2.addElement(imagen);
                 }
                 ImaList.setModel(dlm2);
-                    
+
             } catch (CategoryException ex) {
                 Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ProductoException ex) {
@@ -766,41 +677,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btCategoriaActionPerformed
 
-    private void SelProvCerrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelProvCerrarButtonActionPerformed
-        habilitartodo(true, true);
-        SelectProv.setVisible(false);
-    }//GEN-LAST:event_SelProvCerrarButtonActionPerformed
-
-    private void SelProvActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelProvActualizarButtonActionPerformed
-        ActualizarProv();
-    }//GEN-LAST:event_SelProvActualizarButtonActionPerformed
-
-    private void SelProvSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelProvSeleccionarActionPerformed
-        try {
-            this.tfProveedor.setText(ProveedorTable.getValueAt(ProveedorTable.getSelectedRow(), 0).toString());
-            habilitartodo(true, true);
-            SelectProv.setVisible(false);
-        } catch (IndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor de la lista", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_SelProvSeleccionarActionPerformed
-
-    private void SelProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelProveedorActionPerformed
-        // TODO add your handling code here:
-        habilitartodo(false, false);
-        SelectProv.setVisible(true);
-        SelectProv.toFront();
-    }//GEN-LAST:event_SelProveedorActionPerformed
-
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
-        IProdInstancia = null;
+        MProdInstancia = null;
         this.dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void CerrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCatActionPerformed
         habilitartodo(true, true);
@@ -815,26 +696,23 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria1.getLastSelectedPathComponent();
 
         if (seleccionado != null) {
-            if (NoCatCont == 0) {
-                listaModelCat = new DefaultListModel();
-            }            
             listCategorias.setModel(listaModelCat);
             String cat = seleccionado.getUserObject().toString();
             if (!listaModelCat.contains(cat)) {
                 listaModelCat.addElement(cat);
                 NoCatCont++;
                 habilitartodo(true, true);
-                SelCategoria.setVisible(false);                
+                SelCategoria.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Esa categoria ya se encuentra ingresada en la lista.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
 
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una categoría.", "Warning", JOptionPane.WARNING_MESSAGE);
-        }        
-        
-        
-        
+        }
+
+
+
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
     private void LImagenAddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LImagenAddImaEve
@@ -878,7 +756,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_LImagenAddImaEve
-    
+
     public ImageIcon RZIma(String DirRelativa, int Ancho, int Alto) {
         ImageIcon IcoIco = new ImageIcon(getClass().getResource(DirRelativa));
         Image img = IcoIco.getImage();
@@ -886,7 +764,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         IcoIco = new ImageIcon(newimg);
         return IcoIco;
     }
-    
+
     public void LimpiarIma() {
         txtFotoPath.setText("");
         String DirI = "Recursos/x.jpg";
@@ -896,23 +774,23 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         LimpiarIma();
         habilitartodo(true, true);
         SelImagen.setVisible(false);
-        
+
     }//GEN-LAST:event_CerrarImaButtonActionPerformed
 
     private void AgregarImaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarImaButtonActionPerformed
         if (txtFotoPath.getText() != null) {
             if (NoImaCont == 0) {
                 listaModel = new DefaultListModel();
+                listaModel.clear();
+                ImaList.setModel(listaModel);
             }
-            //DefaultListModel listaModel = new DefaultListModel();
-            ImaList.setModel(listaModel);
             listaModel.addElement(fileImagen.getAbsolutePath());
-            ImaI[NoImaCont] = fileImagen.getAbsolutePath();
+            //ImaI[NoImaCont] = fileImagen.getAbsolutePath();
             txtFotoPath.setText(fileImagen.getAbsolutePath());
             NoImaCont++;
             LimpiarIma();
             habilitartodo(true, true);
-            SelImagen.setVisible(false);           
+            SelImagen.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una Imágen", "Warning", JOptionPane.WARNING_MESSAGE);
         }
@@ -937,41 +815,17 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DefaultListModel dlm = (DefaultListModel) ImaList.getModel();
         int selectedIndex = ImaList.getSelectedIndex();
-        dlm.remove(selectedIndex);        
-        
+        dlm.remove(selectedIndex);
+
     }//GEN-LAST:event_QuitarImagenActionPerformed
 
     private void RemoveCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveCategoriaActionPerformed
         // TODO add your handling code here:
         DefaultListModel dlm = (DefaultListModel) listCategorias.getModel();
         int selectedIndex = listCategorias.getSelectedIndex();
-        dlm.remove(selectedIndex);  
+        dlm.remove(selectedIndex);
     }//GEN-LAST:event_RemoveCategoriaActionPerformed
 
-    public void ActualizarProv() {
-        String data[][] = {};
-        String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
-            boolean[] canEdit = new boolean[]{false, false};
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        };
-
-        ProveedorTable.getColumnModel().getColumn(0).setPreferredWidth(23);
-        ProveedorTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        ProveedorTable.setModel(DTM2);
-        List<DataUsuario> proveedores = Factory.getInstance().getUsuarioController().getProveedores();
-        int p = proveedores.size();
-        for (int i = 0; i < p; i++) {
-            String datos[] = {proveedores.get(i).getNickname(), proveedores.get(i).getEmail()};
-            DTM2.addRow(datos);
-        }
-    }
-    
     private void cargarCategorias() {
         try {
 
@@ -988,10 +842,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                     root.add(nuevo);
                 } else {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                    padre = searchNode(dc.getParent());
+                    padre = searchNode(dc.getParent(), treeCategoria);
                     modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
-
-
                 }
             }
         } catch (Exception ex) {
@@ -999,42 +851,40 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void cargarCategoriasSelect() {
+
         try {
 
-            List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
+            List<DataCategoria> categorias1 = Factory.getInstance().getCategoriaController().getCategorias();
 
-            DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria1.getModel();
-            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo.getRoot();
+            DefaultTreeModel modelo1 = (DefaultTreeModel) treeCategoria1.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) modelo1.getRoot();
             DefaultMutableTreeNode nuevo;
             DefaultMutableTreeNode padre;
 
-            for (DataCategoria dc : categorias) {
+            for (DataCategoria dc : categorias1) {
                 if (dc.getParent().equals("Categorias")) {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     root.add(nuevo);
                 } else {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
-                    padre = searchNode(dc.getParent());
-                    modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
-
-
+                    padre = searchNode(dc.getParent(), treeCategoria1);
+                    modelo1.insertNodeInto(nuevo, padre, padre.getChildCount());
                 }
             }
         } catch (Exception ex) {
             Logger.getLogger(ModificarProducto.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-    }   
-    
-    private void habilitartodo(boolean flg, boolean flgbotonera){
+    }
+
+    private void habilitartodo(boolean flg, boolean flgbotonera) {
 
         tfReferencia.setEditable(flg);
-        tfProveedor.setEditable(flg);
+        //tfProveedor.setEditable(flg);
         taDescripcion.setEditable(flg);
         taEspecificacion.setEditable(flg);
-        SelProveedor.setEnabled(flg);
         ImaList.setEnabled(flg);
         AddImagen.setEnabled(flg);
         QuitarImagen.setEnabled(flg);
@@ -1043,14 +893,14 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         RemoveCategoria.setEnabled(flg);
         pnlInformacion.setEnabled(flg);
         tfPrecio.setEnabled(flg);
-        
+
         listProductos.setEnabled(flgbotonera);
         treeCategoria.setEnabled(flgbotonera);
         btCategoria.setEnabled(flgbotonera);
         btProducto.setEnabled(flgbotonera);
         btn_cancelar.setEnabled(flgbotonera);
         btn_modificar.setEnabled(flgbotonera);
-              
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarCat;
@@ -1062,17 +912,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JList ImaList;
     private javax.swing.JLabel LImagen;
     private javax.swing.JInternalFrame ModificarProd;
-    private javax.swing.JTable ProveedorTable;
     private javax.swing.JButton QuitarImagen;
     private javax.swing.JButton RemoveCategoria;
     private javax.swing.JInternalFrame SelCategoria;
     private javax.swing.JInternalFrame SelImagen;
-    private javax.swing.JButton SelProvActualizarButton;
-    private javax.swing.JButton SelProvCerrarButton;
-    private javax.swing.JButton SelProvSeleccionar;
-    private javax.swing.JButton SelProveedor;
     private javax.swing.JButton SeleccionarCat;
-    private javax.swing.JInternalFrame SelectProv;
     private javax.swing.JButton btCategoria;
     private javax.swing.JButton btProducto;
     private javax.swing.JButton btn_cancelar;
@@ -1083,22 +927,19 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblNicknameProveedor;
     private javax.swing.JList listCategorias;
     private javax.swing.JList listProductos;
     private javax.swing.JPanel panelCategoria;
@@ -1122,5 +963,5 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtPrecio;
     private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
-    private static ModificarProducto IProdInstancia;
+    private static ModificarProducto MProdInstancia;
 }

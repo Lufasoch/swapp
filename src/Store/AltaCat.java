@@ -68,6 +68,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
         lblMensaje = new javax.swing.JLabel();
 
         setMaximizable(true);
+        setTitle("Alta de Categoria");
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);

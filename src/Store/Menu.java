@@ -40,7 +40,8 @@ public class Menu extends javax.swing.JFrame {
         CrearOrden = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         EditarMenu = new javax.swing.JMenu();
-        ModificarProducto = new javax.swing.JMenuItem();
+        menuModificarProducto = new javax.swing.JMenuItem();
+        menuCancelarOC = new javax.swing.JMenuItem();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
         VerInfoProveedor = new javax.swing.JMenuItem();
@@ -102,13 +103,21 @@ public class Menu extends javax.swing.JFrame {
 
         EditarMenu.setText("Editar");
 
-        ModificarProducto.setText("Modificar Producto");
-        ModificarProducto.addActionListener(new java.awt.event.ActionListener() {
+        menuModificarProducto.setText("Modificar Producto");
+        menuModificarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModificarProductoActionPerformed(evt);
+                menuModificarProductoActionPerformed(evt);
             }
         });
-        EditarMenu.add(ModificarProducto);
+        EditarMenu.add(menuModificarProducto);
+
+        menuCancelarOC.setText("Cancelar Orden de Compra");
+        menuCancelarOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCancelarOCActionPerformed(evt);
+            }
+        });
+        EditarMenu.add(menuCancelarOC);
 
         jMenuBar1.add(EditarMenu);
 
@@ -256,8 +265,8 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_VerInfoProductoActionPerformed
 
-    private void ModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarProductoActionPerformed
-        ModifProducto MProd = ModifProducto.getInstancia();
+    private void menuModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarProductoActionPerformed
+        ModificarProducto MProd = ModificarProducto.getInstancia();
         if (MProd.isVisible()) {
             try {
                 MProd.setSelected(true);
@@ -272,7 +281,8 @@ public class Menu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_ModificarProductoActionPerformed
+
+    }//GEN-LAST:event_menuModificarProductoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         InfoOC OCI = InfoOC.getInstancia();
@@ -333,6 +343,20 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_SalirActionPerformed
 
+    private void menuCancelarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCancelarOCActionPerformed
+        CancelarOC CancelOC = CancelarOC.getInstancia();
+        if (CancelOC.isVisible()) {
+            try {
+                CancelOC.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.Escritorio.add(CancelOC);
+            CancelOC.setVisible(true);
+        }
+    }//GEN-LAST:event_menuCancelarOCActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -374,7 +398,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem CrearOrden;
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
-    private javax.swing.JMenuItem ModificarProducto;
     private javax.swing.JMenuItem RegistrarProducto;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem Salir;
@@ -383,5 +406,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem VerInfoProveedor;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuCancelarOC;
+    private javax.swing.JMenuItem menuModificarProducto;
     // End of variables declaration//GEN-END:variables
 }
