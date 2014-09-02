@@ -158,6 +158,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         ImaList = new javax.swing.JList();
         AddImagen = new javax.swing.JButton();
         QuitarImagen = new javax.swing.JButton();
+        lblImagenPreview = new javax.swing.JLabel();
         pnlCategorias = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listCategorias = new javax.swing.JList();
@@ -230,16 +231,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelImagenLayout.setVerticalGroup(
             SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 448, Short.MAX_VALUE)
+            .addGap(0, 460, Short.MAX_VALUE)
             .addGroup(SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelImagenLayout.createSequentialGroup()
-                    .addGap(0, 9, Short.MAX_VALUE)
+                    .addGap(0, 15, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 9, Short.MAX_VALUE)))
+                    .addGap(0, 15, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelImagen);
-        SelImagen.setBounds(0, 0, 331, 480);
+        SelImagen.setBounds(0, 0, 331, 492);
 
         SelCategoria.setTitle("Seleccionar Categorias");
         SelCategoria.setVisible(true);
@@ -298,16 +299,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelCategoriaLayout.setVerticalGroup(
             SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
             .addGroup(SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelCategoriaLayout.createSequentialGroup()
-                    .addGap(0, 9, Short.MAX_VALUE)
+                    .addGap(0, 15, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 9, Short.MAX_VALUE)))
+                    .addGap(0, 15, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelCategoria);
-        SelCategoria.setBounds(0, 0, 381, 550);
+        SelCategoria.setBounds(0, 0, 381, 562);
 
         ModificarProd.setVisible(true);
         ModificarProd.getContentPane().setLayout(null);
@@ -459,10 +460,15 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        ImaList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ImaListValueChanged(evt);
+            }
+        });
         jScrollPane8.setViewportView(ImaList);
 
         pnlImagenes.add(jScrollPane8);
-        jScrollPane8.setBounds(10, 10, 220, 390);
+        jScrollPane8.setBounds(10, 10, 220, 140);
 
         AddImagen.setText("Agregar");
         AddImagen.addActionListener(new java.awt.event.ActionListener() {
@@ -481,6 +487,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         });
         pnlImagenes.add(QuitarImagen);
         QuitarImagen.setBounds(238, 65, 80, 29);
+        pnlImagenes.add(lblImagenPreview);
+        lblImagenPreview.setBounds(20, 180, 280, 210);
 
         pnlInformacion.addTab("Imagenes", pnlImagenes);
 
@@ -551,8 +559,36 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
+    private static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);
+        } catch (NumberFormatException noesnumero) {
+            return false;
+        }
+        return true;
+    }
+
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         try {
+            if (tfNombre.getText().trim().equals("")) {
+                throw new ProductoException("El nombre de producto no puede ser vacio");
+            }
+            if (tfReferencia.getText().trim().equals("")) {
+                throw new ProductoException("La Referencia no puede ser vacia");
+            }
+            if (taDescripcion.getText().trim().equals("")) {
+                throw new ProductoException("La Descripcion no puede ser vacia");
+            }
+            if (taEspecificacion.getText().trim().equals("")) {
+                throw new ProductoException("La Especificacion no puede ser vacia");
+            }
+            if (tfPrecio.getText().trim().equals("") || !isNumeric(tfPrecio.getText().trim())) {
+                throw new ProductoException("El Precio ingresado no es valido");
+            }
+            if (listCategorias.getModel().getSize() == 0) {
+                throw new ProductoException("El producto debe tener al menos una categoria");
+            }
+
             DataProducto dp = new DataProducto();
             DataEspecificacionProducto dep = new DataEspecificacionProducto();
 
@@ -826,6 +862,21 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         dlm.remove(selectedIndex);
     }//GEN-LAST:event_RemoveCategoriaActionPerformed
 
+    private void ImaListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ImaListValueChanged
+        reloadImagenPreview();
+    }//GEN-LAST:event_ImaListValueChanged
+
+    private void reloadImagenPreview() {
+        if (ImaList.getModel().getSize() > 0) {
+            ImageIcon imageIcon = new ImageIcon(ImaList.getSelectedValue().toString());
+            lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenPreview.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            lblImagenPreview.repaint();
+        } else {
+            lblImagenPreview.setIcon(null);
+            lblImagenPreview.revalidate();
+        }
+    }
+
     private void cargarCategorias() {
         try {
 
@@ -938,6 +989,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblImagenPreview;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblNicknameProveedor;
     private javax.swing.JList listCategorias;
