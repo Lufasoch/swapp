@@ -43,12 +43,14 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
     private int NoImaCont = 0;
     private String ImaI[] = new String[10];
+    private DefaultListModel listaCatModel = new DefaultListModel();
 
     /**
      * Creates new form ProdGroup
      */
     public ProdGroup() {
         initComponents();
+        listCategorias.setModel(listaCatModel);
         this.validate();
         String DirI = "Recursos/x.jpg";
         LImagen.setIcon(RZIma(DirI, LImagen.getWidth(), LImagen.getHeight()));
@@ -140,7 +142,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
 
         this.TCategorias.setFocusable(false);
-        this.TCategoriasC.setFocusable(false);
+        this.listCategorias.setFocusable(false);
         this.TDescripcion.setFocusable(false);
         this.TDescripcionC.setFocusable(false);
         this.TEspec.setFocusable(false);
@@ -171,7 +173,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
 
         this.TCategorias.setFocusable(true);
-        this.TCategoriasC.setFocusable(true);
+        this.listCategorias.setFocusable(true);
         this.TDescripcion.setFocusable(true);
         this.TDescripcionC.setFocusable(true);
         this.TEspec.setFocusable(true);
@@ -204,13 +206,13 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     }
 
     public void LimpiarTodo() {
-        this.TCategoriasC.setText("");
         this.TDescripcionC.setText("");
         this.TEspecC.setText("");
         this.TNoRefC.setText("");
         this.TPrecioC.setText("");
         this.TProveedorC.setText("");
         this.TTituloC.setText("");
+        this.listaCatModel.clear();
 
 
         DefaultListModel listaModel_limpio = new DefaultListModel();
@@ -271,11 +273,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         TProveedorC = new javax.swing.JTextField();
         TCategorias = new javax.swing.JTextField();
         ElegirCatButton = new javax.swing.JButton();
-        TCategoriasC = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         ElegirImaButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         ImaList = new javax.swing.JList();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listCategorias = new javax.swing.JList();
         jPanel9 = new javax.swing.JPanel();
         CancelarTodo = new javax.swing.JButton();
         LimpiarTodo = new javax.swing.JButton();
@@ -560,14 +563,10 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(ElegirCatButton);
         ElegirCatButton.setBounds(200, 340, 70, 30);
 
-        TCategoriasC.setEditable(false);
-        jPanel3.add(TCategoriasC);
-        TCategoriasC.setBounds(280, 340, 480, 27);
-
         jTextField1.setEditable(false);
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(10, 380, 180, 27);
+        jTextField1.setBounds(10, 410, 180, 27);
 
         ElegirImaButton.setText("Elegir");
         ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -576,7 +575,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(ElegirImaButton);
-        ElegirImaButton.setBounds(200, 380, 70, 30);
+        ElegirImaButton.setBounds(200, 410, 70, 30);
 
         ImaList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = {  };
@@ -586,7 +585,12 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jScrollPane4.setViewportView(ImaList);
 
         jPanel3.add(jScrollPane4);
-        jScrollPane4.setBounds(280, 380, 480, 100);
+        jScrollPane4.setBounds(280, 410, 480, 70);
+
+        jScrollPane5.setViewportView(listCategorias);
+
+        jPanel3.add(jScrollPane5);
+        jScrollPane5.setBounds(280, 340, 480, 60);
 
         RegProdIF.getContentPane().add(jPanel3);
         jPanel3.setBounds(10, 10, 770, 490);
@@ -681,21 +685,14 @@ public class ProdGroup extends javax.swing.JInternalFrame {
                 String nombreCategoria = seleccionado.getUserObject().toString();
                 DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
                 if (dataCat.isContieneProductos()) {
-                    if (TCategoriasC.getText().equals("")) {
-                        //CatE[contCat] = seleccionado.toString();
-                        //TCategoriasC.setText("- " + seleccionado.toString() + " -");
-                        TCategoriasC.setText(seleccionado.toString());
+                    if (listaCatModel.contains(seleccionado.toString().toLowerCase())) {
+                        JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        if (TCategoriasC.getText().toLowerCase().contains(seleccionado.toString().toLowerCase())) {
-                            JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
-                        } else {
-                            //CatE[contCat] = seleccionado.toString();
-                            //TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
-                            TCategoriasC.setText(TCategoriasC.getText() + "-" + seleccionado.toString());
-                        }
+                        listaCatModel.addElement(dataCat.getNombre());
+                        listCategorias.validate();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que contenga productos", "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que pueda contener productos", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -735,27 +732,23 @@ public class ProdGroup extends javax.swing.JInternalFrame {
                     || TEspecC.getText().equals("")
                     || TPrecioC.getText().equals("")
                     || TProveedorC.getText().equals("")
-                    || TCategoriasC.getText().equals("")) {
+                    || listaCatModel.isEmpty()) {
                 throw new Exception("Debe llenar todos los campos obligatorios");
             }
             dataProd.setNombre(TTituloC.getText());
             dataProd.setReferencia(TNoRefC.getText());
 
             //Cargo las categorias ingresadas en una lista de DataCategorias
-            List<DataCategoria> listaDataCat = new ArrayList<DataCategoria>();
-
-            //String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+", "");
-            //String listaNombreCategorias[] = listaCatRecortada.split("-");
-            String listaNombreCategorias[] = TCategoriasC.getText().split("-");
-            for (int i = 1; i < listaNombreCategorias.length; i++) {
-                DataCategoria dc = (DataCategoria) Factory.getInstance().getCategoriaController().getCategoriaPorNombre(listaNombreCategorias[i]);
-                if (!dc.isContieneProductos()) {
-                    throw new Exception("La categoria " + dc.getNombre() + " no puede contener productos");
-                }
-                listaDataCat.add(dc);
+            List<DataCategoria> listDataCat = new ArrayList<DataCategoria>();
+            DataCategoria categoria;
+            for (int i = 0; i < listaCatModel.getSize(); i++) {
+                String cat = listaCatModel.getElementAt(i).toString();
+                categoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(cat);
+                listDataCat.add(categoria);
             }
-            dataProd.setDataCategorias(listaDataCat);
 
+            dataProd.setDataCategorias(listDataCat);
+            
             //Cargo dataProveedor
             DataUsuario dataProv = new DataUsuario();
             dataProv.setNickname(TProveedorC.getText());
@@ -894,7 +887,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private javax.swing.JInternalFrame SelectIma;
     private javax.swing.JInternalFrame SelectProv;
     private javax.swing.JTextField TCategorias;
-    private javax.swing.JTextField TCategoriasC;
     private javax.swing.JTextField TDescripcion;
     private javax.swing.JTextField TDescripcionC;
     private javax.swing.JTextField TEspec;
@@ -923,8 +915,10 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JList listCategorias;
     private javax.swing.JTree treeCategoria;
     private javax.swing.JTextField txtFotoPath;
     // End of variables declaration//GEN-END:variables
