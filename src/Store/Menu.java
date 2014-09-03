@@ -47,6 +47,8 @@ public class Menu extends javax.swing.JFrame {
         VerInfoProveedor = new javax.swing.JMenuItem();
         VerInfoProducto = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        ImportarMenu = new javax.swing.JMenu();
+        ImportarDatosMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Market Place");
@@ -156,6 +158,18 @@ public class Menu extends javax.swing.JFrame {
         ConsultarMenu.add(jMenuItem1);
 
         jMenuBar1.add(ConsultarMenu);
+
+        ImportarMenu.setText("Importar");
+
+        ImportarDatosMenuItem.setText("Datos de Prueba Entrega 1");
+        ImportarDatosMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportarDatosMenuItemActionPerformed(evt);
+            }
+        });
+        ImportarMenu.add(ImportarDatosMenuItem);
+
+        jMenuBar1.add(ImportarMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -357,6 +371,24 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuCancelarOCActionPerformed
 
+    private void ImportarDatosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportarDatosMenuItemActionPerformed
+        ImportarDatos Importer = ImportarDatos.getInstancia();
+        if (Importer.isVisible()) {
+            try {
+                Importer.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                this.Escritorio.add(Importer);
+                Importer.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_ImportarDatosMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -398,6 +430,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem CrearOrden;
     private javax.swing.JMenu EditarMenu;
     public static javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem ImportarDatosMenuItem;
+    private javax.swing.JMenu ImportarMenu;
     private javax.swing.JMenuItem RegistrarProducto;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem Salir;
