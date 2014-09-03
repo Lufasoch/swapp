@@ -39,7 +39,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
     private File fileImagen;
     private int NoImaCont = 0;
-    private int NoCatCont;
+    private int NoCatCont = 0;
     private String oldReferencia;
     //private String[] ImaI;
     private DefaultListModel listaModel = new DefaultListModel();
@@ -619,6 +619,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
 
             dp.setDataCategorias(lcategorias);
+            
             dp.setDataEspecificacion(dep);
 
             if (dp.getReferencia().equals(oldReferencia)) {
@@ -628,9 +629,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
 
             JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-            //limpiar campos
-            //MProdInstancia = null;
-            //this.dispose();
             LimpiarCampos();
 
         } catch (ProductoException ex) {
@@ -659,16 +657,17 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                 habilitartodo(true, true);
 
                 //lista categorias
-                //DefaultListModel dlm = new DefaultListModel();
-                List<DataCategoria> catList = new ArrayList<DataCategoria>();
-                catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(tfReferencia.getText());
+                //DefaultListModel listaModelCat = new DefaultListModel();
+                List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(tfReferencia.getText());
                 NoCatCont = catList.size();
+                listaModelCat.clear();
 
                 for (DataCategoria dc : catList) {
                     listaModelCat.addElement(dc.getNombre());
                 }
 
                 listCategorias.setModel(listaModelCat);
+                listCategorias.validate();
 
                 DefaultListModel dlm2 = new DefaultListModel();
                 List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
@@ -732,13 +731,15 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria1.getLastSelectedPathComponent();
 
         if (seleccionado != null) {
-            listCategorias.setModel(listaModelCat);
+            //listCategorias.setModel(listaModelCat);
             String cat = seleccionado.getUserObject().toString();
             if (!listaModelCat.contains(cat)) {
                 listaModelCat.addElement(cat);
                 NoCatCont++;
                 habilitartodo(true, true);
                 SelCategoria.setVisible(false);
+                //listCategorias.setModel(listaModelCat);
+                listCategorias.repaint();//.validate();
             } else {
                 JOptionPane.showMessageDialog(this, "Esa categoria ya se encuentra ingresada en la lista.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
@@ -746,9 +747,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una categoría.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-
-
-
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
     private void LImagenAddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LImagenAddImaEve

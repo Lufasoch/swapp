@@ -683,13 +683,15 @@ public class ProdGroup extends javax.swing.JInternalFrame {
                 if (dataCat.isContieneProductos()) {
                     if (TCategoriasC.getText().equals("")) {
                         //CatE[contCat] = seleccionado.toString();
-                        TCategoriasC.setText("- " + seleccionado.toString() + " -");
+                        //TCategoriasC.setText("- " + seleccionado.toString() + " -");
+                        TCategoriasC.setText(seleccionado.toString());
                     } else {
-                        if (TCategoriasC.getText().toLowerCase().contains("- " + seleccionado.toString().toLowerCase() + " -")) {
+                        if (TCategoriasC.getText().toLowerCase().contains(seleccionado.toString().toLowerCase())) {
                             JOptionPane.showMessageDialog(this, "Esta categoria ya ha sido seleccionada", "Atencion", JOptionPane.WARNING_MESSAGE);
                         } else {
                             //CatE[contCat] = seleccionado.toString();
-                            TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                            //TCategoriasC.setText(TCategoriasC.getText() + " " + seleccionado.toString() + " -");
+                            TCategoriasC.setText(TCategoriasC.getText() + "-" + seleccionado.toString());
                         }
                     }
                 } else {
@@ -740,11 +742,11 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             dataProd.setReferencia(TNoRefC.getText());
 
             //Cargo las categorias ingresadas en una lista de DataCategorias
-            //      falta verificar que tenga al menos una categoria
             List<DataCategoria> listaDataCat = new ArrayList<DataCategoria>();
 
-            String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+", "");
-            String listaNombreCategorias[] = listaCatRecortada.split("-");
+            //String listaCatRecortada = TCategoriasC.getText().replaceAll("\\s+", "");
+            //String listaNombreCategorias[] = listaCatRecortada.split("-");
+            String listaNombreCategorias[] = TCategoriasC.getText().split("-");
             for (int i = 1; i < listaNombreCategorias.length; i++) {
                 DataCategoria dc = (DataCategoria) Factory.getInstance().getCategoriaController().getCategoriaPorNombre(listaNombreCategorias[i]);
                 if (!dc.isContieneProductos()) {
@@ -755,7 +757,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             dataProd.setDataCategorias(listaDataCat);
 
             //Cargo dataProveedor
-            //      falta verificar campo no vacio
             DataUsuario dataProv = new DataUsuario();
             dataProv.setNickname(TProveedorC.getText());
             dataProd.setDataProveedor(dataProv);

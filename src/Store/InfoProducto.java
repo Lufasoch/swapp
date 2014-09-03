@@ -11,6 +11,7 @@ import direct.market.exceptions.ProductoException;
 import direct.market.factory.Factory;
 import java.awt.Image;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 
 /**
  *
@@ -101,6 +103,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlCategorias = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         listCategorias = new javax.swing.JList();
+        lblRutaCategoria = new javax.swing.JLabel();
         lblMensaje = new javax.swing.JLabel();
 
         setMaximizable(true);
@@ -330,6 +333,11 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         pnlInformacion.addTab("Imagenes", pnlImagenes);
 
+        listCategorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listCategoriasValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(listCategorias);
 
         javax.swing.GroupLayout pnlCategoriasLayout = new javax.swing.GroupLayout(pnlCategorias);
@@ -337,16 +345,22 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlCategoriasLayout.setHorizontalGroup(
             pnlCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCategoriasLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCategoriasLayout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(lblRutaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         pnlCategoriasLayout.setVerticalGroup(
             pnlCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCategoriasLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblRutaCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addGap(27, 27, 27))
         );
 
         pnlInformacion.addTab("Categorias", pnlCategorias);
@@ -372,6 +386,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
     private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
         if (!listProductos.isSelectionEmpty()) {
+            lblRutaCategoria.setText("");
             DataProducto dprod = null;
             try {
                 dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
@@ -392,6 +407,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 for (DataCategoria dc : catList) {
                     dlm.addElement(dc.getNombre());
                 }
+                listCategorias.validate();
 
                 if (!dprod.getDataEspecificacion().getImagenes().isEmpty()) {
                     cbImagenes.removeAllItems();
@@ -453,18 +469,32 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cbImagenesItemStateChanged
 
-    private void reloadTabImagenes(){
+    private void listCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCategoriasValueChanged
+        if (listCategorias.getModel().getSize() > 0 && !listCategorias.isSelectionEmpty()) {
+            TreeNode[] rutaNodos = searchNode(listCategorias.getSelectedValue().toString()).getPath();
+            String rutaCat = "";
+            for (int i = 0; i < rutaNodos.length; i++) {
+                rutaCat += rutaNodos[i];
+                if (i + 1 < rutaNodos.length) {
+                    rutaCat += File.separator;
+                }
+            }
+            lblRutaCategoria.setText("<html><body style='width:200px'>"+rutaCat+"</html>");
+        }
+    }//GEN-LAST:event_listCategoriasValueChanged
+
+    private void reloadTabImagenes() {
         if (cbImagenes.getItemCount() > 0) {
             ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
             lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             lblImagenActual.repaint();
-        }else{
+        } else {
             lblImagenActual.setIcon(null);
             lblImagenActual.revalidate();
         }
 
     }
-    
+
     private void cargarCategorias() {
         try {
             List<DataCategoria> categorias = Factory.getInstance().getCategoriaController().getCategorias();
@@ -509,6 +539,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblImagenActual;
     private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblRutaCategoria;
     private javax.swing.JList listCategorias;
     private javax.swing.JList listProductos;
     private javax.swing.JPanel panelCategoria;
