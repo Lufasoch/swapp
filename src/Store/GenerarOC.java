@@ -704,30 +704,34 @@ public class GenerarOC extends javax.swing.JInternalFrame {
                     root.add(nuevo);
                     if (dc.isContieneProductos()) {
 //                        List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
-                        for (DataProducto dp : dc.getDataProductos()) {
+                        List<DataProducto> productos = dc.getDataProductos();
+                        if (!productos.isEmpty()){
+                            for (DataProducto dp : dc.getDataProductos()) {
                             nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
                             nuevo.add(nuevoprod);
+                            }
+                        }else{
+                            nuevoprod = new DefaultMutableTreeNode("Vacía");
+                            nuevo.add(nuevoprod);                            
                         }
-                    } else {
-                        nuevoprod = new DefaultMutableTreeNode("Vacía");
-                        nuevo.add(nuevoprod);
+                        
                     }
-
                 } else {
                     nuevo = new DefaultMutableTreeNode(dc.getNombre());
                     padre = searchNode(dc.getParent());
                     modelo.insertNodeInto(nuevo, padre, padre.getChildCount());
                     if (dc.isContieneProductos()) {
                         List<DataProducto> productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(dc.getNombre());
-                        for (DataProducto dp : productos) {
+                        if (!productos.isEmpty()){
+                            for (DataProducto dp : dc.getDataProductos()) {
                             nuevoprod = new DefaultMutableTreeNode(dp.getNombre());
                             nuevo.add(nuevoprod);
-                        }
-                    } else {
-                        nuevoprod = new DefaultMutableTreeNode("Vacía");
-                        nuevo.add(nuevoprod);
-                    }
-
+                            }
+                        }else{
+                            nuevoprod = new DefaultMutableTreeNode("Vacía");
+                            nuevo.add(nuevoprod);                            
+                        }                        
+                    } 
                 }
             }
         } catch (Exception ex) {

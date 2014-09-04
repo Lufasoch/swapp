@@ -728,8 +728,17 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ActualizarCatActionPerformed
 
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
+    try {        
         DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria1.getLastSelectedPathComponent();
-
+        if (seleccionado.getUserObject().toString().equals("Categorias"))
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que pueda contener productos", "Warning", JOptionPane.WARNING_MESSAGE);
+        DataCategoria dc;
+        
+            dc = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(seleccionado.getUserObject().toString());
+            if (!dc.isContieneProductos()){
+                throw new CategoryException("Debe seleccionar una categoria que pueda contener productos");
+            }
+               
         if (seleccionado != null) {
             //listCategorias.setModel(listaModelCat);
             String cat = seleccionado.getUserObject().toString();
@@ -747,6 +756,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Antes debe seleccionar una categoría.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
+    } catch (CategoryException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+    }         
     }//GEN-LAST:event_SeleccionarCatActionPerformed
 
     private void LImagenAddImaEve(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LImagenAddImaEve

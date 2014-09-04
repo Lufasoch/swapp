@@ -681,6 +681,8 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
         try {
             DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+            if (seleccionado.getUserObject().toString().equals("Categorias"))
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que pueda contener productos", "Warning", JOptionPane.WARNING_MESSAGE);
             if (seleccionado != null) {
                 String nombreCategoria = seleccionado.getUserObject().toString();
                 DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
