@@ -79,7 +79,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         listaModelCat.clear();
         listCategorias.repaint();
-
+        
+        DefaultListModel dlm = new DefaultListModel();
+        listProductos.setModel(dlm);
+        listProductos.repaint();
+        
         listaModel.clear();
         ImaList.repaint();
     }
