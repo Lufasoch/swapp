@@ -252,7 +252,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         );
         SelCliTPanelLayout.setVerticalGroup(
             SelCliTPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
 
         SelCliente.getContentPane().add(SelCliTPanel, java.awt.BorderLayout.CENTER);
@@ -289,7 +289,7 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         SelCliente.getContentPane().add(SelCliBtnPanel, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(SelCliente);
-        SelCliente.setBounds(0, -20, 329, 552);
+        SelCliente.setBounds(0, -20, 329, 555);
 
         GenOC.setEnabled(false);
         GenOC.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -564,11 +564,12 @@ public class GenerarOC extends javax.swing.JInternalFrame {
                     int cantidad = Integer.parseInt(txtcantidad.getText());
                     if (cantidad == 0) {
                         throw new OCException("La cantidad debe ser mayor a 0.");
-                    }     
+                    }
                     double preciounitario = dp.getDataEspecificacion().getPrecio();
                     double totallinea = cantidad * preciounitario;
                     Object linea[] = {dp.getReferencia(), dp.getNombre(), cantidad, preciounitario, totallinea};
                     totalOC = totalOC + totallinea;
+                    Redondear(totalOC);
                     TxtTotalVal.setText(Double.valueOf(totalOC).toString());
 
                     ta.addRow(linea);
@@ -603,12 +604,12 @@ public class GenerarOC extends javax.swing.JInternalFrame {
     private void Btn_Aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Aceptar1ActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtNomAp.getText().isEmpty()){
+            if (txtNomAp.getText().isEmpty()) {
                 throw new OCException("Debe seleccionar un cliente.");
             }
             SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm");
             int numOC = 0;
-            DataOC doc = new DataOC(numOC, fechaOC, totalOC);
+            DataOC doc = new DataOC(numOC, fechaOC, Redondear(totalOC));
             DefaultTableModel ta = (DefaultTableModel) TArticulos.getModel();
             List<DataLineaOC> lineas = new ArrayList<DataLineaOC>();
             int max = ta.getRowCount();
@@ -650,15 +651,15 @@ public class GenerarOC extends javax.swing.JInternalFrame {
 //    public static boolean isNumeric(String str) {
 //        return str.matches("-?\\d+(\\.\\d+)?");
 //    }
-    
-    private boolean isNumeric(String cadena){
-	try {
-		Integer.parseInt(cadena);
-		return true;
-	} catch (NumberFormatException nfe){
-		return false;
-	}
-}
+
+    private boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
     private void Actualizar() {
 
@@ -732,6 +733,11 @@ public class GenerarOC extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public double Redondear(double numero) {
+        return Math.rint(numero * 100) / 100;
     }
 
     private void HabilitarGenOC(boolean flg) {
