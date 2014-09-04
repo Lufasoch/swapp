@@ -1,4 +1,3 @@
-
 package Store;
 
 import direct.market.datatype.DataUsuario;
@@ -48,8 +47,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         //ABAJO//DATOS DEVUELTOS
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
-        DefaultTableModel DTM2 = new DefaultTableModel(data, header)
-        {
+        DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
             boolean[] canEdit = new boolean[]{false, false};
 
             @Override
@@ -63,12 +61,12 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
 
         ProveedorTable.setModel(DTM2);
         List<DataUsuario> proveedores = Factory.getInstance().getUsuarioController().getProveedores();
-        if (proveedores!= null){
-        int p = proveedores.size();
-        for (int i = 0; i < p; i++) {
-            String datos[] = {proveedores.get(i).getNickname(), proveedores.get(i).getEmail()};
-            DTM2.addRow(datos);
-        }
+        if (proveedores != null) {
+            int p = proveedores.size();
+            for (int i = 0; i < p; i++) {
+                String datos[] = {proveedores.get(i).getNickname(), proveedores.get(i).getEmail()};
+                DTM2.addRow(datos);
+            }
         }
     }
 
@@ -363,7 +361,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
             TCompaniaC.setText(du.getCompania());
             TPaginaWebC.setText(du.getWebLink());
             //PerfilLabel.setIcon(RZIma(du.getImagen(), 150, 150));
-            ImageIcon imageIcon = new ImageIcon(du.getImagen());
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource(du.getImagen()));
             PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             PerfilLabel.repaint();
             //ARRIBA//IMPRIMIR DATOS
@@ -385,7 +383,6 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
     private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
         Actualizar();
     }//GEN-LAST:event_SeMuestraSeActualiza
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;

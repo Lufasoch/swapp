@@ -71,29 +71,25 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(90, 90, 90)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImporter, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(lblImporter, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(btImportar))
-                            .addComponent(lblImportar))))
-                .addContainerGap(83, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
+                        .addComponent(btImportar))
+                    .addComponent(lblImportar))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap(53, Short.MAX_VALUE)
                 .addComponent(lblImportar)
-                .addGap(34, 34, 34)
+                .addGap(46, 46, 46)
                 .addComponent(btImportar)
-                .addGap(56, 56, 56)
-                .addComponent(lblImporter)
-                .addGap(72, 72, 72))
+                .addGap(34, 34, 34)
+                .addComponent(lblImporter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
 
         pack();
@@ -103,15 +99,15 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
 //Alta Usuarios
 //verificar el formato de las fechas
         try {
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", "fotos/cook_thumb20110204.jpg", "PROVEEDOR", "Apple", "www.apple.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Eddy", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", "fotos/cue_thumb20110901.jpg", "PROVEEDOR", "Samsung", "www.samsung.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("CraigX", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", "fotos/federighi_thumb20120727.jpg", "PROVEEDOR", "Sony", "us.playstation.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Johnny", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", "fotos/ive_thumb20110204.jpg", "PROVEEDOR", "Microsoft", "www.xbox.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", "fotos/default.jpg", "PROVEEDOR", "HTC", "www.htc.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Dan", "Daniel", "Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", "fotos/default.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("Phil", "Philip", "Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", "fotos/schiller_thumb20110204.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("BruceS", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", "fotos/default.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("JeffW", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", "fotos/default.jpg", "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", "/fotos/cook_thumb20110204.jpg", "PROVEEDOR", "Apple", "www.apple.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Eddy", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", "/fotos/cue_thumb20110901.jpg", "PROVEEDOR", "Samsung", "www.samsung.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("CraigX", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", "/fotos/federighi_thumb20120727.jpg", "PROVEEDOR", "Sony", "us.playstation.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Johnny", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", "/fotos/ive_thumb20110204.jpg", "PROVEEDOR", "Microsoft", "www.xbox.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", "/fotos/default.jpg", "PROVEEDOR", "HTC", "www.htc.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Dan", "Daniel", "Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Phil", "Philip", "Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", "/fotos/schiller_thumb20110204.jpg", "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("BruceS", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("JeffW", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
         } catch (UsuarioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -173,7 +169,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("199"));
 //Producto 1 Especificacion Imagenes
             List<String> imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM1-topic_iphone_5.png");
+            imagenes.add("/fotos/IM1-topic_iphone_5.png");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -203,7 +199,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("99"));
 //Producto 2 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM2-color_black.jpg");
+            imagenes.add("/fotos/IM2-color_black.jpg");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -231,8 +227,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("299"));
 //Producto 3 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM3-n4-buy-1200.jpg");
-            imagenes.add("fotos/IM4-N4_Google_Maps-1200.jpg");
+            imagenes.add("/fotos/IM3-n4-buy-1200.jpg");
+            imagenes.add("/fotos/IM4-N4_Google_Maps-1200.jpg");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -286,7 +282,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("839.99"));
 //Producto 5 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM5-samsung-galaxy-s4.jpg");
+            imagenes.add("/fotos/IM5-samsung-galaxy-s4.jpg");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -314,7 +310,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("237"));
 //Producto 6 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM6-samsung-galaxy-ace-s5830.jpg");
+            imagenes.add("/fotos/IM6-samsung-galaxy-ace-s5830.jpg");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -390,7 +386,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("499"));
 //Producto 9 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM7-2012-ipadrd-step1-black.png");
+            imagenes.add("/fotos/IM7-2012-ipadrd-step1-black.png");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -418,7 +414,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("329"));
 //Producto 10 Especificacion Imagenes
             imagenes = new ArrayList<String>();
-            imagenes.add("fotos/IM8-specs_color.jpg");
+            imagenes.add("/fotos/IM8-specs_color.jpg");
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
