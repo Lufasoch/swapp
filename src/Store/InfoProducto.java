@@ -485,7 +485,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
     private void reloadTabImagenes() {
         if (cbImagenes.getItemCount() > 0) {
-            ImageIcon imageIcon = new ImageIcon(cbImagenes.getSelectedItem().toString());
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource(cbImagenes.getSelectedItem().toString()));
             lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             lblImagenActual.repaint();
         } else {

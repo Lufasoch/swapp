@@ -882,8 +882,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
     private void reloadImagenPreview() {
         if (ImaList.getModel().getSize() > 0) {
-            ImageIcon imageIcon = new ImageIcon(ImaList.getSelectedValue().toString());
-            lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenPreview.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource(ImaList.getSelectedValue().toString()));
+            lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(-1, lblImagenPreview.getHeight(), Image.SCALE_AREA_AVERAGING)));
             lblImagenPreview.repaint();
         } else {
             lblImagenPreview.setIcon(null);

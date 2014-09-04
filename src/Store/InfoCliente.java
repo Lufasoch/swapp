@@ -497,7 +497,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             TTipoUC.setText("Cliente");
             //String perfS = du.getImagen(); //Sin esto no anda
             //PerfilLabel.setIcon(RZIma(perfS,150,150));
-            ImageIcon imageIcon = new ImageIcon(du.getImagen());
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource(du.getImagen()));
             PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             PerfilLabel.repaint();
             //ABAJO//CAMBIAR MODELO DE LA TABLA
