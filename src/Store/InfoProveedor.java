@@ -114,7 +114,6 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         Actualizar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        VerInfoButton = new javax.swing.JButton();
         Cerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ProveedorTable = new javax.swing.JTable();
@@ -280,16 +279,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout(2, 0, 0, 8));
-
-        VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerInfoButton.setText("Detalles del Proveedor");
-        VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInfoButtonActionPerformed(evt);
-            }
-        });
-        jPanel2.add(VerInfoButton);
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 0, 8));
 
         Cerrar.setText("Cerrar");
         Cerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -300,7 +290,7 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         jPanel2.add(Cerrar);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(390, 120, 180, 100);
+        jPanel2.setBounds(390, 170, 180, 50);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(485, 500));
@@ -333,6 +323,11 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         ProveedorTable.setFillsViewportHeight(true);
         ProveedorTable.setPreferredSize(new java.awt.Dimension(330, 200));
         ProveedorTable.getTableHeader().setReorderingAllowed(false);
+        ProveedorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProveedorTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ProveedorTable);
 
         getContentPane().add(jScrollPane1);
@@ -345,7 +340,22 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_ActualizarActionPerformed
+
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        Actualizar();
+        IPInstancia = null;
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
+        Actualizar();
+    }//GEN-LAST:event_SeMuestraSeActualiza
+
+    private void ProveedorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedorTableMouseClicked
+        
         try {
             String nicknameP = ProveedorTable.getValueAt(ProveedorTable.getSelectedRow(), 0).toString();//NICKNAME PARA BUSCAR AL USUARIO
             DataUsuario du = Factory.getInstance().getUsuarioController().getDataProveedor(nicknameP);
@@ -368,21 +378,9 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Proveedor de la lista", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_VerInfoButtonActionPerformed
+        
+    }//GEN-LAST:event_ProveedorTableMouseClicked
 
-    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        Actualizar();
-    }//GEN-LAST:event_ActualizarActionPerformed
-
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        Actualizar();
-        IPInstancia = null;
-        this.dispose();
-    }//GEN-LAST:event_CerrarActionPerformed
-
-    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
-        Actualizar();
-    }//GEN-LAST:event_SeMuestraSeActualiza
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
@@ -407,7 +405,6 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TTipoUC;
     private javax.swing.JTextField TeMail;
     private javax.swing.JTextField TeMailP;
-    private javax.swing.JButton VerInfoButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -141,11 +141,10 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         TTipoUC = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         ActualizarButton = new javax.swing.JButton();
-        VerInfoButton = new javax.swing.JButton();
-        OrdenButton = new javax.swing.JButton();
-        Cerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         OrdenesTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        Cerrar = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -267,6 +266,11 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         ClientesTable.setFillsViewportHeight(true);
         ClientesTable.setPreferredSize(new java.awt.Dimension(330, 200));
         ClientesTable.getTableHeader().setReorderingAllowed(false);
+        ClientesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ClientesTableMouseClicked(evt);
+            }
+        });
         jScrollVerClientes.setViewportView(ClientesTable);
         ClientesTable.getColumnModel().getColumn(1).setHeaderValue("eMail");
         ClientesTable.getAccessibleContext().setAccessibleParent(jScrollVerClientes);
@@ -398,7 +402,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout(1, 4, 8, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 3, 8, 0));
 
         ActualizarButton.setText("Actualizar");
         ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -408,34 +412,8 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         });
         jPanel1.add(ActualizarButton);
 
-        VerInfoButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        VerInfoButton.setText("Ver datos del Cliente");
-        VerInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInfoButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(VerInfoButton);
-
-        OrdenButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        OrdenButton.setText("Ver Orden de Compra");
-        OrdenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OrdenButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(OrdenButton);
-
-        Cerrar.setText("Cerrar");
-        Cerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CerrarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Cerrar);
-
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 470, 710, 60);
+        jPanel1.setBounds(40, 470, 340, 50);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -462,20 +440,79 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        OrdenesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OrdenesTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(OrdenesTable);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(402, 52, 160, 170);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel2.setLayout(new java.awt.GridLayout());
+
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Cerrar);
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(390, 470, 360, 50);
+
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
-        BackgroundLabel.setBounds(0, 0, 790, 570);
+        BackgroundLabel.setBounds(0, 0, 800, 570);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoButtonActionPerformed
-        try {
+    private void desabilitar()
+    {
+        TPanel.setVisible(false);
+        jScrollPane1.setVisible(false);
+        PPanel.setVisible(false);
+        jPanel1.setVisible(false);
+        InfoPanel.setVisible(false);
+    }
+    
+    private void habilitar()
+    {
+        TPanel.setVisible(true);
+        jScrollPane1.setVisible(true);
+        PPanel.setVisible(true);
+        jPanel1.setVisible(true);
+        InfoPanel.setVisible(true);
+    }
+    
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        Actualizar();
+        ICInstancia = null;
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
+        Actualizar();
+    }//GEN-LAST:event_ActualizarButtonActionPerformed
+
+    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
+        Actualizar();
+    }//GEN-LAST:event_SeMuestraSeActualiza
+
+    private void Cerrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cerrar1ActionPerformed
+        habilitar();
+        DefaultTableModel vacio = new DefaultTableModel(0, 0);
+        OrdenInfoTable.setModel(vacio);
+        VerOCF.setVisible(false);
+    }//GEN-LAST:event_Cerrar1ActionPerformed
+
+    private void ClientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientesTableMouseClicked
+
+         try {
             String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
             DataUsuario du = Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
             //BUSCAR USUARIO A LA BASE DE DATOS
@@ -527,29 +564,12 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         } catch (UsuarioException ex) {
             Logger.getLogger(InfoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_VerInfoButtonActionPerformed
-
-    private void desabilitar()
-    {
-        TPanel.setVisible(false);
-        jScrollPane1.setVisible(false);
-        PPanel.setVisible(false);
-        jPanel1.setVisible(false);
-        InfoPanel.setVisible(false);
-    }
-    
-    private void habilitar()
-    {
-        TPanel.setVisible(true);
-        jScrollPane1.setVisible(true);
-        PPanel.setVisible(true);
-        jPanel1.setVisible(true);
-        InfoPanel.setVisible(true);
-    }
-    
-    private void OrdenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrdenButtonActionPerformed
         
-        try {
+    }//GEN-LAST:event_ClientesTableMouseClicked
+
+    private void OrdenesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrdenesTableMouseClicked
+
+         try {
             desabilitar();
             VerOCF.setVisible(true);
 
@@ -578,28 +598,9 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_OrdenButtonActionPerformed
+        
+    }//GEN-LAST:event_OrdenesTableMouseClicked
 
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        Actualizar();
-        ICInstancia = null;
-        this.dispose();
-    }//GEN-LAST:event_CerrarActionPerformed
-
-    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Actualizar();
-    }//GEN-LAST:event_ActualizarButtonActionPerformed
-
-    private void SeMuestraSeActualiza(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_SeMuestraSeActualiza
-        Actualizar();
-    }//GEN-LAST:event_SeMuestraSeActualiza
-
-    private void Cerrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Cerrar1ActionPerformed
-        habilitar();
-        DefaultTableModel vacio = new DefaultTableModel(0, 0);
-        OrdenInfoTable.setModel(vacio);
-        VerOCF.setVisible(false);
-    }//GEN-LAST:event_Cerrar1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JLabel BackgroundLabel;
@@ -607,7 +608,6 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton Cerrar1;
     private javax.swing.JTable ClientesTable;
     private javax.swing.JPanel InfoPanel;
-    private javax.swing.JButton OrdenButton;
     private javax.swing.JTable OrdenInfoTable;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PPanel;
@@ -628,10 +628,10 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TeMailC;
     private javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField TxtTotalVal;
-    private javax.swing.JButton VerInfoButton;
     private javax.swing.JInternalFrame VerOCF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -47,8 +47,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel5 = new javax.swing.JPanel();
-        ElegirPadre = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         PadreCat = new javax.swing.JTextField();
@@ -73,21 +71,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
 
-        jPanel5.setBackground(new java.awt.Color(214, 228, 237));
-        jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
-
-        ElegirPadre.setText("Elegir categoria padre");
-        ElegirPadre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ElegirPadreActionPerformed(evt);
-            }
-        });
-        jPanel5.add(ElegirPadre);
-
-        getContentPane().add(jPanel5);
-        jPanel5.setBounds(20, 490, 290, 50);
-
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
@@ -100,17 +83,22 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel1.add(PadreCat);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(330, 80, 440, 60);
+        jPanel1.setBounds(330, 50, 440, 60);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
         treeCategoria.setBorder(null);
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
         treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        treeCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                treeCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(treeCategoria);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 20, 290, 450);
+        jScrollPane1.setBounds(20, 50, 290, 460);
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -133,7 +121,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel4.add(Crear);
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(330, 490, 440, 50);
+        jPanel4.setBounds(330, 460, 440, 50);
 
         jPanel3.setBackground(new java.awt.Color(214, 228, 237));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -152,7 +140,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel3.add(catSubCat);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(330, 240, 440, 160);
+        jPanel3.setBounds(330, 230, 440, 160);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -164,7 +152,7 @@ public class AltaCat extends javax.swing.JInternalFrame {
         jPanel2.add(NombreCat);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(330, 160, 440, 60);
+        jPanel2.setBounds(330, 140, 440, 60);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -181,10 +169,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
         ACatInstancia = null;
         this.dispose();
     }
-
-    private void ElegirPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElegirPadreActionPerformed
-        PadreCat.setText(treeCategoria.getLastSelectedPathComponent().toString());
-    }//GEN-LAST:event_ElegirPadreActionPerformed
 
     private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
         if (catProductos.isSelected() || catSubCat.isSelected()) {
@@ -228,6 +212,13 @@ public class AltaCat extends javax.swing.JInternalFrame {
         ACatInstancia = null;
         this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
+
+    private void treeCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeCategoriaMouseClicked
+        if (treeCategoria.getLastSelectedPathComponent() != null) {
+            PadreCat.setText(treeCategoria.getLastSelectedPathComponent().toString());
+        }
+
+    }//GEN-LAST:event_treeCategoriaMouseClicked
 
     public DefaultMutableTreeNode searchNode(String nodeStr) {
         DefaultTreeModel modelito = (DefaultTreeModel) treeCategoria.getModel();
@@ -276,7 +267,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cerrar;
     private javax.swing.JButton Crear;
-    private javax.swing.JButton ElegirPadre;
     private javax.swing.JTextField NombreCat;
     private javax.swing.JTextField PadreCat;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -287,7 +277,6 @@ public class AltaCat extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;

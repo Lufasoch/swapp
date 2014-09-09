@@ -79,7 +79,6 @@ public class InfoOC extends javax.swing.JInternalFrame {
         TxtTotalVal = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         Actualizar = new javax.swing.JButton();
-        DetallesOC = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -88,7 +87,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
 
         TPanel.setBackground(new java.awt.Color(214, 228, 237));
         TPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        TPanel.setLayout(null);
+        TPanel.setLayout(new java.awt.GridLayout());
 
         OrdenesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -116,13 +115,17 @@ public class InfoOC extends javax.swing.JInternalFrame {
         });
         OrdenesTable.setFillsViewportHeight(true);
         OrdenesTable.getTableHeader().setReorderingAllowed(false);
+        OrdenesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OrdenesTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(OrdenesTable);
 
         TPanel.add(jScrollPane1);
-        jScrollPane1.setBounds(8, 8, 174, 380);
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(40, 30, 190, 400);
+        TPanel.setBounds(40, 20, 190, 400);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
@@ -136,7 +139,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
         jPanel3.add(Cerrar);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(570, 490, 190, 50);
+        jPanel3.setBounds(570, 500, 190, 50);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -166,10 +169,11 @@ public class InfoOC extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(OrdenInfoTable);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(240, 30, 520, 400);
+        jScrollPane2.setBounds(240, 20, 520, 400);
 
+        PTotales.setBackground(new java.awt.Color(214, 228, 237));
         PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        PTotales.setLayout(new java.awt.GridLayout(1, 2));
+        PTotales.setLayout(new java.awt.GridLayout(1, 2, 8, 8));
 
         TxtTotal.setEditable(false);
         TxtTotal.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
@@ -190,11 +194,11 @@ public class InfoOC extends javax.swing.JInternalFrame {
         PTotales.add(TxtTotalVal);
 
         getContentPane().add(PTotales);
-        PTotales.setBounds(450, 420, 310, 50);
+        PTotales.setBounds(450, 430, 310, 50);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1, 8, 8));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 1, 8, 8));
 
         Actualizar.setText("Actualizar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,16 +208,8 @@ public class InfoOC extends javax.swing.JInternalFrame {
         });
         jPanel1.add(Actualizar);
 
-        DetallesOC.setText("Ver Orden");
-        DetallesOC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DetallesOCActionPerformed(evt);
-            }
-        });
-        jPanel1.add(DetallesOC);
-
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 440, 190, 100);
+        jPanel1.setBounds(40, 430, 190, 50);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -226,7 +222,15 @@ public class InfoOC extends javax.swing.JInternalFrame {
         Actualizar();
     }//GEN-LAST:event_ActualizarActionPerformed
 
-    private void DetallesOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetallesOCActionPerformed
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        DefaultTableModel vacio = new DefaultTableModel(0,0);
+        OrdenInfoTable.setModel(vacio);
+        IOCInstancia=null;
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    private void OrdenesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrdenesTableMouseClicked
+        
         try
         {
             String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
@@ -257,20 +261,13 @@ public class InfoOC extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_DetallesOCActionPerformed
-
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        DefaultTableModel vacio = new DefaultTableModel(0,0);
-        OrdenInfoTable.setModel(vacio);
-        IOCInstancia=null;
-        this.dispose();
-    }//GEN-LAST:event_CerrarActionPerformed
+        
+    }//GEN-LAST:event_OrdenesTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton Cerrar;
-    private javax.swing.JButton DetallesOC;
     private javax.swing.JTable OrdenInfoTable;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PTotales;

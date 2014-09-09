@@ -136,9 +136,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         listProductos = new javax.swing.JList();
-        jPanel2 = new javax.swing.JPanel();
-        btCategoria = new javax.swing.JButton();
-        btProducto = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         pnlInformacion = new javax.swing.JTabbedPane();
         pnlDatos = new javax.swing.JPanel();
@@ -180,7 +177,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         SelImagen.setTitle("Seleccionar Imagenes");
-        SelImagen.setVisible(true);
+        SelImagen.setVisible(false);
 
         jPanel10.setBackground(new java.awt.Color(214, 228, 237));
         jPanel10.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -235,19 +232,19 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelImagenLayout.setVerticalGroup(
             SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGap(0, 484, Short.MAX_VALUE)
             .addGroup(SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelImagenLayout.createSequentialGroup()
-                    .addGap(0, 15, Short.MAX_VALUE)
+                    .addGap(0, 27, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 15, Short.MAX_VALUE)))
+                    .addGap(0, 27, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelImagen);
-        SelImagen.setBounds(0, 0, 331, 492);
+        SelImagen.setBounds(0, 0, 331, 517);
 
         SelCategoria.setTitle("Seleccionar Categorias");
-        SelCategoria.setVisible(true);
+        SelCategoria.setVisible(false);
 
         jPanel6.setBackground(new java.awt.Color(214, 228, 237));
         jPanel6.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -281,14 +278,14 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         jPanel8.add(SeleccionarCat);
 
         jPanel6.add(jPanel8);
-        jPanel8.setBounds(10, 430, 350, 60);
+        jPanel8.setBounds(10, 460, 350, 60);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
         treeCategoria1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane7.setViewportView(treeCategoria1);
 
         jPanel6.add(jScrollPane7);
-        jScrollPane7.setBounds(10, 10, 350, 410);
+        jScrollPane7.setBounds(10, 10, 350, 440);
 
         javax.swing.GroupLayout SelCategoriaLayout = new javax.swing.GroupLayout(SelCategoria.getContentPane());
         SelCategoria.getContentPane().setLayout(SelCategoriaLayout);
@@ -297,7 +294,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             .addGap(0, 370, Short.MAX_VALUE)
             .addGroup(SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelCategoriaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
@@ -305,14 +301,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 530, Short.MAX_VALUE)
             .addGroup(SelCategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(SelCategoriaLayout.createSequentialGroup()
-                    .addGap(0, 15, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 15, Short.MAX_VALUE)))
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
         );
 
         getContentPane().add(SelCategoria);
-        SelCategoria.setBounds(0, 0, 381, 562);
+        SelCategoria.setBounds(0, 0, 381, 560);
 
         ModificarProd.setVisible(true);
         ModificarProd.getContentPane().setLayout(null);
@@ -322,6 +315,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
         treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        treeCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                treeCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(treeCategoria);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
@@ -335,6 +333,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         jTextField2.setText("Seleccione el Producto");
         jPanel1.add(jTextField2);
 
+        listProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProductosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listProductos);
 
         javax.swing.GroupLayout panelCategoriaLayout = new javax.swing.GroupLayout(panelCategoria);
@@ -362,68 +365,45 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
 
         ModificarProd.getContentPane().add(panelCategoria);
-        panelCategoria.setBounds(10, 20, 420, 470);
-
-        jPanel2.setBackground(new java.awt.Color(214, 228, 237));
-        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
-
-        btCategoria.setText("Seleccionar");
-        btCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCategoriaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btCategoria);
-
-        btProducto.setText("Seleccionar");
-        btProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProductoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btProducto);
-
-        ModificarProd.getContentPane().add(jPanel2);
-        jPanel2.setBounds(10, 500, 420, 50);
+        panelCategoria.setBounds(10, 10, 420, 470);
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel4.setLayout(null);
+        jPanel4.setLayout(new java.awt.GridLayout());
 
         pnlInformacion.setBorder(null);
 
         pnlDatos.setLayout(null);
         pnlDatos.add(tfNombre);
-        tfNombre.setBounds(123, 18, 191, 27);
+        tfNombre.setBounds(123, 18, 191, 28);
 
         tfReferencia.setEditable(false);
         pnlDatos.add(tfReferencia);
-        tfReferencia.setBounds(123, 64, 191, 27);
+        tfReferencia.setBounds(123, 64, 191, 28);
 
         tfProveedor.setEditable(false);
         pnlDatos.add(tfProveedor);
-        tfProveedor.setBounds(120, 110, 190, 27);
+        tfProveedor.setBounds(120, 110, 190, 28);
 
         txtNombre.setText("Nombre");
         pnlDatos.add(txtNombre);
-        txtNombre.setBounds(12, 23, 52, 17);
+        txtNombre.setBounds(12, 23, 57, 18);
 
         txtNumeroReferencia.setText("Referencia");
         pnlDatos.add(txtNumeroReferencia);
-        txtNumeroReferencia.setBounds(12, 69, 67, 17);
+        txtNumeroReferencia.setBounds(12, 69, 75, 18);
 
         txtProveedor.setText("Proveedor");
         pnlDatos.add(txtProveedor);
-        txtProveedor.setBounds(10, 120, 65, 17);
+        txtProveedor.setBounds(10, 120, 73, 18);
 
         txtDescripcion.setText("Descripcion");
         pnlDatos.add(txtDescripcion);
-        txtDescripcion.setBounds(10, 190, 74, 17);
+        txtDescripcion.setBounds(10, 190, 82, 18);
 
         txtEspecificacion.setText("Especificacion");
         pnlDatos.add(txtEspecificacion);
-        txtEspecificacion.setBounds(10, 310, 89, 17);
+        txtEspecificacion.setBounds(10, 310, 99, 18);
 
         jScrollPane4.setAutoscrolls(true);
         jScrollPane4.setPreferredSize(new java.awt.Dimension(262, 40));
@@ -449,9 +429,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         txtPrecio.setText("Precio");
         pnlDatos.add(txtPrecio);
-        txtPrecio.setBounds(10, 160, 73, 17);
+        txtPrecio.setBounds(10, 160, 73, 18);
         pnlDatos.add(tfPrecio);
-        tfPrecio.setBounds(120, 150, 190, 27);
+        tfPrecio.setBounds(120, 150, 190, 28);
         pnlDatos.add(lblNicknameProveedor);
         lblNicknameProveedor.setBounds(20, 100, 0, 0);
 
@@ -481,7 +461,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlImagenes.add(AddImagen);
-        AddImagen.setBounds(238, 23, 80, 29);
+        AddImagen.setBounds(238, 23, 80, 30);
 
         QuitarImagen.setText("Quitar");
         QuitarImagen.addActionListener(new java.awt.event.ActionListener() {
@@ -490,7 +470,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlImagenes.add(QuitarImagen);
-        QuitarImagen.setBounds(238, 65, 80, 29);
+        QuitarImagen.setBounds(238, 65, 80, 30);
         pnlImagenes.add(lblImagenPreview);
         lblImagenPreview.setBounds(20, 180, 280, 210);
 
@@ -510,7 +490,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlCategorias.add(AddCategoria);
-        AddCategoria.setBounds(228, 20, 80, 29);
+        AddCategoria.setBounds(228, 20, 80, 30);
 
         RemoveCategoria.setText("Quitar");
         RemoveCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -519,15 +499,14 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             }
         });
         pnlCategorias.add(RemoveCategoria);
-        RemoveCategoria.setBounds(230, 60, 80, 29);
+        RemoveCategoria.setBounds(230, 60, 80, 30);
 
         pnlInformacion.addTab("Categorias", pnlCategorias);
 
         jPanel4.add(pnlInformacion);
-        pnlInformacion.setBounds(10, 10, 330, 450);
 
         ModificarProd.getContentPane().add(jPanel4);
-        jPanel4.setBounds(430, 20, 350, 470);
+        jPanel4.setBounds(440, 10, 340, 470);
 
         jPanel3.setBackground(new java.awt.Color(214, 228, 237));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -550,7 +529,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         jPanel3.add(btn_cancelar);
 
         ModificarProd.getContentPane().add(jPanel3);
-        jPanel3.setBounds(490, 500, 290, 50);
+        jPanel3.setBounds(490, 490, 290, 50);
 
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
@@ -558,9 +537,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         lblMensaje.setBounds(0, -1, 800, 570);
 
         getContentPane().add(ModificarProd);
-        ModificarProd.setBounds(0, 0, 800, 610);
+        ModificarProd.setBounds(0, 0, 800, 570);
 
-        setBounds(0, 0, 800, 600);
+        setBounds(0, 0, 800, 599);
     }// </editor-fold>//GEN-END:initComponents
 
     private static boolean isNumeric(String str) {
@@ -641,80 +620,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
-
-    private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
-        if (!listProductos.isSelectionEmpty()) {
-            DataProducto dprod = null;
-            try {
-                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
-
-                tfNombre.setText(dprod.getNombre());
-                tfReferencia.setText(dprod.getReferencia());
-                oldReferencia = dprod.getReferencia();
-                lblNicknameProveedor.setText(dprod.getDataProveedor().getNickname());
-                lblNicknameProveedor.setVisible(false);
-                tfProveedor.setText(dprod.getDataProveedor().getCompania());
-                taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
-                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
-                tfPrecio.setText(String.valueOf(dprod.getDataEspecificacion().getPrecio()));
-
-                habilitartodo(true, true);
-
-                //lista categorias
-                //DefaultListModel listaModelCat = new DefaultListModel();
-                List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(tfReferencia.getText());
-                NoCatCont = catList.size();
-                listaModelCat.clear();
-
-                for (DataCategoria dc : catList) {
-                    listaModelCat.addElement(dc.getNombre());
-                }
-
-                listCategorias.setModel(listaModelCat);
-                listCategorias.validate();
-
-                DefaultListModel dlm2 = new DefaultListModel();
-                List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
-                for (String imagen : imagenes) {
-                    dlm2.addElement(imagen);
-                }
-                ImaList.setModel(dlm2);
-
-            } catch (CategoryException ex) {
-                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ProductoException ex) {
-                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            lblMensaje.setText("Debe seleccionar un producto");
-        }
-    }//GEN-LAST:event_btProductoActionPerformed
-
-    private void btCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCategoriaActionPerformed
-        lblMensaje.setText("");
-        DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
-        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-        DefaultListModel dlm = new DefaultListModel();
-        if (seleccionado != null) {
-            if (seleccionado.isLeaf()) {//arreglar
-                List<DataProducto> productos = new ArrayList<DataProducto>();
-                try {
-                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
-                } catch (CategoryException ex) {
-                    Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                for (DataProducto dp : productos) {
-                    dlm.addElement(dp.getNombre());
-                }
-                listProductos.setModel(dlm);
-            } else {
-                lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
-            }
-        } else {
-            lblMensaje.setText("Debe seleccionar una categoria");
-        }
-    }//GEN-LAST:event_btCategoriaActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
@@ -880,6 +785,84 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         reloadImagenPreview();
     }//GEN-LAST:event_ImaListValueChanged
 
+    private void treeCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeCategoriaMouseClicked
+        
+        lblMensaje.setText("");
+        DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+        DefaultListModel dlm = new DefaultListModel();
+        if (seleccionado != null) {
+            if (seleccionado.isLeaf()) {//arreglar
+                List<DataProducto> productos = new ArrayList<DataProducto>();
+                try {
+                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+                } catch (CategoryException ex) {
+                    Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (DataProducto dp : productos) {
+                    dlm.addElement(dp.getNombre());
+                }
+                listProductos.setModel(dlm);
+            } else {
+                lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
+            }
+        } else {
+            lblMensaje.setText("Debe seleccionar una categoria");
+        }
+        
+    }//GEN-LAST:event_treeCategoriaMouseClicked
+
+    private void listProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProductosMouseClicked
+       
+        if (!listProductos.isSelectionEmpty()) {
+            DataProducto dprod = null;
+            try {
+                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+
+                tfNombre.setText(dprod.getNombre());
+                tfReferencia.setText(dprod.getReferencia());
+                oldReferencia = dprod.getReferencia();
+                lblNicknameProveedor.setText(dprod.getDataProveedor().getNickname());
+                lblNicknameProveedor.setVisible(false);
+                tfProveedor.setText(dprod.getDataProveedor().getCompania());
+                taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
+                taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
+                tfPrecio.setText(String.valueOf(dprod.getDataEspecificacion().getPrecio()));
+
+                habilitartodo(true, true);
+
+                //lista categorias
+                //DefaultListModel listaModelCat = new DefaultListModel();
+                List<DataCategoria> catList = Factory.getInstance().getCategoriaController().getCategoriasDeProducto(tfReferencia.getText());
+                NoCatCont = catList.size();
+                listaModelCat.clear();
+
+                for (DataCategoria dc : catList) {
+                    listaModelCat.addElement(dc.getNombre());
+                }
+
+                listCategorias.setModel(listaModelCat);
+                listCategorias.validate();
+
+                DefaultListModel dlm2 = new DefaultListModel();
+                List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
+                for (String imagen : imagenes) {
+                    dlm2.addElement(imagen);
+                }
+                ImaList.setModel(dlm2);
+
+            } catch (CategoryException ex) {
+                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ProductoException ex) {
+                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            lblMensaje.setText("Debe seleccionar un producto");
+        }
+        
+    }//GEN-LAST:event_listProductosMouseClicked
+
     private void reloadImagenPreview() {
         if (ImaList.getModel().getSize() > 0) {
             ImageIcon imageIcon = new ImageIcon(getClass().getResource(ImaList.getSelectedValue().toString()));
@@ -961,8 +944,6 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         listProductos.setEnabled(flgbotonera);
         treeCategoria.setEnabled(flgbotonera);
-        btCategoria.setEnabled(flgbotonera);
-        btProducto.setEnabled(flgbotonera);
         btn_cancelar.setEnabled(flgbotonera);
         btn_modificar.setEnabled(flgbotonera);
 
@@ -982,14 +963,11 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JInternalFrame SelCategoria;
     private javax.swing.JInternalFrame SelImagen;
     private javax.swing.JButton SeleccionarCat;
-    private javax.swing.JButton btCategoria;
-    private javax.swing.JButton btProducto;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;

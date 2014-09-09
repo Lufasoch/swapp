@@ -51,11 +51,31 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btImportar = new javax.swing.JButton();
-        lblImportar = new javax.swing.JLabel();
         lblImporter = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        ImpTxT = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        btImportar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
+        getContentPane().setLayout(null);
+        getContentPane().add(lblImporter);
+        lblImporter.setBounds(90, 734, 234, 26);
+
+        jPanel1.setBackground(new java.awt.Color(214, 228, 237));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 20, 20, 20, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel1.setLayout(new java.awt.GridLayout());
+
+        ImpTxT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ImpTxT.setText("Importacion de datos de prueba");
+        jPanel1.add(ImpTxT);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(30, 30, 360, 90);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 20, 20, 20, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+        jPanel2.setLayout(new java.awt.GridLayout());
 
         btImportar.setText("Importar");
         btImportar.addActionListener(new java.awt.event.ActionListener() {
@@ -63,36 +83,16 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
                 btImportarActionPerformed(evt);
             }
         });
+        jPanel2.add(btImportar);
 
-        lblImportar.setText("Importacion de datos de prueba");
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(30, 160, 360, 110);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImporter, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(btImportar))
-                    .addComponent(lblImportar))
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(lblImportar)
-                .addGap(46, 46, 46)
-                .addComponent(btImportar)
-                .addGap(34, 34, 34)
-                .addComponent(lblImporter, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 430, 310);
 
-        pack();
+        setBounds(0, 0, 440, 340);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportarActionPerformed
@@ -614,8 +614,11 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btImportarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ImpTxT;
     private javax.swing.JButton btImportar;
-    private javax.swing.JLabel lblImportar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblImporter;
     // End of variables declaration//GEN-END:variables
     private static ImportarDatos IDInstancia;

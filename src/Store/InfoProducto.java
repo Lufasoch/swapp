@@ -76,9 +76,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         listProductos = new javax.swing.JList();
-        jPanel2 = new javax.swing.JPanel();
-        btCategoria = new javax.swing.JButton();
-        btProducto = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -116,6 +113,11 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Categorias");
         treeCategoria.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        treeCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                treeCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(treeCategoria);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
@@ -129,6 +131,11 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         jTextField2.setText("Seleccione el Producto");
         jPanel1.add(jTextField2);
 
+        listProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProductosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listProductos);
 
         javax.swing.GroupLayout panelCategoriaLayout = new javax.swing.GroupLayout(panelCategoria);
@@ -158,29 +165,6 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         getContentPane().add(panelCategoria);
         panelCategoria.setBounds(10, 20, 420, 470);
 
-        jPanel2.setBackground(new java.awt.Color(214, 228, 237));
-        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout(1, 2, 8, 0));
-
-        btCategoria.setText("Seleccionar");
-        btCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCategoriaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btCategoria);
-
-        btProducto.setText("Seleccionar");
-        btProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProductoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btProducto);
-
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(10, 500, 420, 50);
-
         jPanel3.setBackground(new java.awt.Color(214, 228, 237));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
@@ -198,7 +182,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel4.setLayout(null);
+        jPanel4.setLayout(new java.awt.GridLayout());
 
         pnlInformacion.setBorder(null);
         pnlInformacion.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -243,7 +227,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +270,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEspecificacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
         );
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
@@ -301,7 +285,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         );
         panelImagenLayout.setVerticalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
         );
 
         cbImagenes.addItemListener(new java.awt.event.ItemListener() {
@@ -319,7 +303,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addGroup(pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbImagenes, 0, 282, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         pnlImagenesLayout.setVerticalGroup(
             pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,9 +331,9 @@ public class InfoProducto extends javax.swing.JInternalFrame {
             .addGroup(pnlCategoriasLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCategoriasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(lblRutaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -366,10 +350,9 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         pnlInformacion.addTab("Categorias", pnlCategorias);
 
         jPanel4.add(pnlInformacion);
-        pnlInformacion.setBounds(10, 10, 330, 450);
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(430, 20, 350, 470);
+        jPanel4.setBounds(440, 20, 340, 470);
 
         lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
         lblMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
@@ -384,7 +367,59 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductoActionPerformed
+    private void pnlInformacionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlInformacionFocusGained
+        reloadTabImagenes();
+
+    }//GEN-LAST:event_pnlInformacionFocusGained
+
+    private void cbImagenesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbImagenesItemStateChanged
+        reloadTabImagenes();
+
+    }//GEN-LAST:event_cbImagenesItemStateChanged
+
+    private void listCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCategoriasValueChanged
+        if (listCategorias.getModel().getSize() > 0 && !listCategorias.isSelectionEmpty()) {
+            TreeNode[] rutaNodos = searchNode(listCategorias.getSelectedValue().toString()).getPath();
+            String rutaCat = "";
+            for (int i = 0; i < rutaNodos.length; i++) {
+                rutaCat += rutaNodos[i];
+                if (i + 1 < rutaNodos.length) {
+                    rutaCat += " " + File.separator;
+                }
+            }
+            lblRutaCategoria.setText("<html><body style='width:200px'>"+rutaCat+"</html>");
+        }
+    }//GEN-LAST:event_listCategoriasValueChanged
+
+    private void treeCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeCategoriaMouseClicked
+        
+        lblMensaje.setText("");
+        DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
+        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
+        DefaultListModel dlm = new DefaultListModel();
+        if (seleccionado != null) {
+            if (seleccionado.isLeaf()) {//arreglar
+                List<DataProducto> productos = new ArrayList<DataProducto>();
+                try {
+                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
+                } catch (CategoryException ex) {
+                    Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (DataProducto dp : productos) {
+                    dlm.addElement(dp.getNombre());
+                }
+                listProductos.setModel(dlm);
+            } else {
+                lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
+            }
+        } else {
+            lblMensaje.setText("Debe seleccionar una categoria");
+        }
+        
+    }//GEN-LAST:event_treeCategoriaMouseClicked
+
+    private void listProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProductosMouseClicked
+        
         if (!listProductos.isSelectionEmpty()) {
             lblRutaCategoria.setText("");
             DataProducto dprod = null;
@@ -432,56 +467,8 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         } else {
             lblMensaje.setText("Debe seleccionar un producto");
         }
-    }//GEN-LAST:event_btProductoActionPerformed
-
-    private void btCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCategoriaActionPerformed
-        lblMensaje.setText("");
-        DefaultTreeModel modelo = (DefaultTreeModel) treeCategoria.getModel();
-        DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-        DefaultListModel dlm = new DefaultListModel();
-        if (seleccionado != null) {
-            if (seleccionado.isLeaf()) {//arreglar
-                List<DataProducto> productos = new ArrayList<DataProducto>();
-                try {
-                    productos = Factory.getInstance().getCategoriaController().getProductosPorNombreCategoria(seleccionado.getUserObject().toString());
-                } catch (CategoryException ex) {
-                    Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                for (DataProducto dp : productos) {
-                    dlm.addElement(dp.getNombre());
-                }
-                listProductos.setModel(dlm);
-            } else {
-                lblMensaje.setText("Debe seleccionar una categoria sin subcategorias");
-            }
-        } else {
-            lblMensaje.setText("Debe seleccionar una categoria");
-        }
-    }//GEN-LAST:event_btCategoriaActionPerformed
-
-    private void pnlInformacionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnlInformacionFocusGained
-        reloadTabImagenes();
-
-    }//GEN-LAST:event_pnlInformacionFocusGained
-
-    private void cbImagenesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbImagenesItemStateChanged
-        reloadTabImagenes();
-
-    }//GEN-LAST:event_cbImagenesItemStateChanged
-
-    private void listCategoriasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCategoriasValueChanged
-        if (listCategorias.getModel().getSize() > 0 && !listCategorias.isSelectionEmpty()) {
-            TreeNode[] rutaNodos = searchNode(listCategorias.getSelectedValue().toString()).getPath();
-            String rutaCat = "";
-            for (int i = 0; i < rutaNodos.length; i++) {
-                rutaCat += rutaNodos[i];
-                if (i + 1 < rutaNodos.length) {
-                    rutaCat += " " + File.separator;
-                }
-            }
-            lblRutaCategoria.setText("<html><body style='width:200px'>"+rutaCat+"</html>");
-        }
-    }//GEN-LAST:event_listCategoriasValueChanged
+        
+    }//GEN-LAST:event_listProductosMouseClicked
 
     private void reloadTabImagenes() {
         if (cbImagenes.getItemCount() > 0) {
@@ -522,12 +509,9 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCategoria;
-    private javax.swing.JButton btProducto;
     private javax.swing.JComboBox cbImagenes;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;

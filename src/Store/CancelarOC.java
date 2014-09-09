@@ -86,7 +86,6 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         TxtTotalVal = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         Actualizar = new javax.swing.JButton();
-        DetallesOC = new javax.swing.JButton();
         CancelarOC = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
@@ -125,6 +124,11 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         });
         OrdenesTable.setFillsViewportHeight(true);
         OrdenesTable.getTableHeader().setReorderingAllowed(false);
+        OrdenesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OrdenesTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(OrdenesTable);
 
         TPanel.add(jScrollPane1);
@@ -145,7 +149,7 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         jPanel3.add(Cerrar);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(570, 490, 190, 50);
+        jPanel3.setBounds(570, 500, 190, 50);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
@@ -199,11 +203,11 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         PTotales.add(TxtTotalVal);
 
         getContentPane().add(PTotales);
-        PTotales.setBounds(450, 420, 310, 50);
+        PTotales.setBounds(450, 440, 310, 50);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(2, 1, 8, 8));
 
         Actualizar.setText("Actualizar");
         Actualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -211,15 +215,7 @@ public class CancelarOC extends javax.swing.JInternalFrame {
                 ActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(Actualizar, java.awt.BorderLayout.PAGE_START);
-
-        DetallesOC.setText("Ver Orden");
-        DetallesOC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DetallesOCActionPerformed(evt);
-            }
-        });
-        jPanel1.add(DetallesOC, java.awt.BorderLayout.CENTER);
+        jPanel1.add(Actualizar);
 
         CancelarOC.setText("Cancelar Orden");
         CancelarOC.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +223,7 @@ public class CancelarOC extends javax.swing.JInternalFrame {
                 CancelarOCActionPerformed(evt);
             }
         });
-        jPanel1.add(CancelarOC, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(CancelarOC);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(40, 440, 190, 110);
@@ -243,7 +239,31 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         Actualizar();
     }//GEN-LAST:event_ActualizarActionPerformed
 
-    private void DetallesOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DetallesOCActionPerformed
+    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
+        DefaultTableModel vacio = new DefaultTableModel(0, 0);
+        OrdenInfoTable.setModel(vacio);
+        CancelarOC = null;
+        this.dispose();
+    }//GEN-LAST:event_CerrarActionPerformed
+
+    private void CancelarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarOCActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel m = (DefaultTableModel) OrdenesTable.getModel();
+            Integer numOC = Integer.valueOf(m.getValueAt(OrdenesTable.getSelectedRow(), 0).toString());
+            Factory.getInstance().getOrdenCompraController().cancelarOrdenCompra(numOC);
+            JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            Actualizar();
+        } catch (IndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+        } catch (OCException ex) {
+            Logger.getLogger(CancelarOC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_CancelarOCActionPerformed
+
+    private void OrdenesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrdenesTableMouseClicked
+
         try {
             String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
             DataOC doc = Factory.getInstance().getOrdenCompraController().getDataOC(nroCompRow);
@@ -281,36 +301,14 @@ public class CancelarOC extends javax.swing.JInternalFrame {
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_DetallesOCActionPerformed
+        
+    }//GEN-LAST:event_OrdenesTableMouseClicked
 
-    private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
-        DefaultTableModel vacio = new DefaultTableModel(0, 0);
-        OrdenInfoTable.setModel(vacio);
-        CancelarOC = null;
-        this.dispose();
-    }//GEN-LAST:event_CerrarActionPerformed
-
-    private void CancelarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarOCActionPerformed
-        // TODO add your handling code here:
-        try {
-            DefaultTableModel m = (DefaultTableModel) OrdenesTable.getModel();
-            Integer numOC = Integer.valueOf(m.getValueAt(OrdenesTable.getSelectedRow(), 0).toString());
-            Factory.getInstance().getOrdenCompraController().cancelarOrdenCompra(numOC);
-            JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-            Actualizar();
-        } catch (IndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
-        } catch (OCException ex) {
-            Logger.getLogger(CancelarOC.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_CancelarOCActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton CancelarOC;
     private javax.swing.JButton Cerrar;
-    private javax.swing.JButton DetallesOC;
     private javax.swing.JTable OrdenInfoTable;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PTotales;
