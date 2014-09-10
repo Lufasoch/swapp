@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataEspecificacionProducto;
 import direct.market.datatype.DataProducto;
@@ -778,8 +779,9 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
             //Llamo a altaProducto con el dataProducto cargado.
             Factory.getInstance().getProductoController().altaProducto(dataProd);
-            JOptionPane.showMessageDialog(this, "Producto creado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-
+            //JOptionPane.showMessageDialog(this, "Producto creado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            MyIcon icon = new MyIcon();
+            JOptionPane.showMessageDialog(this, "Producto creado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
             LimpiarTodo();
             NoImaCont = 0;//vuelvo el contador de imagenes a cero para la proxima vez que use ProdGroup (Registrar Producto)
 

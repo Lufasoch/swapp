@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
 import direct.market.exceptions.OCException;
@@ -252,7 +253,9 @@ public class CancelarOC extends javax.swing.JInternalFrame {
             DefaultTableModel m = (DefaultTableModel) OrdenesTable.getModel();
             Integer numOC = Integer.valueOf(m.getValueAt(OrdenesTable.getSelectedRow(), 0).toString());
             Factory.getInstance().getOrdenCompraController().cancelarOrdenCompra(numOC);
-            JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            MyIcon icon = new MyIcon();
+            JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada correctamente.","Correcto", JOptionPane.DEFAULT_OPTION, icon);
+            //JOptionPane.showMessageDialog(this, "Orden de Compra " + numOC + " cancelada", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             Actualizar();
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);

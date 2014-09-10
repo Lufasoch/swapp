@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
@@ -612,7 +613,9 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             doc.setLineas(lineas);
             numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
             String msg = "OC Número " + numOC + " creada correctamente";
-            JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            MyIcon icon = new MyIcon();
+            JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.DEFAULT_OPTION, icon);
+            //JOptionPane.showMessageDialog(this, msg, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             HabilitarGenOC(false);
             NroOCtext.setText(Integer.valueOf(numOC).toString());
             txtFecha.setText(sdf1.format(fechaOC));

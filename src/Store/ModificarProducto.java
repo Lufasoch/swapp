@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.datatype.DataCategoria;
 import direct.market.datatype.DataEspecificacionProducto;
 import direct.market.datatype.DataProducto;
@@ -232,16 +233,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         );
         SelImagenLayout.setVerticalGroup(
             SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 484, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
             .addGroup(SelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SelImagenLayout.createSequentialGroup()
-                    .addGap(0, 27, Short.MAX_VALUE)
+                    .addGap(0, 30, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 27, Short.MAX_VALUE)))
+                    .addGap(0, 30, Short.MAX_VALUE)))
         );
 
         getContentPane().add(SelImagen);
-        SelImagen.setBounds(0, 0, 331, 517);
+        SelImagen.setBounds(0, 0, 331, 523);
 
         SelCategoria.setTitle("Seleccionar Categorias");
         SelCategoria.setVisible(false);
@@ -369,7 +370,7 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         pnlInformacion.setBorder(null);
 
@@ -610,8 +611,9 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             } else {
                 Factory.getInstance().getProductoController().modificarProductoConReferenciaModificada(dp, oldReferencia);
             }
-
-            JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            MyIcon icon = new MyIcon();
+            JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
+            //JOptionPane.showMessageDialog(this, "Producto modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             LimpiarCampos();
 
         } catch (ProductoException ex) {

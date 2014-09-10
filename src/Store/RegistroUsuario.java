@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.enums.UsuarioType;
 import direct.market.exceptions.UsuarioException;
 import java.awt.Image;
@@ -321,20 +322,20 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-     /*  
-        int returnVal = fotoChooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            File fotoCliente = fotoChooser.getSelectedFile();
-            try{
-                String fotoClientePath = fotoCliente.getCanonicalPath();
-                txtFotoPath.setText(fotoClientePath);
-                //PerfilLabel.setIcon(RZIma(fotoClientePath,150,150));
+        /*  
+         int returnVal = fotoChooser.showOpenDialog(this);
+         if(returnVal == JFileChooser.APPROVE_OPTION){
+         File fotoCliente = fotoChooser.getSelectedFile();
+         try{
+         String fotoClientePath = fotoCliente.getCanonicalPath();
+         txtFotoPath.setText(fotoClientePath);
+         //PerfilLabel.setIcon(RZIma(fotoClientePath,150,150));
                 
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }*/
+         }catch(Exception e){
+         JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
+         "Error", JOptionPane.ERROR_MESSAGE);
+         }
+         }*/
     }//GEN-LAST:event_btnExaminarFotoActionPerformed
 
     //Solo direcciones desde "Store/"
@@ -347,13 +348,9 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
     }
 
     private void AceptarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarButtonActionPerformed
-//        if (txtFotoPath.getText().isEmpty() || NicknameC.getText().isEmpty() || NombreC.getText().isEmpty() || ApellidoC.getText().isEmpty() || eMailC.getText().isEmpty() || FechaNacC.getDate() == null) {
-//            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-//        } else if (TipoUC.getSelectedItem().toString().equals("Proveedor") && (EmpresaC.getText().isEmpty() || SitioWeb.getText().isEmpty())) {
-//            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
-//        } else {
+
         try {
-            String path="";
+            String path = "";
             if (fileImagen != null) {
                 path = fileImagen.getAbsolutePath();
 //                String name = fileImagen.getName();
@@ -377,26 +374,26 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 //                    out.write(buffer, 0, tamanoRes);
 //                }
 //                in.close();
-//                out.close();
-            }
-            else{
-                path="Recursos/Usuarios/Perfil.jpg";
+//               out.close();
+            } else {
+                path = "Recursos/Usuarios/Perfil.jpg";
             }
             String tipo;
-            if(TipoUC.getSelectedItem().toString().equals("Cliente")){
+            if (TipoUC.getSelectedItem().toString().equals("Cliente")) {
                 tipo = UsuarioType.CLIENTE.name();
-            }else{
+            } else {
                 tipo = UsuarioType.PROVEEDOR.name();
             }
-            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
-           // Factory.getUsuarioController().altaUsuario(NicknameC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), "", tipo, EmpresaC.getText(), SitioWebC.getText());
-
-            JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), "12345678", NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
+           
+            MyIcon icon = new MyIcon();
+            JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
+            
             limpiarCampos();
             //this.dispose();
         } /*catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
-        }*/ catch (UsuarioException ex) {
+         JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+         }*/ catch (UsuarioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());//, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_AceptarButtonActionPerformed

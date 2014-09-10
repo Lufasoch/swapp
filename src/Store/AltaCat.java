@@ -4,6 +4,7 @@
  */
 package Store;
 
+import Icon.MyIcon;
 import direct.market.datatype.DataCategoria;
 import direct.market.exceptions.CategoryException;
 import direct.market.factory.Factory;
@@ -176,8 +177,9 @@ public class AltaCat extends javax.swing.JInternalFrame {
             try {
                 String padre = (PadreCat.getText().isEmpty() ? "Categorias" : PadreCat.getText());
                 Factory.getInstance().getCategoriaController().altaCategoria(padre, NombreCat.getText(), contieneProductos);
-
-                JOptionPane.showMessageDialog(this, "Categoria creada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                MyIcon icon = new MyIcon();
+                JOptionPane.showMessageDialog(this, "Categoria creada correctamente.", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
+                //JOptionPane.showMessageDialog(this, "Categoria creada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
 
                 if (catSubCat.isSelected()) {
                     DefaultMutableTreeNode nodoPadre;
