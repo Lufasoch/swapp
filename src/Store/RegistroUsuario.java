@@ -75,6 +75,10 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         ApellidoC = new javax.swing.JTextField();
         eMail = new javax.swing.JTextField();
         eMailC = new javax.swing.JTextField();
+        Password = new javax.swing.JTextField();
+        PasswordC = new javax.swing.JTextField();
+        RePassword = new javax.swing.JTextField();
+        RePasswordC = new javax.swing.JTextField();
         FechaNac = new javax.swing.JTextField();
         FechaNacC = new com.toedter.calendar.JDateChooser();
         PanelProveedor01 = new javax.swing.JPanel();
@@ -106,7 +110,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout(8, 2, 4, 4));
+        jPanel1.setLayout(new java.awt.GridLayout(10, 2, 4, 4));
 
         TipoU.setEditable(false);
         TipoU.setText("Tipo de Usuario");
@@ -150,6 +154,20 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         jPanel1.add(eMail);
         jPanel1.add(eMailC);
 
+        Password.setEditable(false);
+        Password.setText("Ingrese una clave");
+        Password.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        Password.setEnabled(false);
+        jPanel1.add(Password);
+        jPanel1.add(PasswordC);
+
+        RePassword.setEditable(false);
+        RePassword.setText("Confirme la clave");
+        RePassword.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        RePassword.setEnabled(false);
+        jPanel1.add(RePassword);
+        jPanel1.add(RePasswordC);
+
         FechaNac.setEditable(false);
         FechaNac.setText("Fecha de Nacimiento");
         FechaNac.setDisabledTextColor(new java.awt.Color(1, 1, 1));
@@ -188,7 +206,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         jPanel1.add(PanelProveedor04);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 240, 750, 290);
+        jPanel1.setBounds(20, 200, 750, 360);
 
         jPanel6.setBackground(new java.awt.Color(214, 228, 237));
         jPanel6.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -219,7 +237,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         jPanel6.add(CancelarButton);
 
         getContentPane().add(jPanel6);
-        jPanel6.setBounds(580, 40, 190, 170);
+        jPanel6.setBounds(580, 10, 190, 170);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -229,7 +247,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         PerfilLabel.setBounds(10, 10, 150, 150);
 
         getContentPane().add(PPanel);
-        PPanel.setBounds(370, 40, 170, 170);
+        PPanel.setBounds(370, 10, 170, 170);
 
         jPanel7.setBackground(new java.awt.Color(214, 228, 237));
         jPanel7.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -256,7 +274,7 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         jPanel7.add(btnExaminarFoto);
 
         getContentPane().add(jPanel7);
-        jPanel7.setBounds(20, 40, 310, 170);
+        jPanel7.setBounds(20, 10, 310, 170);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -452,7 +470,11 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel PanelProveedor02;
     private javax.swing.JPanel PanelProveedor03;
     private javax.swing.JPanel PanelProveedor04;
+    private javax.swing.JTextField Password;
+    private javax.swing.JTextField PasswordC;
     private javax.swing.JLabel PerfilLabel;
+    private javax.swing.JTextField RePassword;
+    private javax.swing.JTextField RePasswordC;
     private javax.swing.JTextField SitioWeb;
     private javax.swing.JTextField SitioWebC;
     private javax.swing.JTextField TipoU;
