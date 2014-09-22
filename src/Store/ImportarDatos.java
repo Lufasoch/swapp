@@ -66,8 +66,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 20, 20, 20, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
+        ImpTxT.setEditable(false);
         ImpTxT.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ImpTxT.setText("Importacion de datos de prueba");
         jPanel1.add(ImpTxT);
@@ -76,7 +77,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
         jPanel1.setBounds(30, 30, 360, 90);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(20, 20, 20, 20, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         btImportar.setText("Importar");
         btImportar.addActionListener(new java.awt.event.ActionListener() {
