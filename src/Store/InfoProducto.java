@@ -93,6 +93,8 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         taDescripcion = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         taEspecificacion = new javax.swing.JTextArea();
+        txtPrecio = new javax.swing.JLabel();
+        tfPrecio = new javax.swing.JTextField();
         pnlImagenes = new javax.swing.JPanel();
         panelImagen = new javax.swing.JPanel();
         lblImagenActual = new javax.swing.JLabel();
@@ -182,7 +184,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
         jPanel4.setBackground(new java.awt.Color(214, 228, 237));
         jPanel4.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         pnlInformacion.setBorder(null);
         pnlInformacion.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -223,54 +225,69 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         taEspecificacion.setRows(5);
         jScrollPane5.setViewportView(taEspecificacion);
 
+        txtPrecio.setText("Precio");
+
+        tfPrecio.setEditable(false);
+
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescripcion)
                             .addComponent(txtProveedor)
                             .addComponent(txtNumeroReferencia)
                             .addComponent(txtNombre))
-                        .addGap(29, 29, 29)
+                        .addGap(36, 36, 36)
                         .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfReferencia)
                             .addComponent(tfNombre)
                             .addComponent(tfProveedor, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtDescripcion)
+                        .addGap(220, 220, 220))
                     .addGroup(pnlDatosLayout.createSequentialGroup()
                         .addComponent(txtEspecificacion)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlDatosLayout.createSequentialGroup()
+                        .addComponent(txtPrecio)
+                        .addGap(64, 64, 64)
+                        .addComponent(tfPrecio)))
                 .addContainerGap())
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlDatosLayout.setVerticalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre)
                     .addComponent(tfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumeroReferencia)
                     .addComponent(tfReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
+                .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPrecio)
+                    .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProveedor)
                     .addComponent(tfProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtDescripcion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtEspecificacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
         );
 
         pnlInformacion.addTab("Datos Generales", pnlDatos);
@@ -285,7 +302,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         );
         panelImagenLayout.setVerticalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+            .addComponent(lblImagenActual, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
         );
 
         cbImagenes.addItemListener(new java.awt.event.ItemListener() {
@@ -303,7 +320,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addGroup(pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbImagenes, 0, 282, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         pnlImagenesLayout.setVerticalGroup(
             pnlImagenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,7 +350,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCategoriasLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(lblRutaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -429,6 +446,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
                 tfNombre.setText(dprod.getNombre());
                 tfReferencia.setText(dprod.getReferencia());
+                tfPrecio.setText(String.valueOf(dprod.getDataEspecificacion().getPrecio()));
                 tfProveedor.setText(dprod.getDataProveedor().getCompania());
                 taDescripcion.setText(dprod.getDataEspecificacion().getDescripcion());
                 taEspecificacion.setText(dprod.getDataEspecificacion().getEspecificacion());
@@ -535,6 +553,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea taDescripcion;
     private javax.swing.JTextArea taEspecificacion;
     private javax.swing.JTextField tfNombre;
+    private javax.swing.JTextField tfPrecio;
     private javax.swing.JTextField tfProveedor;
     private javax.swing.JTextField tfReferencia;
     private javax.swing.JTree treeCategoria;
@@ -542,6 +561,7 @@ public class InfoProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel txtEspecificacion;
     private javax.swing.JLabel txtNombre;
     private javax.swing.JLabel txtNumeroReferencia;
+    private javax.swing.JLabel txtPrecio;
     private javax.swing.JLabel txtProveedor;
     // End of variables declaration//GEN-END:variables
     private static InfoProducto IProdInstancia;
