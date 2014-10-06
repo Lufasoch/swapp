@@ -402,7 +402,10 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             } else {
                 tipo = UsuarioType.PROVEEDOR.name();
             }
-            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), "12345678", NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
+            if(!(PasswordC.getName().equals(RePasswordC.getName()))){
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), PasswordC.getName(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
            
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
