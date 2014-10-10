@@ -371,7 +371,8 @@ public final class InfoProveedor extends javax.swing.JInternalFrame {
             TCompaniaC.setText(du.getCompania());
             TPaginaWebC.setText(du.getWebLink());
             //PerfilLabel.setIcon(RZIma(du.getImagen(), 150, 150));
-            ImageIcon imageIcon = new ImageIcon(getClass().getResource(du.getImagen()));
+            //ImageIcon imageIcon = new ImageIcon(getClass().getResource(du.getImagen()));
+            ImageIcon imageIcon = new ImageIcon(du.getImagen());
             PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             PerfilLabel.repaint();
             //ARRIBA//IMPRIMIR DATOS

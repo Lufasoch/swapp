@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import Store.util;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -98,20 +101,23 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportarActionPerformed
-//Alta Usuarios
-//verificar el formato de las fechas
         try {
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","12345678", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", "/fotos/cook_thumb20110204.jpg", "PROVEEDOR", "Apple", "www.apple.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","12345678", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", "/fotos/cue_thumb20110901.jpg", "PROVEEDOR", "Samsung", "www.samsung.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","12345678", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", "/fotos/federighi_thumb20120727.jpg", "PROVEEDOR", "Sony", "us.playstation.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","12345678", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", "/fotos/ive_thumb20110204.jpg", "PROVEEDOR", "Microsoft", "www.xbox.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","12345678", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", "/fotos/default.jpg", "PROVEEDOR", "HTC", "www.htc.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Dan","12345678", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("Phil","12345678", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", "/fotos/schiller_thumb20110204.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","12345678", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","12345678", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", "/fotos/default.jpg", "CLIENTE", null, null);
-        } catch (UsuarioException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            //verificar el formato de las fechas
+            //verificar el formato de las fechas
+            String path = new File(".").getCanonicalPath();
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","12345678", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","12345678", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","12345678", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","12345678", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","12345678", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Dan","12345678", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Phil","12345678", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","12345678", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","12345678", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+ } catch (UsuarioException ex) {
+            Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 //Alta Categorias
@@ -170,8 +176,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 112 g\nPantalla: 4\"\nVersiones de Wifi: a/b/g/n");
             dataEsp.setPrecio(Double.parseDouble("199"));
 //Producto 1 Especificacion Imagenes
-            List<String> imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM1-topic_iphone_5.png");
+            String path = new File(".").getCanonicalPath();
+            List<byte[]> imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM1-topic_iphone_5.png")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -200,8 +207,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 140 g\nPantalla: 3.5\"\nVersiones de Wifi: b/g/n");
             dataEsp.setPrecio(Double.parseDouble("99"));
 //Producto 2 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM2-color_black.jpg");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM2-color_black.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -228,9 +235,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Capacidad: 8 GB\nPeso: 139 g\nPantalla: 4.7\"\nVersión de Android: 4.3");
             dataEsp.setPrecio(Double.parseDouble("299"));
 //Producto 3 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM3-n4-buy-1200.jpg");
-            imagenes.add("/fotos/IM4-N4_Google_Maps-1200.jpg");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM3-n4-buy-1200.jpg")));
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM4-N4_Google_Maps-1200.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -283,8 +290,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 136.6 x 69.8 x 7.9 mm\nPeso: 130 g\nPantalla: 4.99\"\nVersión de Android: 4.2.2");
             dataEsp.setPrecio(Double.parseDouble("839.99"));
 //Producto 5 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM5-samsung-galaxy-s4.jpg");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM5-samsung-galaxy-s4.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -311,8 +318,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 112.4 x 59.9 x 11.5 mm\nPeso: 113 g\nPantalla: 3.5\"\nVersión de Android: 2.3");
             dataEsp.setPrecio(Double.parseDouble("237"));
 //Producto 6 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM6-samsung-galaxy-ace-s5830.jpg");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM6-samsung-galaxy-ace-s5830.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -387,8 +394,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 652 g\nPantalla: 9.7\"\nProcesador: A6X");
             dataEsp.setPrecio(Double.parseDouble("499"));
 //Producto 9 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM7-2012-ipadrd-step1-black.png");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM7-2012-ipadrd-step1-black.png")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -415,8 +422,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 308 g\nPantalla: 7.9\"\nProcesador: A5");
             dataEsp.setPrecio(Double.parseDouble("329"));
 //Producto 10 Especificacion Imagenes
-            imagenes = new ArrayList<String>();
-            imagenes.add("/fotos/IM8-specs_color.jpg");
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM8-specs_color.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);

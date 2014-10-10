@@ -477,6 +477,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         jScrollPane1.setVisible(false);
         PPanel.setVisible(false);
         jPanel1.setVisible(false);
+        jPanel2.setVisible(false);
         InfoPanel.setVisible(false);
     }
     
@@ -486,6 +487,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         jScrollPane1.setVisible(true);
         PPanel.setVisible(true);
         jPanel1.setVisible(true);
+        jPanel2.setVisible(true);
         InfoPanel.setVisible(true);
     }
     
@@ -515,14 +517,6 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
          try {
             String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
             DataUsuario du = Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
-            //BUSCAR USUARIO A LA BASE DE DATOS
-
-            //ABAJO//DATOS DEVUELTOS
-//            String[] DatosU = {"Lufasoch", "lufasoch@gmail.com", "Fabricio", "Sosa", "Cliente", "Recursos/Usuarios/Lufasoch.png"};
-            // int[] NOrdenes = {458, 5366, 7552, 4234, 23423, 4234, 89678, 14134, 563456, 45345};
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); //WWW
-//            java.util.Date FechaU = new Date(88,9,19);     
-            //ARRIBA//DATOS DEVUELTOS    
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             //ABAJO//IMPRIMIR DATOS
@@ -532,10 +526,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             TApellidoC.setText(du.getApellido());
             TFechaNacC.setText(sdf.format(du.getFechaNacimiento()));
             TTipoUC.setText("Cliente");
-           // String perfS = du.getImagen(); //Sin esto no anda
-           // PerfilLabel.setIcon(RZIma(perfS,150,150));
-           
-            ImageIcon imageIcon = new ImageIcon(getClass().getResource(du.getImagen()));
+            ImageIcon imageIcon = new ImageIcon(du.getImagen());
             PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             PerfilLabel.repaint();
             //ABAJO//CAMBIAR MODELO DE LA TABLA

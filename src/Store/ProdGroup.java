@@ -187,11 +187,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setFocusable(true);
         this.TTitulo.setFocusable(true);
         this.TTituloC.setFocusable(true);
-
-
         this.ImaList.setFocusable(true);
-
-
         this.ElegirProvButton.setFocusable(true);
         this.ElegirImaButton.setFocusable(true);
         this.ElegirCatButton.setFocusable(true);
@@ -214,8 +210,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         this.TProveedorC.setText("");
         this.TTituloC.setText("");
         this.listaCatModel.clear();
-
-
         DefaultListModel listaModel_limpio = new DefaultListModel();
         ImaList.setModel(listaModel_limpio);
     }
@@ -501,7 +495,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel1.add(TEspec);
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(10, 10, 180, 132);
+        jPanel1.setBounds(10, 10, 180, 136);
 
         jPanel2.setBackground(new java.awt.Color(214, 228, 237));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 8, 8));
@@ -525,17 +519,17 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel3.add(jPanel4);
         jPanel4.setBounds(200, 120, 560, 130);
         jPanel3.add(TPrecioC);
-        TPrecioC.setBounds(200, 260, 560, 27);
+        TPrecioC.setBounds(200, 260, 560, 28);
 
         TProveedor.setEditable(false);
         TProveedor.setText("Proveedor:");
         jPanel3.add(TProveedor);
-        TProveedor.setBounds(10, 300, 180, 27);
+        TProveedor.setBounds(10, 300, 180, 28);
 
         TPrecio.setEditable(false);
         TPrecio.setText("Precio:");
         jPanel3.add(TPrecio);
-        TPrecio.setBounds(10, 260, 180, 27);
+        TPrecio.setBounds(10, 260, 180, 28);
 
         ElegirProvButton.setText("Elegir");
         ElegirProvButton.addActionListener(new java.awt.event.ActionListener() {
@@ -544,16 +538,16 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(ElegirProvButton);
-        ElegirProvButton.setBounds(200, 300, 70, 29);
+        ElegirProvButton.setBounds(200, 300, 70, 30);
 
         TProveedorC.setEditable(false);
         jPanel3.add(TProveedorC);
-        TProveedorC.setBounds(280, 300, 480, 27);
+        TProveedorC.setBounds(280, 300, 480, 28);
 
         TCategorias.setEditable(false);
         TCategorias.setText("Categorias:");
         jPanel3.add(TCategorias);
-        TCategorias.setBounds(10, 340, 180, 27);
+        TCategorias.setBounds(10, 340, 180, 28);
 
         ElegirCatButton.setText("Elegir");
         ElegirCatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -567,7 +561,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jTextField1.setEditable(false);
         jTextField1.setText("Imágenes:");
         jPanel3.add(jTextField1);
-        jTextField1.setBounds(10, 410, 180, 27);
+        jTextField1.setBounds(10, 410, 180, 28);
 
         ElegirImaButton.setText("Elegir");
         ElegirImaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -625,7 +619,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         jPanel9.add(RegistrarTodo);
 
         RegProdIF.getContentPane().add(jPanel9);
-        jPanel9.setBounds(370, 514, 410, 45);
+        jPanel9.setBounds(370, 514, 410, 46);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         RegProdIF.getContentPane().add(jLabel1);
@@ -668,8 +662,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_SeleccionarActionPerformed
 
-    //private int contCat = 0;
-    //String CatE[];
     private void CerrarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCatActionPerformed
         HabilitarTodo();
         SelectCat.setVisible(false);
@@ -682,8 +674,9 @@ public class ProdGroup extends javax.swing.JInternalFrame {
     private void SeleccionarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarCatActionPerformed
         try {
             DefaultMutableTreeNode seleccionado = (DefaultMutableTreeNode) treeCategoria.getLastSelectedPathComponent();
-            if (seleccionado.getUserObject().toString().equals("Categorias"))
+            if (seleccionado.getUserObject().toString().equals("Categorias")) {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una categoria que pueda contener productos", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
             if (seleccionado != null) {
                 String nombreCategoria = seleccionado.getUserObject().toString();
                 DataCategoria dataCat = Factory.getInstance().getCategoriaController().getCategoriaPorNombre(nombreCategoria);
@@ -703,8 +696,6 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         } catch (CategoryException ce) {
             JOptionPane.showMessageDialog(this, ce.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         }
-
-        //contCat++;
         HabilitarTodo();
         SelectCat.setVisible(false);
     }//GEN-LAST:event_SeleccionarCatActionPerformed
@@ -722,12 +713,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
     private void RegistrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarTodoActionPerformed
         try {
-            //TCategoriasC.getText() tiene todas las categorias separadas por ", "
-            //ImaI[de 0 hasta NoImaCont-1] tiene todas las rutas absolutas de las imagenes
-            //en InfoCliente y Info proveedor se ve como mostrarlas en el icono de una label
-
             DataProducto dataProd = new DataProducto();
-            //Cargo datos basicos del dataProd
             //Verifico campos no vacios
             if (TTituloC.getText().equals("")
                     || TNoRefC.getText().equals("")
@@ -751,7 +737,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
 
             dataProd.setDataCategorias(listDataCat);
-            
+
             //Cargo dataProveedor
             DataUsuario dataProv = new DataUsuario();
             dataProv.setNickname(TProveedorC.getText());
@@ -766,9 +752,9 @@ public class ProdGroup extends javax.swing.JInternalFrame {
 
             //Cargo imagenes a la lista de string de imagenes
             if (ImaList.getModel().getSize() > 0) {
-                List<String> imagenes = new ArrayList<String>();
+                List<byte[]> imagenes = new ArrayList<byte[]>();
                 for (int j = 0; j < ImaList.getModel().getSize(); j++) {
-                    imagenes.add(ImaList.getModel().getElementAt(j).toString());
+                    imagenes.add(util.imgToBytes(new File(ImaList.getModel().getElementAt(j).toString())));
                 }
                 if (!imagenes.isEmpty()) {
                     dataEsp.setImagenes(imagenes);
@@ -807,36 +793,15 @@ public class ProdGroup extends javax.swing.JInternalFrame {
         int result = buscarImagen.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            fileImagen = buscarImagen.getSelectedFile();
-            txtFotoPath.setText(fileImagen.getPath());
-            ImageIcon imageIcon = new ImageIcon(fileImagen.getPath());
-            LImagen.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(LImagen.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
-            LImagen.repaint();
-
-            String name = fileImagen.getName();
-            int pos = name.lastIndexOf('.');
-            String ext = name.substring(pos + 1);
-
-            File directorio = new File("src/Store/Recursos/Productos/TempPic/");
-            directorio.mkdirs();
-
-            File destino = new File("src/Store/Recursos/Productos/TempPic/tmp" + "." + ext);
             try {
-                InputStream in = new FileInputStream(fileImagen);
-                OutputStream out = new FileOutputStream(destino);
-
-                byte[] buffer = new byte[1024];
-                int tamanoRes;
-
-
-                while ((tamanoRes = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, tamanoRes);
-                }
-                in.close();
-                out.close();
-
+                fileImagen = buscarImagen.getSelectedFile();
+                byte[] arrImaByts = util.imgToBytes(fileImagen);
+                ImageIcon imageIcon = new ImageIcon(arrImaByts);
+                txtFotoPath.setText(fileImagen.getPath());
+                LImagen.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(LImagen.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+                LImagen.repaint();
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(ProdGroup.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_AddImaEve
@@ -849,6 +814,7 @@ public class ProdGroup extends javax.swing.JInternalFrame {
             }
             //DefaultListModel listaModel = new DefaultListModel();
             ImaList.setModel(listaModel);
+
             listaModel.addElement(fileImagen.getAbsolutePath());
             ImaI[NoImaCont] = fileImagen.getAbsolutePath();
             txtFotoPath.setText(fileImagen.getAbsolutePath());

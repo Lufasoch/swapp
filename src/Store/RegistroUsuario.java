@@ -16,6 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import direct.market.factory.Factory;
+import Store.util;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.security.auth.callback.PasswordCallback;
 //import direct.market.controller.UsuarioControllerImpl;
 
 class CustomFilter extends javax.swing.filechooser.FileFilter {
@@ -39,8 +43,6 @@ class CustomFilter extends javax.swing.filechooser.FileFilter {
  * @author Lufasoch
  */
 public class RegistroUsuario extends javax.swing.JInternalFrame {
-
-    private File fileImagen = null;
 
     public RegistroUsuario() {
         initComponents();
@@ -297,6 +299,9 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_TipoUCItemStateChanged
 
+    private File fileImagen = null;
+    private byte[] arrImaByts = null;
+    
     private void btnExaminarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarFotoActionPerformed
         JFileChooser buscarImagen = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Imágenes (bmp, jpg, png)", new String[]{"bmp", "jpg", "png"});
@@ -306,54 +311,20 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
         int result = buscarImagen.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            fileImagen = buscarImagen.getSelectedFile();
-            txtFotoPath.setText(fileImagen.getPath());
-            ImageIcon imageIcon = new ImageIcon(fileImagen.getPath());
-            PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
-            PerfilLabel.repaint();
-
-            //******************** GUARDAR IMGENES EN CARPETA ********************
-
-            String name = fileImagen.getName();
-            int pos = name.lastIndexOf('.');
-            String ext = name.substring(pos + 1);
-
-            File directorio = new File("src/Store/Recursos/Usuarios/TempPic/");
-            directorio.mkdirs();
-
-            File destino = new File("src/Store/Recursos/Usuarios/TempPic/tmp" + "." + ext);
-            try {
-                InputStream in = new FileInputStream(fileImagen);
-                OutputStream out = new FileOutputStream(destino);
-
-                byte[] buffer = new byte[1024];
-                int tamanoRes;
-
-
-                while ((tamanoRes = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, tamanoRes);
-                }
-                in.close();
-                out.close();
+            try {            
+                fileImagen = buscarImagen.getSelectedFile();
+                arrImaByts = util.imgToBytes(fileImagen);
+                ImageIcon imageIcon = new ImageIcon(arrImaByts);
+                txtFotoPath.setText(fileImagen.getPath());
+                PerfilLabel.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(PerfilLabel.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+                PerfilLabel.repaint();
 
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        /*  
-         int returnVal = fotoChooser.showOpenDialog(this);
-         if(returnVal == JFileChooser.APPROVE_OPTION){
-         File fotoCliente = fotoChooser.getSelectedFile();
-         try{
-         String fotoClientePath = fotoCliente.getCanonicalPath();
-         txtFotoPath.setText(fotoClientePath);
-         //PerfilLabel.setIcon(RZIma(fotoClientePath,150,150));
+
                 
-         }catch(Exception e){
-         JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo",
-         "Error", JOptionPane.ERROR_MESSAGE);
-         }
-         }*/
+        }
     }//GEN-LAST:event_btnExaminarFotoActionPerformed
 
     //Solo direcciones desde "Store/"
@@ -371,28 +342,6 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             String path = "";
             if (fileImagen != null) {
                 path = fileImagen.getAbsolutePath();
-//                String name = fileImagen.getName();
-//                int pos = name.lastIndexOf('.');
-//                String ext = name.substring(pos + 1);
-//                path= "Recursos/Usuarios/"+NicknameC.getText()+"."+ext;
-//
-//                File directorio = new File("src/Store/Recursos/Usuarios/");
-//                directorio.mkdirs();
-//
-//                File destino = new File("src/Store/Recursos/Usuarios/" + NicknameC.getText() + "." + ext);
-//
-//                InputStream in = new FileInputStream(fileImagen);
-//                OutputStream out = new FileOutputStream(destino);
-//
-//                byte[] buffer = new byte[1024];
-//                int tamanoRes;
-//
-//
-//                while ((tamanoRes = in.read(buffer)) > 0) {
-//                    out.write(buffer, 0, tamanoRes);
-//                }
-//                in.close();
-//               out.close();
             } else {
                 path = "Recursos/Usuarios/Perfil.jpg";
             }
@@ -402,19 +351,16 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             } else {
                 tipo = UsuarioType.PROVEEDOR.name();
             }
-            if(!(PasswordC.getName().equals(RePasswordC.getName()))){
+            if(!(PasswordC.getText().equals(RePasswordC.getText()))){
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), PasswordC.getName(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), path, tipo, EmpresaC.getText(), SitioWebC.getText());
+            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), PasswordC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), arrImaByts, tipo, EmpresaC.getText(), SitioWebC.getText());
            
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
             
             limpiarCampos();
-            //this.dispose();
-        } /*catch (IOException ex) {
-         JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
-         }*/ catch (UsuarioException ex) {
+        } catch (UsuarioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());//, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_AceptarButtonActionPerformed

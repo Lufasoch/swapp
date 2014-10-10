@@ -435,13 +435,16 @@ public class InfoProducto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_treeCategoriaMouseClicked
 
+    String prodN=null;
+    
     private void listProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProductosMouseClicked
         
         if (!listProductos.isSelectionEmpty()) {
             lblRutaCategoria.setText("");
             DataProducto dprod = null;
             try {
-                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
+                prodN = listProductos.getSelectedValue().toString();
+                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(prodN);
 
 
                 tfNombre.setText(dprod.getNombre());
@@ -464,10 +467,10 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
                 if (!dprod.getDataEspecificacion().getImagenes().isEmpty()) {
                     cbImagenes.removeAllItems();
-                    List<String> imagenes = new ArrayList<String>();
-                    imagenes = dprod.getDataEspecificacion().getImagenes();
-                    for (String imagen : imagenes) {
-                        cbImagenes.addItem(imagen);
+                    int tama = dprod.getDataEspecificacion().getImagenes().size();
+                    //List<byte[]> imagenes = dprod.getDataEspecificacion().getImagenes();
+                    for (Integer i = 1; i <= tama; i++) {
+                        cbImagenes.addItem("Imagen 0"+i.toString());
                     }
                     //cbImagenes.setSelectedIndex(0);
                 } else {
@@ -490,9 +493,20 @@ public class InfoProducto extends javax.swing.JInternalFrame {
 
     private void reloadTabImagenes() {
         if (cbImagenes.getItemCount() > 0) {
-            ImageIcon imageIcon = new ImageIcon(getClass().getResource(cbImagenes.getSelectedItem().toString()));
-            lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
-            lblImagenActual.repaint();
+            try {
+                int cont = cbImagenes.getSelectedIndex();
+                DataProducto dprod = Factory.getInstance().getProductoController().buscarProductoPorName(prodN);
+                List<byte[]> imagenes = dprod.getDataEspecificacion().getImagenes();
+                ImageIcon imageIcon = new ImageIcon(imagenes.get(cont));
+                    lblImagenActual.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenActual.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+                    lblImagenActual.repaint();
+                
+    //            ImageIcon imageIcon = new ImageIcon(getClass().getResource(cbImagenes.getSelectedItem().toString()));
+    //            lblImagenActual.repaint();
+    //            lblImagenActual.repaint();
+            } catch (ProductoException ex) {
+                Logger.getLogger(InfoProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             lblImagenActual.setIcon(null);
             lblImagenActual.revalidate();

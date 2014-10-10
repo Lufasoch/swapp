@@ -583,12 +583,34 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             dep.setEspecificacion(taEspecificacion.getText());
             dep.setPrecio(Double.parseDouble(tfPrecio.getText()));
 
-            List<String> limagenes = new ArrayList<String>();
+            List<byte[]> limagenes = new ArrayList<byte[]>();
             DefaultListModel dim = (DefaultListModel) ImaList.getModel();
+            String name;
+            //
+            
+                DataProducto dprod = Factory.getInstance().getProductoController().buscarProductoPorName(prodN);
+                List<byte[]> imagenes = dprod.getDataEspecificacion().getImagenes();
+                Integer cont = 1;
+                //
+                
             int max = dim.getSize();
             for (int i = 0; i < max; i++) {
-                String image = dim.getElementAt(i).toString();
-                limagenes.add(image);
+//                String image = dim.getElementAt(i).toString();
+//                limagenes.add(image);
+                if(dim.getElementAt(i).toString().contains("Imagen 0")){
+                    name = dim.getElementAt(i).toString();
+                    int pos = name.lastIndexOf('0');
+                    String num = name.substring(pos + 1);
+                    while (!cont.toString().equals(num)) {
+                        cont++;
+                    }
+                    cont=cont-1;
+                    limagenes.add(imagenes.get(cont));
+                }
+                else
+                {
+                    limagenes.add(util.imgToBytes(new File(dim.getElementAt(i).toString())));
+                }
             }
             dep.setImagenes(limagenes);
 
@@ -620,6 +642,8 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } catch (CategoryException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
 
@@ -687,30 +711,29 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
             LImagen.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(LImagen.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
             LImagen.repaint();
 
-            String name = fileImagen.getName();
-            int pos = name.lastIndexOf('.');
-            String ext = name.substring(pos + 1);
-
-            File directorio = new File("src/Store/Recursos/Productos/TempPic/");
-            directorio.mkdirs();
-
-            File destino = new File("src/Store/Recursos/Productos/TempPic/tmp" + "." + ext);
-            try {
-                InputStream in = new FileInputStream(fileImagen);
-                OutputStream out = new FileOutputStream(destino);
-
-                byte[] buffer = new byte[1024];
-                int tamanoRes;
-
-                while ((tamanoRes = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, tamanoRes);
-                }
-                in.close();
-                out.close();
-
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+//            String name = fileImagen.getName();
+//            int pos = name.lastIndexOf('.');
+//            String ext = name.substring(pos + 1);
+//
+//            File directorio = new File("src/Store/Recursos/Productos/TempPic/");
+//            directorio.mkdirs();
+//***
+//            File destino = new File("src/Store/Recursos/Productos/TempPic/tmp" + "." + ext);
+//            try {
+//                InputStream in = new FileInputStream(fileImagen);
+//                OutputStream out = new FileOutputStream(destino);
+//
+//                byte[] buffer = new byte[1024];
+//                int tamanoRes;
+//
+//                while ((tamanoRes = in.read(buffer)) > 0) {
+//                    out.write(buffer, 0, tamanoRes);
+//                }
+//                in.close();
+//                out.close();
+//            } catch (IOException ex) {
+//                JOptionPane.showMessageDialog(this, "No se puede seleccionar archivo", "Error", JOptionPane.ERROR_MESSAGE);
+//            }
         }
     }//GEN-LAST:event_LImagenAddImaEve
 
@@ -814,13 +837,16 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_treeCategoriaMouseClicked
 
+    String prodN=null;
+    int prodCant=0;
     private void listProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProductosMouseClicked
        
         if (!listProductos.isSelectionEmpty()) {
             DataProducto dprod = null;
             try {
-                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(listProductos.getSelectedValue().toString());
-
+                prodN = listProductos.getSelectedValue().toString();
+                dprod = Factory.getInstance().getProductoController().buscarProductoPorName(prodN);
+                prodCant = dprod.getDataEspecificacion().getImagenes().size();
                 tfNombre.setText(dprod.getNombre());
                 tfReferencia.setText(dprod.getReferencia());
                 oldReferencia = dprod.getReferencia();
@@ -847,9 +873,10 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
                 listCategorias.validate();
 
                 DefaultListModel dlm2 = new DefaultListModel();
-                List<String> imagenes = dprod.getDataEspecificacion().getImagenes();
-                for (String imagen : imagenes) {
-                    dlm2.addElement(imagen);
+                int tama = dprod.getDataEspecificacion().getImagenes().size();
+                //List<byte[]> imagenes = dprod.getDataEspecificacion().getImagenes();
+                for (Integer i = 1; i <= tama; i++) {
+                    dlm2.addElement("Imagen 0"+i.toString());
                 }
                 ImaList.setModel(dlm2);
 
@@ -866,10 +893,33 @@ public class ModificarProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_listProductosMouseClicked
 
     private void reloadImagenPreview() {
-        if (ImaList.getModel().getSize() > 0) {
-            ImageIcon imageIcon = new ImageIcon(getClass().getResource(ImaList.getSelectedValue().toString()));
-            lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(-1, lblImagenPreview.getHeight(), Image.SCALE_AREA_AVERAGING)));
-            lblImagenPreview.repaint();
+        if (ImaList.getModel().getSize() > 0 && ImaList.getSelectedValue()!=null) {
+            try {
+                String name = ImaList.getSelectedValue().toString();
+                //prodCant == ImaList.getModel().getSize() && 
+                if(name.contains("Imagen 0") && !(name.contains("/Imagen 0"))){
+                int pos = name.lastIndexOf('0');
+                String num = name.substring(pos + 1);
+                DataProducto dprod = Factory.getInstance().getProductoController().buscarProductoPorName(prodN);
+                List<byte[]> imagenes = dprod.getDataEspecificacion().getImagenes();
+                Integer cont = 1;
+                while (!cont.toString().equals(num)) {
+                    cont++;
+                }
+                cont=cont-1;
+                ImageIcon imageIcon = new ImageIcon(imagenes.get(cont));
+                lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lblImagenPreview.getWidth(), -1, Image.SCALE_AREA_AVERAGING)));
+                lblImagenPreview.repaint();
+                }
+                else
+                {
+                ImageIcon imageIcon = new ImageIcon(getClass().getResource(ImaList.getSelectedValue().toString()));
+                lblImagenPreview.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(-1, lblImagenPreview.getHeight(), Image.SCALE_AREA_AVERAGING)));
+                lblImagenPreview.repaint();
+                }
+            } catch (ProductoException ex) {
+                Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             lblImagenPreview.setIcon(null);
             lblImagenPreview.revalidate();
