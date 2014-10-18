@@ -621,9 +621,9 @@ public class GenerarOC extends javax.swing.JInternalFrame {
             txtFecha.setText(sdf1.format(fechaOC));
             Btn_Cancelar1.setText("Cerrar");
             Btn_Cancelar1.setEnabled(true);
-            DataOC dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            //DataOC dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
             DataUsuario dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente((String) TCliente.getValueAt(TCliente.getSelectedRow(), 0));
-            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            //dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
         } catch (OCException ex) {
