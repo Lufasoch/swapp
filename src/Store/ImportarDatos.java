@@ -23,6 +23,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Store.util;
+import direct.market.controller.IProductoController;
+import direct.market.datatype.DataComentario;
 import java.io.File;
 import java.io.IOException;
 
@@ -606,6 +608,41 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+//Comentarios -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+
+//Comentario1 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        IProductoController cp = Factory.getInstance().getProductoController();
+        DataComentario comentario1 = new DataComentario("Dan", 0, "El mejor iPhone hasta el momento. Es la mejor compra que he hecho en años. Le pasa el trapo a todos los teléfonos Android.", new Date(1404864000L));
+        cp.agregarComentario("1", comentario1);
+
+//Comentario2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario2 = new DataComentario("Phil", 1, "Me parece que tu comentario es un poco desubicado. Hay muy buenos teléfonos que creo que mejoran las prestaciones de este, como el Samsung Galaxy S4.", new Date(1404864000L));
+        cp.agregarComentario("1", comentario2);
+
+//Comentario3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario3 = new DataComentario("Dan", 2, "No creo, supe tener un Galaxy S2 y lo tenía que reiniciar todos los días. Nunca más vuelvo a Android.", new Date(1407542400L));
+        cp.agregarComentario("1", comentario3);
+
+//Comentario4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario4 = new DataComentario("Phil", 3, "Se ha mejorado mucho desde entonces, pero me parece que estás muy cerrado con tu opinión. Saludos.", new Date(1407542400L));
+        cp.agregarComentario("1", comentario4);
+
+//Comentario5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario5 = new DataComentario("BruceS", 0, "¡Excelente control! Puedo disfrutar de mi GTA V sin la molestia de cables.", new Date(1420761600L));
+        cp.agregarComentario("12", comentario5);
+
+//Comentario6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario6 = new DataComentario("BruceS", 0, "Retracto lo que escribí antes....se me rompió a los 3 dias. Me han estafado.", new Date(1428537600L));
+        cp.agregarComentario("12", comentario6);
+
+//Comentario7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1420761600L));
+        cp.agregarComentario("7", comentario7);
+
+            
+            
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Importacion terminada correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
             //lblImporter.setText("Importacion terminada");
