@@ -346,7 +346,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 12.5 cm x 6.7 cm x 2.0 cm\nPeso: 44 g");
             dataEsp.setPrecio(Double.parseDouble("3.50"));
 //Producto 7 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
@@ -370,7 +372,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 12.4 cm x 7.0 cm x 1.3 cm\nPeso: 26 g");
             dataEsp.setPrecio(Double.parseDouble("3.40"));
 //Producto 8 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
@@ -450,7 +454,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 7.5 cm x 4.2 cm x 1.8 cm\nPeso: 111 g");
             dataEsp.setPrecio(Double.parseDouble("10.99"));
 //Producto 11 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
@@ -474,7 +480,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Garantía: 3 meses\nDimensiones: 5.91 in x 4.33 in x 1.77 in\nPeso: 7.83 oz");
             dataEsp.setPrecio(Double.parseDouble("27.27"));
 //Producto 12 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
@@ -498,7 +506,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 0 in x 0 in x 0 in\nPeso: 7.83 oz");
             dataEsp.setPrecio(Double.parseDouble("7.99"));
 //Producto 13 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
@@ -522,7 +532,9 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 16.0 cm x 9.5 cm x 5.0 cm\nPeso: 184 g");
             dataEsp.setPrecio(Double.parseDouble("30.80"));
 //Producto 14 Especificacion Imagenes
-//Sin imagenes
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
