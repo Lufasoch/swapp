@@ -266,8 +266,10 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 136.6 x 70.6 x 8.6 mm\nPeso: 133 g\nPantalla: 4.8\"\nVersión de Android: 4.0.4");
             dataEsp.setPrecio(Double.parseDouble("415"));
 //Producto 4 Especificacion Imagenes
-//no tiene imagenes (en nuestro codigo, si no tiene imagenes, directamente no carga ese atributo al dataEspecificacion
-
+imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
+            
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
 
