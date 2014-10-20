@@ -161,7 +161,7 @@ public class Menu extends javax.swing.JFrame {
 
         ImportarMenu.setText("Importar");
 
-        ImportarDatosMenuItem.setText("Datos de Prueba Entrega 1");
+        ImportarDatosMenuItem.setText("Datos de Prueba Entrega 2");
         ImportarDatosMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ImportarDatosMenuItemActionPerformed(evt);

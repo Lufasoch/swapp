@@ -107,15 +107,15 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             //verificar el formato de las fechas
             //verificar el formato de las fechas
             String path = new File(".").getCanonicalPath();
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","12345678", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","12345678", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","12345678", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","12345678", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","12345678", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Dan","12345678", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("Phil","12345678", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","12345678", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","12345678", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","peter42", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com");
+            Factory.getInstance().getUsuarioController().altaUsuario("Dan","danr", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Phil","philip61", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
  } catch (UsuarioException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -622,37 +622,51 @@ imagenes = new ArrayList<byte[]>();
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
+//OC 6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(6, new Date(1379548800000L), Double.parseDouble("199.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Phil");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //Comentarios -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 
 //Comentario1 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
         IProductoController cp = Factory.getInstance().getProductoController();
-        DataComentario comentario1 = new DataComentario("Dan", 0, "El mejor iPhone hasta el momento. Es la mejor compra que he hecho en años. Le pasa el trapo a todos los teléfonos Android.", new Date(1404864000L));
+        DataComentario comentario1 = new DataComentario("Dan", 0, "El mejor iPhone hasta el momento. Es la mejor compra que he hecho en años. Le pasa el trapo a todos los teléfonos Android.", new Date(1379613600000L));
         cp.agregarComentario("1", comentario1);
 
 //Comentario2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario2 = new DataComentario("Phil", 1, "Me parece que tu comentario es un poco desubicado. Hay muy buenos teléfonos que creo que mejoran las prestaciones de este, como el Samsung Galaxy S4.", new Date(1404864000L));
+        DataComentario comentario2 = new DataComentario("Phil", 1, "Me parece que tu comentario es un poco desubicado. Hay muy buenos teléfonos que creo que mejoran las prestaciones de este, como el Samsung Galaxy S4.", new Date(1379613600000L));
         cp.agregarComentario("1", comentario2);
 
 //Comentario3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario3 = new DataComentario("Dan", 2, "No creo, supe tener un Galaxy S2 y lo tenía que reiniciar todos los días. Nunca más vuelvo a Android.", new Date(1407542400L));
+        DataComentario comentario3 = new DataComentario("Dan", 2, "No creo, supe tener un Galaxy S2 y lo tenía que reiniciar todos los días. Nunca más vuelvo a Android.", new Date(1379700000000L));
         cp.agregarComentario("1", comentario3);
 
 //Comentario4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario4 = new DataComentario("Phil", 3, "Se ha mejorado mucho desde entonces, pero me parece que estás muy cerrado con tu opinión. Saludos.", new Date(1407542400L));
+        DataComentario comentario4 = new DataComentario("Phil", 3, "Se ha mejorado mucho desde entonces, pero me parece que estás muy cerrado con tu opinión. Saludos.", new Date(1379700000000L));
         cp.agregarComentario("1", comentario4);
 
 //Comentario5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario5 = new DataComentario("BruceS", 0, "¡Excelente control! Puedo disfrutar de mi GTA V sin la molestia de cables.", new Date(1420761600L));
+        DataComentario comentario5 = new DataComentario("BruceS", 0, "¡Excelente control! Puedo disfrutar de mi GTA V sin la molestia de cables.", new Date(1380132000000L));
         cp.agregarComentario("12", comentario5);
 
 //Comentario6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario6 = new DataComentario("BruceS", 0, "Retracto lo que escribí antes....se me rompió a los 3 dias. Me han estafado.", new Date(1428537600L));
+        DataComentario comentario6 = new DataComentario("BruceS", 0, "Retracto lo que escribí antes....se me rompió a los 3 dias. Me han estafado.", new Date(1380391200000L));
         cp.agregarComentario("12", comentario6);
 
 //Comentario7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1420761600L));
+        DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1380132000000L));
         cp.agregarComentario("7", comentario7);
 
             
