@@ -65,13 +65,8 @@ public class Menu extends javax.swing.JFrame {
         });
         ArchivoMenu.add(AltaCategoria);
 
-        RegistrarProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        RegistrarProducto.setForeground(new java.awt.Color(102, 102, 102));
         RegistrarProducto.setText("Registrar Producto");
-        RegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrarProductoActionPerformed(evt);
-            }
-        });
         ArchivoMenu.add(RegistrarProducto);
 
         RegistrarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
@@ -333,24 +328,6 @@ public class Menu extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_AltaCategoriaActionPerformed
-
-    private void RegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarProductoActionPerformed
-        ProdGroup API = ProdGroup.getInstancia();
-        if (API.isVisible()) {
-            try {
-                API.setSelected(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                this.Escritorio.add(API);
-                API.setVisible(true);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_RegistrarProductoActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         // TODO add your handling code here:
