@@ -65,7 +65,7 @@ public class Menu extends javax.swing.JFrame {
         });
         ArchivoMenu.add(AltaCategoria);
 
-        RegistrarProducto.setForeground(new java.awt.Color(102, 102, 102));
+        RegistrarProducto.setForeground(new java.awt.Color(153, 153, 153));
         RegistrarProducto.setText("Registrar Producto");
         ArchivoMenu.add(RegistrarProducto);
 

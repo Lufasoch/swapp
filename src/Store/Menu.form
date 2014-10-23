@@ -23,7 +23,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="RegistrarProducto">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="66" green="66" red="66" type="rgb"/>
+                  <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar Producto"/>
               </Properties>
