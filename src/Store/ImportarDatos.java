@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import Store.util;
 import direct.market.controller.IProductoController;
 import direct.market.datatype.DataComentario;
 import java.io.File;
@@ -107,15 +106,15 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             //verificar el formato de las fechas
             //verificar el formato de las fechas
             String path = new File(".").getCanonicalPath();
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","peter42", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com");
-            Factory.getInstance().getUsuarioController().altaUsuario("Dan","danr", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("Phil","philip61", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
-            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null);
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","peter42", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Dan","danr", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
+            Factory.getInstance().getUsuarioController().altaUsuario("Phil","philip61", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null, true);
+            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
+            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
  } catch (UsuarioException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

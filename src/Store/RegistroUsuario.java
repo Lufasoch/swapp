@@ -16,10 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import direct.market.factory.Factory;
-import Store.util;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.security.auth.callback.PasswordCallback;
 //import direct.market.controller.UsuarioControllerImpl;
 
 class CustomFilter extends javax.swing.filechooser.FileFilter {
@@ -354,7 +352,8 @@ public class RegistroUsuario extends javax.swing.JInternalFrame {
             if(!(PasswordC.getText().equals(RePasswordC.getText()))){
                 JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), PasswordC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), arrImaByts, tipo, EmpresaC.getText(), SitioWebC.getText());
+
+            Factory.getInstance().getUsuarioController().altaUsuario(NicknameC.getText(), PasswordC.getText(), NombreC.getText(), ApellidoC.getText(), FechaNacC.getDate(), eMailC.getText(), arrImaByts, tipo, EmpresaC.getText(), SitioWebC.getText(), true);
            
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Usuario creado correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
