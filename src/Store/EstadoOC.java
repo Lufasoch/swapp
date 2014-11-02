@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -38,9 +39,8 @@ public class EstadoOC extends javax.swing.JInternalFrame {
     }
 
     public void Actualizar() {
-//        int[] NOrdenes = {458, 5366, 7552};
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        Date[] fechaOC = {new Date(99,7,14), new Date(106,11,8), new Date(112,3,21),};
+        CancelarOC.setEnabled(false);
+        AceptarOC.setEnabled(false);
         List<DataOC> ordenesCompraList = Factory.getInstance().getOrdenCompraController().getOrdenesCompra();
         DefaultTableModel DTM = new DefaultTableModel() {
             boolean[] canEdit = new boolean[]{false, false, false};
@@ -60,13 +60,13 @@ public class EstadoOC extends javax.swing.JInternalFrame {
         int e;
         for (int i = 0; i < c; i++) {
             List<DataEstadoOC> estOCList = ordenesCompraList.get(i).getEstados();
-            e = estOCList.size()-1;
-            
-                if(estOCList.get(e).getEstado().equals("Orden Recibida")){
+            e = estOCList.size() - 1;
+
+            if (estOCList.get(e).getEstado().equals("Orden Recibida")) {
                 String datos[] = {Integer.valueOf(ordenesCompraList.get(i).getNumero()).toString(), sdf.format(ordenesCompraList.get(i).getFecha()), estOCList.get(e).getEstado()};
                 DTM.addRow(datos);
-                }
-            
+            }
+
         }
     }
 
@@ -177,6 +177,10 @@ public class EstadoOC extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(OrdenInfoTable);
+        OrdenInfoTable.getColumnModel().getColumn(0).setPreferredWidth(130);
+        OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(40);
+        OrdenInfoTable.getColumnModel().getColumn(2).setPreferredWidth(40);
+        OrdenInfoTable.getColumnModel().getColumn(3).setPreferredWidth(40);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(270, 20, 500, 350);
@@ -238,6 +242,11 @@ public class EstadoOC extends javax.swing.JInternalFrame {
         AceptarOC.setBackground(new java.awt.Color(102, 255, 102));
         AceptarOC.setForeground(new java.awt.Color(0, 0, 0));
         AceptarOC.setText("Orden Preparada");
+        AceptarOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarOCActionPerformed(evt);
+            }
+        });
         PTotales1.add(AceptarOC);
 
         getContentPane().add(PTotales1);
@@ -286,8 +295,21 @@ public class EstadoOC extends javax.swing.JInternalFrame {
                 DTM2.addRow(new Object[]{dlo.getProducto().getNombre(), dlo.getProducto().getDataEspecificacion().getPrecio(), dlo.getCantidad(), dlo.getTotalLinea()});
             }
             TxtTotalVal.setText(Double.valueOf(doc.getPrecio_total()).toString());
+            
+            TableColumn column;
+            for (int i = 0; i < 4; i++) {
+    column = OrdenInfoTable.getColumnModel().getColumn(i);
+    if (i == 0) {
+        column.setPreferredWidth(130); //third column is bigger
+    } else {
+        column.setPreferredWidth(40);
+    }
+}
+            
+            CancelarOC.setEnabled(true);
+            AceptarOC.setEnabled(true);
         } catch (IndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Orden", "Warning", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_OrdenesTableMouseClicked
@@ -300,6 +322,13 @@ public class EstadoOC extends javax.swing.JInternalFrame {
         Actualizar();
     }//GEN-LAST:event_CancelarOCActionPerformed
 
+    private void AceptarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarOCActionPerformed
+        String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
+        Factory.getInstance().getOrdenCompraController().ordenPreparada(Integer.parseInt(nroCompRow));
+        MyIcon icon = new MyIcon();
+        JOptionPane.showMessageDialog(this, "Orden Preparada correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
+        Actualizar();
+    }//GEN-LAST:event_AceptarOCActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AceptarOC;
     private javax.swing.JButton Actualizar;

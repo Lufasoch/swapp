@@ -4,6 +4,7 @@
  */
 package Store;
 
+import direct.market.datatype.DataEstadoOC;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
 import direct.market.factory.Factory;
@@ -43,14 +44,14 @@ public class InfoOC extends javax.swing.JInternalFrame {
         List<DataOC> ordenesCompraList= Factory.getInstance().getOrdenCompraController().getOrdenesCompra();
         DefaultTableModel DTM = new DefaultTableModel()
             {
-                boolean[] canEdit = new boolean[]{false, false};
+                boolean[] canEdit = new boolean[]{false};
 
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return canEdit[columnIndex];
                 }
             };
-            String header[] = new String[] { "Nro Orden", "Fecha" };
+            String header[] = new String[] { "Nro Orden"};
             DTM.setColumnIdentifiers(header);
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -58,7 +59,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
                 //ARRIBA//CAMBIAR MODELO DE LA TABLA
             int c = ordenesCompraList.size();
         for (int i = 0; i < c; i++) {
-            String datos[] = {Integer.valueOf(ordenesCompraList.get(i).getNumero()).toString(), sdf.format(ordenesCompraList.get(i).getFecha())};
+            String datos[] = {Integer.valueOf(ordenesCompraList.get(i).getNumero()).toString()};
             DTM.addRow(datos);
         }
     }    
@@ -79,6 +80,8 @@ public class InfoOC extends javax.swing.JInternalFrame {
         TxtTotalVal = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         Actualizar = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        EstadosTable = new javax.swing.JTable();
         BackgroundLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -87,22 +90,22 @@ public class InfoOC extends javax.swing.JInternalFrame {
 
         TPanel.setBackground(new java.awt.Color(214, 228, 237));
         TPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        TPanel.setLayout(new java.awt.GridLayout());
+        TPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         OrdenesTable.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {null}
             },
             new String [] {
-                "Nro Orden", "Fecha"
+                "Nro Orden"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -125,7 +128,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
         TPanel.add(jScrollPane1);
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(40, 20, 190, 400);
+        TPanel.setBounds(10, 20, 110, 400);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
@@ -167,9 +170,13 @@ public class InfoOC extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(OrdenInfoTable);
+        OrdenInfoTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        OrdenInfoTable.getColumnModel().getColumn(1).setHeaderValue("Precio unitario");
+        OrdenInfoTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+        OrdenInfoTable.getColumnModel().getColumn(3).setHeaderValue("Sub-Total");
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(240, 20, 520, 400);
+        jScrollPane2.setBounds(130, 20, 400, 400);
 
         PTotales.setBackground(new java.awt.Color(214, 228, 237));
         PTotales.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
@@ -209,7 +216,39 @@ public class InfoOC extends javax.swing.JInternalFrame {
         jPanel1.add(Actualizar);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 430, 190, 50);
+        jPanel1.setBounds(10, 430, 170, 50);
+
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
+
+        EstadosTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Estado", "Fecha"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(EstadosTable);
+        EstadosTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        EstadosTable.getColumnModel().getColumn(1).setPreferredWidth(80);
+
+        getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(540, 20, 240, 400);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -235,7 +274,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
         {
             String nroCompRow = OrdenesTable.getValueAt(OrdenesTable.getSelectedRow(), 0).toString();
             DataOC doc=Factory.getInstance().getOrdenCompraController().getDataOC(nroCompRow);
-
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             
             DefaultTableModel DTM2 = new DefaultTableModel()
                 {
@@ -250,12 +289,33 @@ public class InfoOC extends javax.swing.JInternalFrame {
                 DTM2.setColumnIdentifiers(header);
                 OrdenInfoTable.setModel(DTM2);
                 OrdenInfoTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                OrdenInfoTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+                OrdenInfoTable.getColumnModel().getColumn(0).setPreferredWidth(180);
 
                 for(DataLineaOC dlo: doc.getLineas()){
                        DTM2.addRow(new Object[] { dlo.getProducto().getNombre(), dlo.getProducto().getDataEspecificacion().getPrecio(), dlo.getCantidad(), dlo.getTotalLinea() }); 
                 }
                 TxtTotalVal.setText(Double.valueOf(doc.getPrecio_total()).toString());
+                
+                DefaultTableModel DTM3 = new DefaultTableModel()
+                {
+                    boolean[] canEdit = new boolean[]{ false, false };
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }
+                };
+                String header3[] = new String[] { "Estado", "Fecha" };
+                DTM3.setColumnIdentifiers(header3);
+                EstadosTable.setModel(DTM3);
+                EstadosTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                EstadosTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+                EstadosTable.getColumnModel().getColumn(1).setPreferredWidth(70);
+                
+                List<DataEstadoOC> deol = doc.getEstados();
+                for(DataEstadoOC deo : deol){
+                    DTM3.addRow(new Object[] { deo.getEstado(), sdf.format(deo.getFecha())});
+                }
             } 
         catch (IndexOutOfBoundsException ex)
         {
@@ -268,6 +328,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
     private javax.swing.JButton Actualizar;
     private javax.swing.JLabel BackgroundLabel;
     private javax.swing.JButton Cerrar;
+    private javax.swing.JTable EstadosTable;
     private javax.swing.JTable OrdenInfoTable;
     private javax.swing.JTable OrdenesTable;
     private javax.swing.JPanel PTotales;
@@ -278,6 +339,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 private static InfoOC IOCInstancia;
 }

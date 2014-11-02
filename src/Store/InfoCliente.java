@@ -5,6 +5,7 @@
 package Store;
 
 //import direct.market.controller.IUsuarioController;
+import direct.market.datatype.DataEstadoOC;
 import direct.market.datatype.DataLineaOC;
 import direct.market.datatype.DataOC;
 import direct.market.datatype.DataUsuario;
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -62,12 +64,12 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         PerfilLabel.setIcon(RZIma(DirI, 150, 150));
         //// Se buscan los clientes
         //ABAJO//DATOS DEVUELTOS
-        
-        DefaultTableModel vacio = new DefaultTableModel(0,0);
-        String header2[] = new String[]{"No. Orden"};
-            vacio.setColumnIdentifiers(header2);
+
+        DefaultTableModel vacio = new DefaultTableModel(0, 0);
+        String header2[] = new String[]{"No. Orden", "Estado", "Fecha"};
+        vacio.setColumnIdentifiers(header2);
         OrdenesTable.setModel(vacio);
-        
+
         String data[][] = {};
         String header[] = new String[]{"Nickname", "eMail"};
         DefaultTableModel DTM2 = new DefaultTableModel(data, header) {
@@ -141,10 +143,9 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         TTipoUC = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         ActualizarButton = new javax.swing.JButton();
+        Cerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         OrdenesTable = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        Cerrar = new javax.swing.JButton();
         BackgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -283,11 +284,11 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         );
         TPanelLayout.setVerticalGroup(
             TPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+            .addComponent(jScrollVerClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
         );
 
         getContentPane().add(TPanel);
-        TPanel.setBounds(40, 50, 340, 410);
+        TPanel.setBounds(10, 190, 340, 360);
 
         PPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         PPanel.setLayout(null);
@@ -302,7 +303,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         PerfilLabel.setBounds(10, 10, 150, 150);
 
         getContentPane().add(PPanel);
-        PPanel.setBounds(580, 50, 170, 170);
+        PPanel.setBounds(100, 10, 170, 170);
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         InfoPanel.setLayout(new java.awt.GridLayout(6, 2));
@@ -398,13 +399,13 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         InfoPanel.add(TTipoUC);
 
         getContentPane().add(InfoPanel);
-        InfoPanel.setBounds(390, 240, 360, 220);
+        InfoPanel.setBounds(360, 10, 420, 220);
 
         jPanel1.setBackground(new java.awt.Color(214, 228, 237));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(1, 3, 8, 0));
 
-        ActualizarButton.setText("Actualizar");
+        ActualizarButton.setText("Actualizar Clientes");
         ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ActualizarButtonActionPerformed(evt);
@@ -412,24 +413,32 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         });
         jPanel1.add(ActualizarButton);
 
+        Cerrar.setText("Cerrar");
+        Cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Cerrar);
+
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(40, 470, 340, 50);
+        jPanel1.setBounds(360, 500, 420, 50);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
 
         OrdenesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null}
+                {null, null, null}
             },
             new String [] {
-                "Nro Orden"
+                "Nro Orden", "Estado", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -446,23 +455,12 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(OrdenesTable);
+        OrdenesTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        OrdenesTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        OrdenesTable.getColumnModel().getColumn(2).setPreferredWidth(50);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(402, 52, 160, 170);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(8, 8, 8, 8, new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/backgroundP2.jpg")))); // NOI18N
-        jPanel2.setLayout(new java.awt.GridLayout());
-
-        Cerrar.setText("Cerrar");
-        Cerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CerrarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Cerrar);
-
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(390, 470, 360, 50);
+        jScrollPane1.setBounds(360, 240, 420, 250);
 
         BackgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Store/Recursos/background.jpg"))); // NOI18N
         getContentPane().add(BackgroundLabel);
@@ -471,26 +469,22 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void desabilitar()
-    {
+    private void desabilitar() {
         TPanel.setVisible(false);
         jScrollPane1.setVisible(false);
         PPanel.setVisible(false);
         jPanel1.setVisible(false);
-        jPanel2.setVisible(false);
         InfoPanel.setVisible(false);
     }
-    
-    private void habilitar()
-    {
+
+    private void habilitar() {
         TPanel.setVisible(true);
         jScrollPane1.setVisible(true);
         PPanel.setVisible(true);
         jPanel1.setVisible(true);
-        jPanel2.setVisible(true);
         InfoPanel.setVisible(true);
     }
-    
+
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
         Actualizar();
         ICInstancia = null;
@@ -514,7 +508,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
 
     private void ClientesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientesTableMouseClicked
 
-         try {
+        try {
             String nicknameP = ClientesTable.getValueAt(ClientesTable.getSelectedRow(), 0).toString();
             DataUsuario du = Factory.getInstance().getUsuarioController().getDataCliente(nicknameP);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -538,16 +532,29 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
                     return canEdit[columnIndex];
                 }
             };
-            String header[] = new String[]{"No. Orden"};
+            String header[] = new String[]{"No. Orden", "Estado", "Fecha"};
             DTM.setColumnIdentifiers(header);
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             //ARRIBA//CAMBIAR MODELO DE LA TABLA
             if (du != null) {
                 int lc = du.getListaCompras().size();
+                int leS;
                 for (int i = 0; i < lc; i++) {
-                    Integer datos[] = {du.getListaCompras().get(i).getNumero()};
-                    DTM.addRow(datos);
+                    List<DataEstadoOC> dae = du.getListaCompras().get(i).getEstados();
+                    leS = dae.size() - 1;
+//                    Integer datos[] = {du.getListaCompras().get(i).getNumero()};
+//                    DTM.addRow(datos, dae.get(leS).getEstado());
+                    DTM.addRow(new Object[]{du.getListaCompras().get(i).getNumero(), dae.get(leS).getEstado(), sdf.format(dae.get(leS).getFecha())});
+                }
+                TableColumn column;
+                for (int i = 0; i < 3; i++) {
+                    column = OrdenesTable.getColumnModel().getColumn(i);
+                    if (i == 1) {
+                        column.setPreferredWidth(100); 
+                    } else {
+                        column.setPreferredWidth(50);
+                    }
                 }
             }
 
@@ -556,12 +563,12 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         } catch (UsuarioException ex) {
             Logger.getLogger(InfoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_ClientesTableMouseClicked
 
     private void OrdenesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrdenesTableMouseClicked
 
-         try {
+        try {
             desabilitar();
             VerOCF.setVisible(true);
 
@@ -590,9 +597,8 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
         } catch (IndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de compra", "Warning", JOptionPane.WARNING_MESSAGE);
         }
-        
-    }//GEN-LAST:event_OrdenesTableMouseClicked
 
+    }//GEN-LAST:event_OrdenesTableMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JLabel BackgroundLabel;
@@ -623,7 +629,6 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
     private javax.swing.JInternalFrame VerOCF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
