@@ -42,6 +42,7 @@ public class Menu extends javax.swing.JFrame {
         EditarMenu = new javax.swing.JMenu();
         menuModificarProducto = new javax.swing.JMenuItem();
         menuCancelarOC = new javax.swing.JMenuItem();
+        aceptaRechazarOC = new javax.swing.JMenuItem();
         ConsultarMenu = new javax.swing.JMenu();
         VerInfoCliente = new javax.swing.JMenuItem();
         VerInfoProveedor = new javax.swing.JMenuItem();
@@ -108,13 +109,21 @@ public class Menu extends javax.swing.JFrame {
         });
         EditarMenu.add(menuModificarProducto);
 
-        menuCancelarOC.setText("Cancelar Orden de Compra");
+        menuCancelarOC.setText("Eliminar Orden de Compra");
         menuCancelarOC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuCancelarOCActionPerformed(evt);
             }
         });
         EditarMenu.add(menuCancelarOC);
+
+        aceptaRechazarOC.setText("Aceptar/Rechazar Orden de compra");
+        aceptaRechazarOC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptaRechazarOCActionPerformed(evt);
+            }
+        });
+        EditarMenu.add(aceptaRechazarOC);
 
         jMenuBar1.add(EditarMenu);
 
@@ -366,6 +375,24 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ImportarDatosMenuItemActionPerformed
 
+    private void aceptaRechazarOCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptaRechazarOCActionPerformed
+        EstadoOC AccCan = EstadoOC.getInstancia();
+        if (AccCan.isVisible()) {
+            try {
+                AccCan.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                this.Escritorio.add(AccCan);
+                AccCan.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_aceptaRechazarOCActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,6 +442,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem VerInfoCliente;
     private javax.swing.JMenuItem VerInfoProducto;
     private javax.swing.JMenuItem VerInfoProveedor;
+    private javax.swing.JMenuItem aceptaRechazarOC;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuCancelarOC;
