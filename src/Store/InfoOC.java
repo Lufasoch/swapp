@@ -55,7 +55,7 @@ public class InfoOC extends javax.swing.JInternalFrame {
             DTM.setColumnIdentifiers(header);
             OrdenesTable.setModel(DTM);
             OrdenesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            
                 //ARRIBA//CAMBIAR MODELO DE LA TABLA
             int c = ordenesCompraList.size();
         for (int i = 0; i < c; i++) {
@@ -314,7 +314,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 
                 List<DataEstadoOC> deol = doc.getEstados();
                 for(DataEstadoOC deo : deol){
-                    DTM3.addRow(new Object[] { deo.getEstado(), sdf.format(deo.getFecha())});
+                    DTM3.addRow(new Object[] { deo.getEstado(), sdf.format(deo.getFecha().getTime())});
                 }
             } 
         catch (IndexOutOfBoundsException ex)

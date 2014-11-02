@@ -545,7 +545,7 @@ public final class InfoCliente extends javax.swing.JInternalFrame {
                     leS = dae.size() - 1;
 //                    Integer datos[] = {du.getListaCompras().get(i).getNumero()};
 //                    DTM.addRow(datos, dae.get(leS).getEstado());
-                    DTM.addRow(new Object[]{du.getListaCompras().get(i).getNumero(), dae.get(leS).getEstado(), sdf.format(dae.get(leS).getFecha())});
+                    DTM.addRow(new Object[]{du.getListaCompras().get(i).getNumero(), dae.get(leS).getEstado(), sdf.format(dae.get(leS).getFecha().getTime())});
                 }
                 TableColumn column;
                 for (int i = 0; i < 3; i++) {
