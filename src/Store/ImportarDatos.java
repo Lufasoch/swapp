@@ -107,17 +107,17 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             //verificar el formato de las fechas
             //verificar el formato de las fechas
             String path = new File(".").getCanonicalPath();
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com", false);
-            Factory.getInstance().getUsuarioController().altaUsuario("Eddy","edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com", false);
-            Factory.getInstance().getUsuarioController().altaUsuario("CraigX","craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com", false);
-            Factory.getInstance().getUsuarioController().altaUsuario("Johnny","john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com", false);
-            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter","peter42", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com", false);
-            Factory.getInstance().getUsuarioController().altaUsuario("Dan","danr", "Daniel","Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
-            Factory.getInstance().getUsuarioController().altaUsuario("Phil","philip61", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null, true);
-            Factory.getInstance().getUsuarioController().altaUsuario("BruceS","bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
-            Factory.getInstance().getUsuarioController().altaUsuario("JeffW","jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
-            Factory.getInstance().getUsuarioController().altaUsuario("Ricky","rickyr", "Ricky", "Ricón", new Date(336096001000L), "ricky.r@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
- } catch (UsuarioException ex) {
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1", "tim123", "Tim", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path + "/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Eddy", "edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path + "/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("CraigX", "craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path + "/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Johnny", "john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path + "/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("OpenPeter", "peter42", "Peter", "Oppenhemier", new Date(-202262400000L), "peter.open@htc.com", util.imgToBytes(new File(path + "/src/fotos/default.jpg")), "PROVEEDOR", "HTC", "www.htc.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Dan", "danr", "Daniel", "Riccio", new Date(-204940800000L), "dan.riccio@gmail.com", util.imgToBytes(new File(path + "/src/fotos/default.jpg")), "CLIENTE", null, null, false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Phil", "philip61", "Philip", "Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path + "/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null, false);
+            Factory.getInstance().getUsuarioController().altaUsuario("BruceS", "bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path + "/src/fotos/default.jpg")), "CLIENTE", null, null, false);
+            Factory.getInstance().getUsuarioController().altaUsuario("JeffW", "jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path + "/src/fotos/default.jpg")), "CLIENTE", null, null, false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Ricky", "rickyr", "Ricky", "Ricón", new Date(336096001000L), "ricky.r@gmail.com", util.imgToBytes(new File(path + "/src/fotos/default.jpg")), "CLIENTE", null, null, false);
+        } catch (UsuarioException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -181,7 +181,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
 //Producto 1 Especificacion Imagenes
             String path = new File(".").getCanonicalPath();
             List<byte[]> imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM1-topic_iphone_5.png")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM1-topic_iphone_5.png")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -211,7 +211,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("99"));
 //Producto 2 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM2-color_black.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM2-color_black.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -239,8 +239,8 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setPrecio(Double.parseDouble("299"));
 //Producto 3 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM3-n4-buy-1200.jpg")));
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM4-N4_Google_Maps-1200.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM3-n4-buy-1200.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM4-N4_Google_Maps-1200.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -267,10 +267,10 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             dataEsp.setEspecificacion("Dimensiones: 136.6 x 70.6 x 8.6 mm\nPeso: 133 g\nPantalla: 4.8\"\nVersión de Android: 4.0.4");
             dataEsp.setPrecio(Double.parseDouble("415"));
 //Producto 4 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
-            
+
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
 
@@ -296,7 +296,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("839.99"));
 //Producto 5 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM5-samsung-galaxy-s4.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM5-samsung-galaxy-s4.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -324,7 +324,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("237"));
 //Producto 6 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM6-samsung-galaxy-ace-s5830.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM6-samsung-galaxy-ace-s5830.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -349,8 +349,8 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Dimensiones: 12.5 cm x 6.7 cm x 2.0 cm\nPeso: 44 g");
             dataEsp.setPrecio(Double.parseDouble("3.50"));
 //Producto 7 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -375,8 +375,8 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Dimensiones: 12.4 cm x 7.0 cm x 1.3 cm\nPeso: 26 g");
             dataEsp.setPrecio(Double.parseDouble("3.40"));
 //Producto 8 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -404,7 +404,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("499"));
 //Producto 9 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM7-2012-ipadrd-step1-black.png")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM7-2012-ipadrd-step1-black.png")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -432,7 +432,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("329"));
 //Producto 10 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM8-specs_color.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM8-specs_color.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -457,8 +457,8 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Dimensiones: 7.5 cm x 4.2 cm x 1.8 cm\nPeso: 111 g");
             dataEsp.setPrecio(Double.parseDouble("10.99"));
 //Producto 11 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -483,8 +483,8 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Garantía: 3 meses\nDimensiones: 5.91 in x 4.33 in x 1.77 in\nPeso: 7.83 oz");
             dataEsp.setPrecio(Double.parseDouble("27.27"));
 //Producto 12 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -510,7 +510,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("7.99"));
 //Producto 13 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -535,8 +535,8 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Dimensiones: 16.0 cm x 9.5 cm x 5.0 cm\nPeso: 184 g");
             dataEsp.setPrecio(Double.parseDouble("30.80"));
 //Producto 14 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -566,7 +566,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("199"));
 //Producto 15 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -596,7 +596,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("99"));
 //Producto 16 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -624,7 +624,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("499"));
 //Producto 17 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -652,7 +652,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setPrecio(Double.parseDouble("399"));
 //Producto 18 Especificacion Imagenes
             imagenes = new ArrayList<byte[]>();
-            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM7-2012-ipadrd-step1-black.png")));
+            imagenes.add(util.imgToBytes(new File(path + "/src/fotos/IM7-2012-ipadrd-step1-black.png")));
             dataEsp.setImagenes(imagenes);
 
             dp.setDataEspecificacion(dataEsp);
@@ -680,7 +680,7 @@ imagenes = new ArrayList<byte[]>();
             DataUsuario dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Dan");
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
-            
+
             Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1376352001000L));
             Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1376956801000L));
 
@@ -905,90 +905,100 @@ imagenes = new ArrayList<byte[]>();
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 
 //Comentario1 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        IProductoController cp = Factory.getInstance().getProductoController();
-        DataComentario comentario1 = new DataComentario("Dan", 0, "El mejor iPhone hasta el momento. Es la mejor compra que he hecho en años. Le pasa el trapo a todos los teléfonos Android.", new Date(1379613600000L));
-        cp.agregarComentario("1", comentario1);
+            IProductoController cp = Factory.getInstance().getProductoController();
+            DataComentario comentario1 = new DataComentario("Dan", 0, "El mejor iPhone hasta el momento. Es la mejor compra que he hecho en años. Le pasa el trapo a todos los teléfonos Android.", new Date(1379613600000L));
+            cp.agregarComentario("1", comentario1);
 
 //Comentario2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario2 = new DataComentario("Phil", 1, "Me parece que tu comentario es un poco desubicado. Hay muy buenos teléfonos que creo que mejoran las prestaciones de este, como el Samsung Galaxy S4.", new Date(1379613600000L));
-        cp.agregarComentario("1", comentario2);
+            DataComentario comentario2 = new DataComentario("Phil", 1, "Me parece que tu comentario es un poco desubicado. Hay muy buenos teléfonos que creo que mejoran las prestaciones de este, como el Samsung Galaxy S4.", new Date(1379613600000L));
+            cp.agregarComentario("1", comentario2);
 
 //Comentario3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario3 = new DataComentario("Dan", 2, "No creo, supe tener un Galaxy S2 y lo tenía que reiniciar todos los días. Nunca más vuelvo a Android.", new Date(1379700000000L));
-        cp.agregarComentario("1", comentario3);
+            DataComentario comentario3 = new DataComentario("Dan", 2, "No creo, supe tener un Galaxy S2 y lo tenía que reiniciar todos los días. Nunca más vuelvo a Android.", new Date(1379700000000L));
+            cp.agregarComentario("1", comentario3);
 
 //Comentario4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario4 = new DataComentario("Phil", 3, "Se ha mejorado mucho desde entonces, pero me parece que estás muy cerrado con tu opinión. Saludos.", new Date(1379700000000L));
-        cp.agregarComentario("1", comentario4);
+            DataComentario comentario4 = new DataComentario("Phil", 3, "Se ha mejorado mucho desde entonces, pero me parece que estás muy cerrado con tu opinión. Saludos.", new Date(1379700000000L));
+            cp.agregarComentario("1", comentario4);
 
 //Comentario5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario5 = new DataComentario("BruceS", 0, "¡Excelente control! Puedo disfrutar de mi GTA V sin la molestia de cables.", new Date(1380132000000L));
-        cp.agregarComentario("12", comentario5);
+            DataComentario comentario5 = new DataComentario("BruceS", 0, "¡Excelente control! Puedo disfrutar de mi GTA V sin la molestia de cables.", new Date(1380132000000L));
+            cp.agregarComentario("12", comentario5);
 
 //Comentario6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario6 = new DataComentario("BruceS", 0, "Retracto lo que escribí antes....se me rompió a los 3 dias. Me han estafado.", new Date(1380391200000L));
-        cp.agregarComentario("12", comentario6);
+            DataComentario comentario6 = new DataComentario("BruceS", 0, "Retracto lo que escribí antes....se me rompió a los 3 dias. Me han estafado.", new Date(1380391200000L));
+            cp.agregarComentario("12", comentario6);
 
 //Comentario7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1380132000000L));
-        cp.agregarComentario("7", comentario7);
+            DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1380132000000L));
+            cp.agregarComentario("7", comentario7);
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //Reclamos -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 
 //Reclamo1 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo1 = new DataReclamo(new Date(1379548801000L), "Phil", "Me demoró más de un mes en llegar el teléfono, estaría bueno que mejoraran los tiempos de envío.");
-        cp.ingresarReclamo("1", reclamo1);
-            
+            DataReclamo reclamo1 = new DataReclamo(new Date(1379548801000L), "Phil", "Me demoró más de un mes en llegar el teléfono, estaría bueno que mejoraran los tiempos de envío.");
+            cp.ingresarReclamo("1", reclamo1);
+
 //Reclamo2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo2 = new DataReclamo(new Date(1380326401000L), "BruceS", "Lo puse en los comentarios y quiero escribirlo acá. Su producto me vino defectuoso, espero un reembolso de dinero.");
-        cp.ingresarReclamo("12", reclamo2);
-            
+            DataReclamo reclamo2 = new DataReclamo(new Date(1380326401000L), "BruceS", "Lo puse en los comentarios y quiero escribirlo acá. Su producto me vino defectuoso, espero un reembolso de dinero.");
+            cp.ingresarReclamo("12", reclamo2);
+
 //Reclamo3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo3 = new DataReclamo(new Date(1381795201000L), "BruceS", "No he tenido respuesta de parte suya. Estaría bueno que mejoraran su servicio de atención al cliente, porque me parece que el actual es pésimo.");
-        cp.ingresarReclamo("12", reclamo3);
-            
+            DataReclamo reclamo3 = new DataReclamo(new Date(1381795201000L), "BruceS", "No he tenido respuesta de parte suya. Estaría bueno que mejoraran su servicio de atención al cliente, porque me parece que el actual es pésimo.");
+            cp.ingresarReclamo("12", reclamo3);
+
 //Reclamo4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo4 = new DataReclamo(new Date(1383264002000L), "Ricky", "Me han enviado un iPhone 4 en lugar del iPhone 5 que encargué…");
-        cp.ingresarReclamo("1", reclamo4);
-            
+            DataReclamo reclamo4 = new DataReclamo(new Date(1383264002000L), "Ricky", "Me han enviado un iPhone 4 en lugar del iPhone 5 que encargué…");
+            cp.ingresarReclamo("1", reclamo4);
+
 //Reclamo5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo5 = new DataReclamo(new Date(1383264002000L), "Ricky", "Vino con algunas rayitas. Estaría bueno que controlaran que estas cosas no pasaran en el traslado del producto.");
-        cp.ingresarReclamo("9", reclamo5);
-            
+            DataReclamo reclamo5 = new DataReclamo(new Date(1383264002000L), "Ricky", "Vino con algunas rayitas. Estaría bueno que controlaran que estas cosas no pasaran en el traslado del producto.");
+            cp.ingresarReclamo("9", reclamo5);
+
 //Reclamo6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo6 = new DataReclamo(new Date(1383264002000L), "Ricky", "Este dispositivo vino fallado de fábrica, me gustaría que me lo reembolsaran.");
-        cp.ingresarReclamo("10", reclamo6);
-            
+            DataReclamo reclamo6 = new DataReclamo(new Date(1383264002000L), "Ricky", "Este dispositivo vino fallado de fábrica, me gustaría que me lo reembolsaran.");
+            cp.ingresarReclamo("10", reclamo6);
+
 //Reclamo7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-        DataReclamo reclamo7 = new DataReclamo(new Date(1383264002000L), "Ricky", "No vinieron los auriculares incluidos en la caja.");
-        cp.ingresarReclamo("16", reclamo7);
-            
-        
+            DataReclamo reclamo7 = new DataReclamo(new Date(1383264002000L), "Ricky", "No vinieron los auriculares incluidos en la caja.");
+            cp.ingresarReclamo("16", reclamo7);
+
+
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //Puntajes -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 
-        cp.agregarPuntaje("1", "Dan", 5);
-        cp.agregarPuntaje("10", "Dan", 5);
-        cp.agregarPuntaje("9", "Dan", 5);
-        cp.agregarPuntaje("1", "Phil", 3);
-        cp.agregarPuntaje("1", "Ricky", 3);
-        cp.agregarPuntaje("10", "Ricky", 4);
-        cp.agregarPuntaje("9", "Ricky", 3);
-        
+            cp.agregarPuntaje("1", "Dan", 5);
+            cp.agregarPuntaje("10", "Dan", 5);
+            cp.agregarPuntaje("9", "Dan", 5);
+            cp.agregarPuntaje("1", "Phil", 3);
+            cp.agregarPuntaje("1", "Ricky", 3);
+            cp.agregarPuntaje("10", "Ricky", 4);
+            cp.agregarPuntaje("9", "Ricky", 3);
+
+
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+//Habilitar Notificaciones en usuarios-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+
+            Factory.getInstance().getUsuarioController().cambiarMailing("Dan", true);
+            Factory.getInstance().getUsuarioController().cambiarMailing("Phil", true);
+            Factory.getInstance().getUsuarioController().cambiarMailing("BruceS", true);
+            Factory.getInstance().getUsuarioController().cambiarMailing("JeffW", true);
+            Factory.getInstance().getUsuarioController().cambiarMailing("Ricky", true);
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //FIN IMPORTACION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
-        
-        
-            
+
+
+
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Importacion terminada correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
             //lblImporter.setText("Importacion terminada");
-        
+
         } catch (ProductoException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CategoryException ex) {
