@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import direct.market.controller.IProductoController;
 import direct.market.datatype.DataComentario;
+import direct.market.datatype.DataReclamo;
 import java.io.File;
 import java.io.IOException;
 
@@ -106,7 +107,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             //verificar el formato de las fechas
             //verificar el formato de las fechas
             String path = new File(".").getCanonicalPath();
-            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim ", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com", false);
+            Factory.getInstance().getUsuarioController().altaUsuario("Tim1","tim123", "Tim", "Cook", new Date(-289267200000L), "tim.cook@apple.com", util.imgToBytes(new File(path+"/src/fotos/cook_thumb20110204.jpg")), "PROVEEDOR", "Apple", "www.apple.com", false);
             Factory.getInstance().getUsuarioController().altaUsuario("Eddy","edd", "Eduardo", "Cue", new Date(136684800000L), "eddy.cue@samsung.com", util.imgToBytes(new File(path+"/src/fotos/cue_thumb20110901.jpg")), "PROVEEDOR", "Samsung", "www.samsung.com", false);
             Factory.getInstance().getUsuarioController().altaUsuario("CraigX","craig@", "Craig", "Federighi", new Date(10627200000L), "craig.feder@sony.com", util.imgToBytes(new File(path+"/src/fotos/federighi_thumb20120727.jpg")), "PROVEEDOR", "Sony", "us.playstation.com", false);
             Factory.getInstance().getUsuarioController().altaUsuario("Johnny","john", "Jonathan", "Ive", new Date(-91065600000L), "johnny.ive@outlook.com", util.imgToBytes(new File(path+"/src/fotos/ive_thumb20110204.jpg")), "PROVEEDOR", "Microsoft", "www.xbox.com", false);
@@ -115,6 +116,7 @@ public class ImportarDatos extends javax.swing.JInternalFrame {
             Factory.getInstance().getUsuarioController().altaUsuario("Phil","philip61", "Philip","Schiller", new Date(-259891200000L), "phil.schiller@gmail.com", util.imgToBytes(new File(path+"/src/fotos/schiller_thumb20110204.jpg")), "CLIENTE", null, null, true);
             Factory.getInstance().getUsuarioController().altaUsuario("BruceS","bruces", "Bruce", "Sewell", new Date(-318124800000L), "bruce.sewell@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
             Factory.getInstance().getUsuarioController().altaUsuario("JeffW","jeffw", "Jeff", "Wiliams", new Date(-160790400000L), "jeff.williams@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
+            Factory.getInstance().getUsuarioController().altaUsuario("Ricky","rickyr", "Ricky", "Ricón", new Date(336096001000L), "ricky.r@gmail.com", util.imgToBytes(new File(path+"/src/fotos/default.jpg")), "CLIENTE", null, null, true);
  } catch (UsuarioException ex) {
             Logger.getLogger(ImportarDatos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -507,7 +509,7 @@ imagenes = new ArrayList<byte[]>();
             dataEsp.setEspecificacion("Dimensiones: 0 in x 0 in x 0 in\nPeso: 7.83 oz");
             dataEsp.setPrecio(Double.parseDouble("7.99"));
 //Producto 13 Especificacion Imagenes
-imagenes = new ArrayList<byte[]>();
+            imagenes = new ArrayList<byte[]>();
             imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
             dataEsp.setImagenes(imagenes);
 
@@ -540,6 +542,122 @@ imagenes = new ArrayList<byte[]>();
             dp.setDataEspecificacion(dataEsp);
             Factory.getInstance().getProductoController().altaProducto(dp);
 
+            //Producto 15 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            dp = new DataProducto();
+            dp.setNombre("iPhone 5S");
+            dp.setReferencia("15");
+//Producto 15 Categorias
+            lDC = new ArrayList<DataCategoria>();
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iPhone");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iOS");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("Apple");
+            lDC.add(dataCategoria);
+            dp.setDataCategorias(lDC);
+//Producto 15 Proveedor
+            dataProv = new DataUsuario();
+            dataProv.setNickname("Tim1");
+            dp.setDataProveedor(dataProv);
+//Producto 15 Especificacion
+            dataEsp = new DataEspecificacionProducto();
+            dataEsp.setDescripcion("La evolución del iPhone 5, con Touch ID y A7");
+            dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 112 g\nPantalla: 4\"\nVersiones de Wifi: a/b/g/n");
+            dataEsp.setPrecio(Double.parseDouble("199"));
+//Producto 15 Especificacion Imagenes
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
+
+            dp.setDataEspecificacion(dataEsp);
+            Factory.getInstance().getProductoController().altaProducto(dp);
+
+            //Producto 16 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            dp = new DataProducto();
+            dp.setNombre("iPhone 5C");
+            dp.setReferencia("16");
+//Producto 16 Categorias
+            lDC = new ArrayList<DataCategoria>();
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iPhone");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iOS");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("Apple");
+            lDC.add(dataCategoria);
+            dp.setDataCategorias(lDC);
+//Producto 16 Proveedor
+            dataProv = new DataUsuario();
+            dataProv.setNickname("Tim1");
+            dp.setDataProveedor(dataProv);
+//Producto 16 Especificacion
+            dataEsp = new DataEspecificacionProducto();
+            dataEsp.setDescripcion("Dale color a tu vida con esta nueva gama de iPhone");
+            dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 132 g\nPantalla: 4\"\nVersiones de Wifi: a/b/g/n");
+            dataEsp.setPrecio(Double.parseDouble("99"));
+//Producto 16 Especificacion Imagenes
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
+
+            dp.setDataEspecificacion(dataEsp);
+            Factory.getInstance().getProductoController().altaProducto(dp);
+
+//Producto 17 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            dp = new DataProducto();
+            dp.setNombre("iPad Air");
+            dp.setReferencia("17");
+//Producto 17 Categorias
+            lDC = new ArrayList<DataCategoria>();
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("Apple");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iOS");
+            lDC.add(dataCategoria);
+            dp.setDataCategorias(lDC);
+//Producto 17 Proveedor
+            dataProv = new DataUsuario();
+            dataProv.setNickname("Tim1");
+            dp.setDataProveedor(dataProv);
+//Producto 17 Especificacion
+            dataEsp = new DataEspecificacionProducto();
+            dataEsp.setDescripcion("Más ligero, más delgado y con mejor procesador que el anterior iPad");
+            dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 469 g\nPantalla: 9.7\"\nVersiones de Wifi: a/b/g/n con MIMO");
+            dataEsp.setPrecio(Double.parseDouble("499"));
+//Producto 17 Especificacion Imagenes
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/defaultP.jpg")));
+            dataEsp.setImagenes(imagenes);
+
+            dp.setDataEspecificacion(dataEsp);
+            Factory.getInstance().getProductoController().altaProducto(dp);
+
+//Producto 18 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            dp = new DataProducto();
+            dp.setNombre("iPad Mini Retina Display");
+            dp.setReferencia("18");
+//Producto 18 Categorias
+            lDC = new ArrayList<DataCategoria>();
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("Apple");
+            lDC.add(dataCategoria);
+            dataCategoria = Factory.getInstance().getCategoriaController().getCategoriaPorNombre("iOS");
+            lDC.add(dataCategoria);
+            dp.setDataCategorias(lDC);
+//Producto 18 Proveedor
+            dataProv = new DataUsuario();
+            dataProv.setNickname("Tim1");
+            dp.setDataProveedor(dataProv);
+//Producto 18 Especificacion
+            dataEsp = new DataEspecificacionProducto();
+            dataEsp.setDescripcion("Igual que el modelo anterior, sólo que con pantalla Retina");
+            dataEsp.setEspecificacion("Capacidad: 16 GB\nPeso: 331 g\nPantalla: 7.9\"\nVersiones de Wifi: a/b/g/n con MIMO");
+            dataEsp.setPrecio(Double.parseDouble("399"));
+//Producto 18 Especificacion Imagenes
+            imagenes = new ArrayList<byte[]>();
+            imagenes.add(util.imgToBytes(new File(path+"/src/fotos/IM7-2012-ipadrd-step1-black.png")));
+            dataEsp.setImagenes(imagenes);
+
+            dp.setDataEspecificacion(dataEsp);
+            Factory.getInstance().getProductoController().altaProducto(dp);
+
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //Alta OC =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -562,9 +680,12 @@ imagenes = new ArrayList<byte[]>();
             DataUsuario dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Dan");
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+            
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1376352001000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1376956801000L));
 
 //OC 2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-            doc = new DataOC(2, new Date(1376870400000L), Double.parseDouble("897"));
+            doc = new DataOC(2, new Date(1376265601000L), Double.parseDouble("897"));
             lineas = new ArrayList<DataLineaOC>();
             dl = new DataLineaOC(3, Factory.getInstance().getProductoController().buscarProductoPorName("Nexus4"));
             lineas.add(dl);
@@ -578,7 +699,7 @@ imagenes = new ArrayList<byte[]>();
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
 //OC 3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-            doc = new DataOC(3, new Date(1376870400000L), Double.parseDouble("108.38"));
+            doc = new DataOC(3, new Date(1376265601000L), Double.parseDouble("108.38"));
             lineas = new ArrayList<DataLineaOC>();
             dl = new DataLineaOC(2, Factory.getInstance().getProductoController().buscarProductoPorName("Cable HDMI para PS3"));
             lineas.add(dl);
@@ -593,8 +714,10 @@ imagenes = new ArrayList<byte[]>();
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1377820801000L));
+
 //OC 4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-            doc = new DataOC(4, new Date(1377129600000L), Double.parseDouble("109.08"));
+            doc = new DataOC(4, new Date(1379548801000L), Double.parseDouble("109.08"));
             lineas = new ArrayList<DataLineaOC>();
             dl = new DataLineaOC(4, Factory.getInstance().getProductoController().buscarProductoPorName("Control inalámbrico para Xbox"));
             lineas.add(dl);
@@ -607,8 +730,11 @@ imagenes = new ArrayList<byte[]>();
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1379635201000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1380067201000L));
+
 //OC 5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-            doc = new DataOC(5, new Date(1377388800000L), Double.parseDouble("3.0"));
+            doc = new DataOC(5, new Date(1379376001000L), Double.parseDouble("3.0"));
             lineas = new ArrayList<DataLineaOC>();
             dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("Protector de cuero para Galaxy"));
             lineas.add(dl);
@@ -621,8 +747,11 @@ imagenes = new ArrayList<byte[]>();
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
 
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1379635201000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1380067201000L));
+
 //OC 6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
-            doc = new DataOC(6, new Date(1379548800000L), Double.parseDouble("199.0"));
+            doc = new DataOC(6, new Date(1376006401000L), Double.parseDouble("199.0"));
             lineas = new ArrayList<DataLineaOC>();
             dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5"));
             lineas.add(dl);
@@ -634,6 +763,142 @@ imagenes = new ArrayList<byte[]>();
             dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Phil");
             dataUsuario.addDataOrdenCompra(dataOrdenCompra);
             Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1378944001000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1379548801000L));
+
+//OC 7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(7, new Date(1379548800000L), Double.parseDouble("497.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5S"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5C"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1376265601000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1376956801000L));
+
+//OC 8 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(8, new Date(1379030401000L), Double.parseDouble("1426.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 4S"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Retina Display"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Mini"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Air"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1379116801000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1379721601000L));
+
+//OC 9 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(9, new Date(1379116801000L), Double.parseDouble("796.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 4S"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5S"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5C"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Mini Retina Display"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1379203201000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1379635201000L));
+
+//OC 10 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(10, new Date(1381363201000L), Double.parseDouble("1327.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Mini"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Air"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Retina Display"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1381449601000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1382227201000L));
+
+//OC 11 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(11, new Date(1382659201000L), Double.parseDouble("1126.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Mini"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Retina Display"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5C"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().cancelarOCFecha(numOC, new Date(1382745601000L));
+
+//OC 12 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+            doc = new DataOC(12, new Date(1382572801000L), Double.parseDouble("1126.0"));
+            lineas = new ArrayList<DataLineaOC>();
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Mini"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPad Retina Display"));
+            lineas.add(dl);
+            dl = new DataLineaOC(1, Factory.getInstance().getProductoController().buscarProductoPorName("iPhone 5C"));
+            lineas.add(dl);
+            doc.setLineas(lineas);
+
+            numOC = Factory.getInstance().getOrdenCompraController().altaOrdenCompra(doc);
+
+            dataOrdenCompra = Factory.getInstance().getOrdenCompraController().getDataOC(Integer.valueOf(numOC).toString());
+            dataUsuario = Factory.getInstance().getUsuarioController().getDataCliente("Ricky");
+            dataUsuario.addDataOrdenCompra(dataOrdenCompra);
+            Factory.getInstance().getUsuarioController().modificarCliente(dataUsuario, numOC);
+
+            Factory.getInstance().getOrdenCompraController().ordenPreparadaFecha(numOC, new Date(1382659201000L));
+            Factory.getInstance().getOrdenCompraController().ordenConfirmadaFecha(numOC, new Date(1383264001000L));
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
 //Comentarios -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -668,7 +933,57 @@ imagenes = new ArrayList<byte[]>();
         DataComentario comentario7 = new DataComentario("JeffW", 0, "Cumple su cometido. No he notado ninguna rayita nueva en mi Samsung.", new Date(1380132000000L));
         cp.agregarComentario("7", comentario7);
 
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+//Reclamos -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+
+//Reclamo1 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo1 = new DataReclamo(new Date(1379548801000L), "Phil", "Me demoró más de un mes en llegar el teléfono, estaría bueno que mejoraran los tiempos de envío.");
+        cp.ingresarReclamo("1", reclamo1);
             
+//Reclamo2 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo2 = new DataReclamo(new Date(1380326401000L), "BruceS", "Lo puse en los comentarios y quiero escribirlo acá. Su producto me vino defectuoso, espero un reembolso de dinero.");
+        cp.ingresarReclamo("12", reclamo2);
+            
+//Reclamo3 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo3 = new DataReclamo(new Date(1381795201000L), "BruceS", "No he tenido respuesta de parte suya. Estaría bueno que mejoraran su servicio de atención al cliente, porque me parece que el actual es pésimo.");
+        cp.ingresarReclamo("12", reclamo3);
+            
+//Reclamo4 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo4 = new DataReclamo(new Date(1383264002000L), "Ricky", "Me han enviado un iPhone 4 en lugar del iPhone 5 que encargué…");
+        cp.ingresarReclamo("1", reclamo4);
+            
+//Reclamo5 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo5 = new DataReclamo(new Date(1383264002000L), "Ricky", "Vino con algunas rayitas. Estaría bueno que controlaran que estas cosas no pasaran en el traslado del producto.");
+        cp.ingresarReclamo("9", reclamo5);
+            
+//Reclamo6 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo6 = new DataReclamo(new Date(1383264002000L), "Ricky", "Este dispositivo vino fallado de fábrica, me gustaría que me lo reembolsaran.");
+        cp.ingresarReclamo("10", reclamo6);
+            
+//Reclamo7 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-
+        DataReclamo reclamo7 = new DataReclamo(new Date(1383264002000L), "Ricky", "No vinieron los auriculares incluidos en la caja.");
+        cp.ingresarReclamo("16", reclamo7);
+            
+        
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+//Puntajes -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+
+        cp.agregarPuntaje("1", "Dan", 5);
+        cp.agregarPuntaje("10", "Dan", 5);
+        cp.agregarPuntaje("9", "Dan", 5);
+        cp.agregarPuntaje("1", "Phil", 3);
+        cp.agregarPuntaje("1", "Ricky", 3);
+        cp.agregarPuntaje("10", "Ricky", 4);
+        cp.agregarPuntaje("9", "Ricky", 3);
+        
+
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+//FIN IMPORTACION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=
+        
+        
             
             MyIcon icon = new MyIcon();
             JOptionPane.showMessageDialog(this, "Importacion terminada correctamente", "Correcto", JOptionPane.DEFAULT_OPTION, icon);
